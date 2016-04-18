@@ -1327,7 +1327,9 @@ WEBKIT_CREATE_FORWARDING_HEADERS(JavaScriptCore DIRECTORIES ${JavaScriptCore_FOR
 add_subdirectory(shell)
 
 WEBKIT_WRAP_SOURCELIST(${JavaScriptCore_SOURCES})
+#ADD_PRECOMPILED_HEADER(JavaScriptCorePrefix.h JavaScriptCorePrefix.cpp JavaScriptCore_SOURCES)
 WEBKIT_FRAMEWORK(JavaScriptCore)
+new_add_precompiled_header(JavaScriptCore JavaScriptCorePrefix.h FORCEINCLUDE) # SOURCE_C WTFPrefix.c SOURCE_CXX WTFPrefix.cpp)
 
 if (NOT APPLE)
     if (${JavaScriptCore_LIBRARY_TYPE} STREQUAL "SHARED")

@@ -46,6 +46,8 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
     include(OptionsCommon)
     include(Options${PORT})
 
+    include(PrecompiledHeader)
+
     # -----------------------------------------------------------------------------
     # config.h
     # -----------------------------------------------------------------------------

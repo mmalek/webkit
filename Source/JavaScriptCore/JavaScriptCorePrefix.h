@@ -1,7 +1,17 @@
+#if defined(HAVE_CONFIG_H) && HAVE_CONFIG_H && defined(BUILDING_WITH_CMAKE)
+#include "cmakeconfig.h"
+#endif
+
+#include "config.h"
+
+#include <wtf/Platform.h>
+
+#if defined(__APPLE__)
 #ifdef __cplusplus
 #define NULL __null
 #else
 #define NULL ((void *)0)
+#endif
 #endif
 
 #include <ctype.h>
