@@ -1047,6 +1047,7 @@ void GraphicsContext::drawLinesForText(const FloatPoint& origin, const DashArray
     FloatRect bounds = computeLineBoundsAndAntialiasingModeForText(origin, widths.last(), printing, localStrokeColor);
     bool fillColorIsNotEqualToStrokeColor = fillColor() != localStrokeColor;
 
+    // FIXME: drawRects() is significantly slower than drawLine() for thin lines (<= 1px)
     Vector<QRectF, 4> dashBounds;
     ASSERT(!(widths.size() % 2));
     dashBounds.reserveInitialCapacity(dashBounds.size() / 2);
@@ -1060,6 +1061,8 @@ void GraphicsContext::drawLinesForText(const FloatPoint& origin, const DashArray
     }
 
     QPainter* p = m_data->p();
+    QPen oldPen = p->pen();
+    p->setPen(Qt::NoPen);
 
     if (fillColorIsNotEqualToStrokeColor) {
         const QBrush oldBrush = p->brush();
@@ -1069,6 +1072,8 @@ void GraphicsContext::drawLinesForText(const FloatPoint& origin, const DashArray
     } else {
         p->drawRects(dashBounds.data(), dashBounds.size());
     }
+
+    p->setPen(oldPen);
 }
 
 
