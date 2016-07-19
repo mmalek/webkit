@@ -201,10 +201,8 @@ static Qt::PenStyle toQPenStyle(StrokeStyle style)
         return Qt::NoPen;
         break;
     case SolidStroke:
-#if ENABLE(CSS3_TEXT)
     case DoubleStroke:
     case WavyStroke:
-#endif
         return Qt::SolidLine;
         break;
     case DottedStroke:
