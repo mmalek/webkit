@@ -90,6 +90,7 @@ fast/workers/worker-storagequota-query-usage.html
 http/tests/canvas/webgl
 compositing/webgl
 fast/canvas/webgl
+fast/images/webgl-teximage2d.html
 http/tests/security/webgl-remote-read-remote-image-allowed.html
 http/tests/security/webgl-remote-read-remote-image-allowed-with-credentials.html
 http/tests/security/webgl-remote-read-remote-image-blocked-no-crossorigin.html
@@ -111,10 +112,6 @@ accessibility
 
 # ENABLE(NETSCAPE_PLUGIN_API) is disabled
 plugins
-fast/css/image-object-hover-inherit.html
-fast/css/object-fit/object-fit-embed.html
-fast/css/object-fit/object-fit-object.html
-fast/invalid/td-inside-object.html
 
 # Encrypted Media Extensions are not enabled.
 media/encrypted-media/
@@ -162,6 +159,13 @@ webkit.org/b/107601 fullscreen/video-cursor-auto-hide.html [ Failure ]
 
 webkit.org/b/49142 fast/css/style-scoped
 
+#207 border-image-repeat: space and -webkit-mask-repeat: space
+css3/masking/mask-repeat-one-copy.html
+css3/masking/mask-repeat-space-border.html
+css3/masking/mask-repeat-space-content.html
+css3/masking/mask-repeat-space-padding.html
+fast/borders/border-image-space.html
+
 # =========================================================================== #
 #       Drag and Drop Support in DRT.                                         #
 # =========================================================================== #
@@ -187,16 +191,91 @@ fast/replaced/applet-rendering-java-disabled.html
 #192, also webkit.org/b/85689
 fast/animation/request-animation-frame-disabled.html
 
+#193
+fast/scrolling/overflow-scroll-past-max.html
+
 # Need layoutTestController.enableAutoResizeMode()
 fast/autoresize/basic.html
 fast/autoresize/turn-off-autoresize.html
 
+#201 - Support testRunner.setBackingScaleFactor() in DRT
+fast/hidpi
+fast/backgrounds/gradient-background-leakage-hidpi.html
+fast/canvas/2d.backingStorePixelRatio.html
+fast/canvas/2d.imageDataHD.html
+fast/canvas/canvas-as-image-hidpi.html
+fast/canvas/canvas-resize-reset-pixelRatio.html
+imported/blink/fast/hidpi/border-background-align.html
+imported/blink/svg/zoom/text/lowdpi-zoom-text.html
+svg/as-image/animated-svg-repaints-completely-in-hidpi.html
+svg/as-image/image-respects-deviceScaleFactor.html
+svg/as-image/svg-as-image-canvas.html
+# All hidpi-* tests should activate HiDPI, but our DRT doesn't support it
+fast/backgrounds/hidpi-background-image-contain-cover-scale-needs-more-precision.html
+fast/backgrounds/hidpi-bitmap-background-on-subpixel-position.html
+fast/backgrounds/hidpi-bitmap-background-origin-on-subpixel-position.html
+fast/backgrounds/hidpi-bitmap-background-repeat-on-subpixel-position.html
+fast/backgrounds/hidpi-generated-gradient-background-on-subpixel-position.html
+fast/borders/hidpi-border-clipping-right-after-move.html
+fast/borders/hidpi-border-image-gradient-on-subpixels.html
+fast/borders/hidpi-border-painting-groove.html
+fast/borders/hidpi-border-painting-ridge.html
+fast/borders/hidpi-border-radius-outer-border-goes-rectangle.html
+fast/borders/hidpi-border-radius-with-subpixel-margin-not-renderable.html
+fast/borders/hidpi-border-width-flooring.html
+fast/borders/hidpi-double-border-with-border-radius-always-produce-solid-line.html
+fast/borders/hidpi-outline-hairline-painting.html
+fast/borders/hidpi-outline-on-subpixel-position.html
+fast/borders/hidpi-rounded-border-on-subpixel-position.html
+fast/borders/hidpi-simple-hairline-border-painting.html
+fast/box-shadow/hidpi-webkit-box-shadow-subpixel-position.html
+fast/canvas/hidpi-repaint-on-retina-leaves-bits-behind.html
+fast/flexbox/hidpi-simple-line-layout-with-flexbox-and-transition.html
+fast/forms/hidpi-fieldset-on-subpixel-position-when-legend-is-present.html
+fast/forms/hidpi-textarea-on-subpixel-position.html
+fast/forms/hidpi-textfield-background-bleeding.html
+fast/frames/hidpi-position-iframe-on-device-pixel.html
+fast/images/hidpi-directly-composited-image-on-subpixel-position.html
+fast/images/hidpi-image-position-on-device-pixels.html
+fast/inline-block/hidpi-margin-top-with-subpixel-value-and-overflow-hidden.html
+fast/inline/hidpi-inline-selection-leaves-gap.html
+fast/inline/hidpi-inline-text-decoration-with-subpixel-value.html
+fast/inline/hidpi-pixel-gap-between-adjacent-selection-inlines.html
+fast/inline/hidpi-rtl-text-does-not-fit-line-and-gets-cut-off.html
+fast/inline/hidpi-select-inline-on-subpixel-position.html
+fast/inline/hidpi-selection-gap-and-inline-selection-have-gap-rtl.html
+fast/inline/hidpi-selection-gap-on-subpixel-position.html
+fast/inline/hidpi-selection-gap-overlaps-inline-selection.html
+fast/inline/hidpi-slow-path-text-on-subpixel-position.html
+fast/layers/hidpi-box-positioned-off-by-one-when-transform-is-present.html
+fast/layers/hidpi-floor-negative-coordinate-values-to-maintain-rounding-direction.html
+fast/layers/hidpi-nested-layers-with-subpixel-accumulation.html
+fast/layers/hidpi-transform-on-child-content-is-mispositioned.html
+fast/regions/hidpi-region-with-auto-margin-on-subpixel-position.html
+fast/repaint/hidpi-absolute-positioned-element-wrong-cliprect-after-move.html
+fast/repaint/hidpi-block-width-change-leaves-cruft.html
+fast/repaint/hidpi-box-with-subpixel-height-inflates.html
+fast/repaint/hidpi-content-inside-iframe-leaves-trails.html
+fast/repaint/hidpi-device-pixel-based-repaint-rect-tracking.html
+fast/repaint/hidpi-transform-on-subpixel-repaintrect.html
+fast/repaint/hidpi-wrong-repaint-rect-when-parent-has-noncompositing-transform.html
+fast/text/hidpi-text-selection-gap-between-words.html
+
 # ============================================================================= #
-# Failing CSS Tests
+# Failing fast Tests
 # ============================================================================= #
 
-#
-fast/css/named-images.html [ Failure ]
+# These tests are actually pixel-tests and have Mac-only expectations
+fast/borders/border-painting-correctness-dashed.html [ ImageOnlyFailure ]
+fast/borders/border-painting-correctness-dotted.html [ ImageOnlyFailure ]
+
+#198
+fast/forms/select-initial-position.html [ Failure ]
+
+# -webkit-named-image(wireless-playback)
+fast/css/named-images.html [ WontFix ]
+# -apple-system-* colors
+fast/css/apple-system-colors.html [ WontFix ]
 
 #119
 fast/css/direct-adjacent-style-update-optimization.html [ Failure ]
@@ -235,6 +314,40 @@ webkit.org/b/115437 fast/css/sticky/sticky-writing-mode-vertical-lr.html [ Image
 # Similar to above
 fast/css/sticky/sticky-writing-mode-vertical-rl.html [ ImageOnlyFailure ]
 
+#197
+fast/css-generated-content/012.html [ Failure ]
+#200
+fast/repaint/transform-layout-repaint.html [ Failure ]
+#191 - Ligatures
+fast/css/text-rendering.html [ ImageOnlyFailure ]
+#190
+fast/css/square-button-appearance.html [ Failure ]
+
+#189
+fast/css/font-face-multiple-faces.html [ Failure ]
+fast/css/font-face-synthetic-bold-italic.html [ Failure ]
+
+#185
+fast/text/midword-break-before-surrogate-pair-2.html [ Failure ]
+
+#184 - Accents
+fast/text/atsui-small-caps-punctuation-size.html [ Failure ]
+fast/text/cg-vs-atsui.html [ Failure ]
+
+#177
+fast/replaced/width100percent-checkbox.html [ Failure ]
+fast/replaced/width100percent-radio.html [ Failure ]
+fast/replaced/width100percent-searchfield.html [ Failure ]
+fast/replaced/width100percent-textarea.html [ Failure ]
+fast/replaced/width100percent-textfield.html [ Failure ]
+
+#174
+fast/borders/borderRadiusDashed04.html [ ImageOnlyFailure ]
+fast/borders/borderRadiusDashed05.html [ ImageOnlyFailure ]
+
+#160 - ???
+fast/frames/inline-object-inside-frameset.html [ Failure ]
+
 # Unsorted timeouts (FIXME)
 
 fast/animation/request-animation-frame-throttle-subframe.html [ Skip ]
@@ -267,7 +380,7 @@ fast/history/page-cache-running-audiocontext.html [ Skip ]
 fast/history/page-cache-suspended-audiocontext.html [ Skip ]
 fast/history/page-cache-webdatabase-no-transaction-db.html [ Skip ]
 fast/history/page-cache-webdatabase-pending-transaction.html [ Skip ]
-fast/html/object-image-nested-fallback.html [ Skip ]
+#fast/html/object-image-nested-fallback.html [ Skip ]
 fast/images/animated-gif-body-outside-viewport.html [ Skip ]
 fast/images/animated-gif-iframe-webkit-transform.html [ Skip ]
 fast/images/animated-gif-webkit-transform.html [ Skip ]
@@ -275,7 +388,6 @@ fast/images/animated-gif-window-resizing.html [ Skip ]
 fast/images/animated-gif-zooming.html [ Skip ]
 fast/images/composited-animated-gif-outside-viewport.html [ Skip ]
 fast/images/move-image-to-new-document.html [ Skip ]
-fast/images/webgl-teximage2d.html [ Skip ]
 fast/notifications/notifications-click-event-focus.html [ Skip ]
 fast/notifications/notifications-click-event.html [ Skip ]
 fast/notifications/notifications-display-close-events.html [ Skip ]
@@ -284,14 +396,9 @@ fast/notifications/notifications-with-permission.html [ Skip ]
 fast/picture/viewport-resize.html [ Skip ]
 fast/scrolling/arrow-key-scroll-in-rtl-document.html [ Skip ]
 fast/scrolling/iframe-scrollable-after-back.html [ Skip ]
-fast/scrolling/overflow-scroll-past-max.html [ Skip ]
 fast/scrolling/overflow-scrollable-after-back.html [ Skip ]
 fast/scrolling/rtl-point-in-iframe.html [ Skip ]
 
-fast/events/touch/moved-touch-target.html
-fast/events/touch/touch-active-state.html
-fast/events/touch/touch-inside-iframe-scrolled.html
-fast/events/touch/zoomed-touch-event-pageXY.html
 platform/qt/fast/spatial-navigation/snav-ensure-scrolls-with-scrollbars-disabled-by-webkit.html
 
 ## ============================================================================= #
