@@ -27,9 +27,9 @@
 #include "InspectorClientWebPage.h"
 #include "InspectorServerQt.h"
 #include "PageClientQt.h"
-//#include "QGraphicsWidgetPluginImpl.h"
+#include "QGraphicsWidgetPluginImpl.h"
 #include "QWebUndoCommand.h"
-//#include "QWidgetPluginImpl.h"
+#include "QWidgetPluginImpl.h"
 #include "QtFallbackWebPopup.h"
 #include "QtPlatformPlugin.h"
 #include "UndoStepQt.h"
@@ -411,9 +411,9 @@ QtPluginWidgetAdapter *QWebPagePrivate::createPlugin(const QString &classid, con
 
 QtPluginWidgetAdapter *QWebPagePrivate::adapterForWidget(QObject *object) const
 {
-#if !PLUGIN_VIEW_IS_BROKEN
     if (QWidget *widget = qobject_cast<QWidget*>(object))
         return new QWidgetPluginImpl(widget);
+#ifndef QT_NO_GRAPHICSVIEW
     if (QGraphicsWidget *widget = qobject_cast<QGraphicsWidget*>(object))
         return new QGraphicsWidgetPluginImpl(widget);
 #endif
