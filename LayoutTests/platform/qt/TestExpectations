@@ -303,7 +303,7 @@ fast/css/will-change/will-change-creates-stacking-context-inline.html [ ImageOnl
 fast/css/word-spacing-characters-complex-text.html [ ImageOnlyFailure ]
 
 # 140
-#fast/css/read-only-read-write-webkit-user-modify.html [ Failure ]
+fast/css/read-only-read-write-webkit-user-modify.html [ Failure ]
 
 # These failures are suspected to be caused by subpixel rendering errors
 
@@ -344,9 +344,31 @@ fast/replaced/width100percent-textfield.html [ Failure ]
 #174
 fast/borders/borderRadiusDashed04.html [ ImageOnlyFailure ]
 fast/borders/borderRadiusDashed05.html [ ImageOnlyFailure ]
+fast/box-shadow/inset.html [ Failure ]
 
 #160 - ???
 fast/frames/inline-object-inside-frameset.html [ Failure ]
+
+#158
+fast/forms/select-baseline.html [ Failure ]
+
+#156
+fast/forms/input-text-click-inside.html [ Failure ]
+fast/forms/input-text-click-outside.html [ Failure ]
+fast/forms/textfield-focus-ring.html [ Failure ]
+fast/frames/take-focus-from-iframe.html [ Failure ]
+fast/css/focus-ring-exists-for-search-field.html [ Failure ]
+
+#155
+#fast/forms/input-readonly-dimmed.html [ Failure ]
+
+#154
+fast/forms/basic-buttons.html [ Failure ]
+
+#146
+fast/block/float/015.html [ Failure ]
+
+
 
 # Unsorted timeouts (FIXME)
 
