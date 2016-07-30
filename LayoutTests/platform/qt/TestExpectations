@@ -59,6 +59,8 @@
 #       Permanently Skipped Tests.                                            #
 # =========================================================================== #
 
+# Old CUSTOM_ELEMENT tests
+fast/dom/custom
 
 # =========================================================================== #
 #       Disabled features.                                                    #
@@ -112,6 +114,7 @@ accessibility
 
 # ENABLE(NETSCAPE_PLUGIN_API) is disabled
 plugins
+fast/dom/Window/Plug-ins.html
 
 # Encrypted Media Extensions are not enabled.
 media/encrypted-media/
@@ -194,9 +197,17 @@ fast/animation/request-animation-frame-disabled.html
 #193
 fast/scrolling/overflow-scroll-past-max.html
 
+# Missing WebKitCanvasUsesAcceleratedDrawing in overridePreference()
+fast/canvas/canvas-blend-solid.html
+fast/canvas/drawImage-with-small-values.html
+
 # Need layoutTestController.enableAutoResizeMode()
 fast/autoresize/basic.html
 fast/autoresize/turn-off-autoresize.html
+
+# [Qt] Implement layouTestController.setShouldStayOnPageAfterHandlingBeforeUnload
+# https://bugs.webkit.org/show_bug.cgi?id=66162
+fast/loader/form-submission-after-beforeunload-cancel.html [ Failure ]
 
 #201 - Support testRunner.setBackingScaleFactor() in DRT
 fast/hidpi
@@ -314,6 +325,12 @@ webkit.org/b/115437 fast/css/sticky/sticky-writing-mode-vertical-lr.html [ Image
 # Similar to above
 fast/css/sticky/sticky-writing-mode-vertical-rl.html [ ImageOnlyFailure ]
 
+webkit.org/b/104696 fast/block/float/floats-offset-image-quirk-lineheight.html [ ImageOnlyFailure ]
+webkit.org/b/104696 fast/block/float/floats-offset-image-quirk.html [ ImageOnlyFailure ]
+webkit.org/b/104696 fast/block/float/floats-offset-image-strict-lineheight.html [ ImageOnlyFailure ]
+webkit.org/b/104696 fast/block/float/floats-offset-image-strict.html [ ImageOnlyFailure ]
+webkit.org/b/104696 fast/block/float/floats-wrap-inside-inline-007.html [ ImageOnlyFailure ]
+
 #197
 fast/css-generated-content/012.html [ Failure ]
 #200
@@ -368,7 +385,24 @@ fast/forms/basic-buttons.html [ Failure ]
 #146
 fast/block/float/015.html [ Failure ]
 
+#211
+fast/dom/Window/window-properties-device-orientation.html [ Failure ]
 
+webkit.org/b/30620 fast/xsl/sort-locale.xml [ Failure ]
+
+# Failing reftests
+webkit.org/b/103424 fast/backgrounds/background-opaque-images-over-color.html [ ImageOnlyFailure ]
+# Fails on ios-simulator as well
+fast/animation/height-auto-transition-computed-value.html [ ImageOnlyFailure ]
+#217
+fast/block/nested-renderers.html [ ImageOnlyFailure ]
+webkit.org/b/144673 fast/forms/button-line-height.html [ ImageOnlyFailure ]
+#85
+fast/forms/datalist/update-range-with-datalist.html [ ImageOnlyFailure ]
+#218
+fast/regions/absolute-in-relative-overflow.html [ ImageOnlyFailure ]
+#219
+fast/forms/select/intrinsic-min-width-applies-with-fixed-width.html [ ImageOnlyFailure ]
 
 # Unsorted timeouts (FIXME)
 
