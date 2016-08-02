@@ -139,13 +139,68 @@ webkit.org/b/85262 fast/css/image-resolution
 webkit.org/b/89052 fast/css/image-orientation
 
 # ENABLE(TEXT_AUTOSIZING) is disabled
-webkit.org/b/84186 fast/text-autosizing [ ImageOnlyFailure ]
+# webkit.org/b/84186
+  fast/text-autosizing/cluster-inline-block-or-table.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-inline-grid-flex-box.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-list-item.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-narrow-in-wide-ohidden.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-narrow-in-wide.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-wide-in-narrow.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-with-narrow-lca-and-cluster.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-with-narrow-lca.html [ ImageOnlyFailure ]
+  fast/text-autosizing/cluster-with-wide-lca.html [ ImageOnlyFailure ]
+  fast/text-autosizing/clusters-insufficient-text.html [ ImageOnlyFailure ]
+  fast/text-autosizing/clusters-insufficient-width.html [ ImageOnlyFailure ]
+  fast/text-autosizing/clusters-sufficient-text-except-in-root.html [ ImageOnlyFailure ]
+  fast/text-autosizing/clusters-sufficient-width.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-and-overflow-auto-ancestor.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-and-overflow-paged-x-ancestor.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-and-overflow-scroll-ancestor.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-height-body.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-then-float-ancestors.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-then-overflow-ancestors.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-then-position-absolute-ancestors.html [ ImageOnlyFailure ]
+  fast/text-autosizing/constrained-then-position-fixed-ancestors.html [ ImageOnlyFailure ]
+  fast/text-autosizing/em-margin-border-padding.html [ ImageOnlyFailure ]
+  fast/text-autosizing/font-scale-factor.html [ ImageOnlyFailure ]
+  fast/text-autosizing/form-controls-autosizing-button-input-elements.html [ ImageOnlyFailure ]
+  fast/text-autosizing/form-controls-autosizing-checkbox-input-element.html [ ImageOnlyFailure ]
+  fast/text-autosizing/form-controls-autosizing-radio-input-element.html [ ImageOnlyFailure ]
+  fast/text-autosizing/form-controls-autosizing-select-element.html [ ImageOnlyFailure ]
+  fast/text-autosizing/form-controls-autosizing-textfield-input-elements.html [ ImageOnlyFailure ]
+  fast/text-autosizing/header-li-links-autosizing.html [ ImageOnlyFailure ]
+  fast/text-autosizing/header-links-autosizing-different-fontsize.html [ ImageOnlyFailure ]
+  fast/text-autosizing/header-links-autosizing.html [ ImageOnlyFailure ]
+  fast/text-autosizing/narrow-child.html [ ImageOnlyFailure ]
+  fast/text-autosizing/narrow-descendants-combined.html [ ImageOnlyFailure ]
+  fast/text-autosizing/narrow-iframe-flattened.html [ ImageOnlyFailure ]
+  fast/text-autosizing/narrow-iframe.html [ ImageOnlyFailure ]
+  fast/text-autosizing/nested-child.html [ ImageOnlyFailure ]
+  fast/text-autosizing/nested-em-line-height.html [ ImageOnlyFailure ]
+  fast/text-autosizing/oscillation-javascript-fontsize-change.html [ ImageOnlyFailure ]
+  fast/text-autosizing/simple-paragraph.html [ ImageOnlyFailure ]
+  fast/text-autosizing/span-child.html [ ImageOnlyFailure ]
+  fast/text-autosizing/unwrappable-blocks.html [ ImageOnlyFailure ]
+  fast/text-autosizing/unwrappable-inlines.html [ ImageOnlyFailure ]
+  fast/text-autosizing/various-font-sizes.html [ ImageOnlyFailure ]
+  fast/text-autosizing/wide-block.html [ ImageOnlyFailure ]
+  fast/text-autosizing/wide-child.html [ ImageOnlyFailure ]
+  fast/text-autosizing/wide-iframe.html [ ImageOnlyFailure ]
+  fast/text-autosizing/wide-in-narrow-overflow-scroll.html [ ImageOnlyFailure ]
 
 # CSS3 Text support is not yet enabled (needs ENABLE_CSS3_TEXT).
-webkit.org/b/58491 fast/css3-text/css3-text-decoration
-webkit.org/b/76173 fast/css3-text/css3-text-align-last
-webkit.org/b/99945 fast/css3-text/css3-text-justify [ Failure ]
-webkit.org/b/112755 fast/css3-text/css3-text-indent [ ImageOnlyFailure ]
+#webkit.org/b/58491 fast/css3-text/css3-text-decoration [ ImageOnlyFailure ]
+#webkit.org/b/76173 fast/css3-text/css3-text-align-last [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-align-last/text-align-last-with-text-align-justify.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-decoration/text-decoration-skip/decoration-skip-crash-fallback-svg.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-decoration/text-decoration-skip/glyph-inside-underline.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink-svg.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-decoration/text-decoration-skip/text-decoration-skip-ink.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-decoration/text-decoration-style-double-space-scales.html [ ImageOnlyFailure ]
+  fast/css3-text/css3-text-justify/text-justify-none.html [ ImageOnlyFailure ]
+#webkit.org/b/99945 fast/css3-text/css3-text-justify [ Failure ]
+#webkit.org/b/112755 fast/css3-text/css3-text-indent [ ImageOnlyFailure ]
+fast/css3-text/css3-text-indent/text-indent-each-line-hanging.html [ ImageOnlyFailure ]
 
 # CURSOR_VISIBILITY is not enabled in qt
 webkit.org/b/107601 fullscreen/video-cursor-auto-hide.html [ Failure ]
@@ -158,11 +213,15 @@ webkit.org/b/107601 fullscreen/video-cursor-auto-hide.html [ Failure ]
 webkit.org/b/49142 fast/css/style-scoped
 
 #207 border-image-repeat: space and -webkit-mask-repeat: space
-css3/masking/mask-repeat-one-copy.html
-css3/masking/mask-repeat-space-border.html
-css3/masking/mask-repeat-space-content.html
-css3/masking/mask-repeat-space-padding.html
-fast/borders/border-image-space.html
+css3/masking/mask-repeat-one-copy.html [ ImageOnlyFailure ]
+css3/masking/mask-repeat-space-border.html [ ImageOnlyFailure ]
+css3/masking/mask-repeat-space-content.html [ ImageOnlyFailure ]
+css3/masking/mask-repeat-space-padding.html [ ImageOnlyFailure ]
+fast/borders/border-image-space.html [ ImageOnlyFailure ]
+
+#232
+fast/images/pdf-as-image-with-annotations.html [ ImageOnlyFailure ]
+fast/replaced/pdf-as-object-and-embed.html [ ImageOnlyFailure ]
 
 # =========================================================================== #
 #       Drag and Drop Support in DRT.                                         #
@@ -322,6 +381,7 @@ fast/css/sticky/sticky-writing-mode-vertical-rl.html [ ImageOnlyFailure ]
 
 fast/sub-pixel/block-with-margin-overflow.html [ ImageOnlyFailure ]
 webkit.org/b/85532 fast/sub-pixel/file-upload-control-at-fractional-offset.html [ ImageOnlyFailure ]
+fast/sub-pixel/ellipsis-table.html [ ImageOnlyFailure ]
 
 webkit.org/b/104696 fast/block/float/floats-offset-image-quirk-lineheight.html [ ImageOnlyFailure ]
 webkit.org/b/104696 fast/block/float/floats-offset-image-quirk.html [ ImageOnlyFailure ]
@@ -411,6 +471,7 @@ webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-3.html [ ImageOnlyFailure ]
 webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-4.html [ ImageOnlyFailure ]
 webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-5.html [ ImageOnlyFailure ]
 webkit.org/b/153700 fast/ruby/ruby-expansion-cjk.html [ ImageOnlyFailure ]
+fast/ruby/text-decoration-in-descendants-ruby.html [ ImageOnlyFailure ]
 
 #223
 fast/multicol/newmulticol/multicol-clip-rounded-corners.html [ ImageOnlyFailure ]
@@ -428,13 +489,36 @@ webkit.org/b/124504 fast/text/break-word-pre-wrap.html [ ImageOnlyFailure ]
 #221
 fast/block/positioning/fixed-container-with-relative-parent.html [ ImageOnlyFailure ]
 fast/repaint/layer-child-outline.html [ ImageOnlyFailure ]
-fast/text/combining-mark-paint.html [ ImageOnlyFailure ]
+fast/inline/outline-corners-with-offset.html [ ImageOnlyFailure ]
+fast/inline/padding-ellipsis-right.html [ ImageOnlyFailure ]
 
 fast/text/descent-clip-in-scaled-page.html [ ImageOnlyFailure ]
 
 #228
 fast/text/font-kerning.html [ ImageOnlyFailure ]
 fast/text/multiple-feature-properties.html [ ImageOnlyFailure ]
+#229
+fast/text/kerning-with-TextLayout.html [ ImageOnlyFailure ]
+#230
+fast/gradients/css3-color-stop-invalid.html [ ImageOnlyFailure ]
+#231
+fast/images/animated-png.html [ ImageOnlyFailure ]
+
+webkit.org/b/42194 fast/scrolling/scroll-select-list.html [ ImageOnlyFailure ]
+
+#233
+fast/text/decorations-vertical-underline.html [ ImageOnlyFailure ]
+fast/text/international/synthesized-italic-vertical.html [ ImageOnlyFailure ]
+fast/writing-mode/vertical-subst-font-vert-no-dflt.html [ ImageOnlyFailure ]
+
+webkit.org/b/146724 fast/text/word-break-keep-all.html [ ImageOnlyFailure ]
+
+#webkit.org/b/160248 fast/text/combining-character-sequence-vertical.html [ ImageOnlyFailure ]
+webkit.org/b/160248 fast/text/combining-mark-paint.html [ ImageOnlyFailure ]
+webkit.org/b/160248 fast/text/synthetic-bold-transformed.html [ ImageOnlyFailure ]
+webkit.org/b/160248 fast/text/trailing-word.html [ ImageOnlyFailure ]
+
+webkit.org/b/139493 fast/text/narrow-non-breaking-space.html [ ImageOnlyFailure ]
 
 # Failing regions tests
   fast/regions/absolute-pos-elem-in-region.html [ ImageOnlyFailure ]
