@@ -49,18 +49,13 @@
 # - new tests without expected results
 # - Regressions occured after Qt version update
 
-
-# fast/css
-# Regressions: Unexpected text-only failures (63)
-# Regressions: Unexpected image-only failures (22)
-
+# Tests that have failure expectation in global file
+fast/multicol/multicol-with-child-renderLayer-for-input.html [ Pass ]
+fast/sub-pixel/input-caret-on-subpixel-bound.html [ Pass ]
 
 # =========================================================================== #
 #       Permanently Skipped Tests.                                            #
 # =========================================================================== #
-
-# Old CUSTOM_ELEMENT tests
-fast/dom/custom
 
 # =========================================================================== #
 #       Disabled features.                                                    #
@@ -135,7 +130,7 @@ fast/events/constructors/keyboard-event-constructor.html
 fast/events/constructors/focus-event-constructor.html
 
 # No woff2 yet
-fast/text/woff2.html
+fast/text/woff2.html [ ImageOnlyFailure ]
 
 # CSS image-resolution is not yet enabled.
 webkit.org/b/85262 fast/css/image-resolution
@@ -144,13 +139,13 @@ webkit.org/b/85262 fast/css/image-resolution
 webkit.org/b/89052 fast/css/image-orientation
 
 # ENABLE(TEXT_AUTOSIZING) is disabled
-webkit.org/b/84186 fast/text-autosizing
+webkit.org/b/84186 fast/text-autosizing [ ImageOnlyFailure ]
 
 # CSS3 Text support is not yet enabled (needs ENABLE_CSS3_TEXT).
 webkit.org/b/58491 fast/css3-text/css3-text-decoration
 webkit.org/b/76173 fast/css3-text/css3-text-align-last
 webkit.org/b/99945 fast/css3-text/css3-text-justify [ Failure ]
-webkit.org/b/112755 fast/css3-text/css3-text-indent [ Failure ImageOnlyFailure ]
+webkit.org/b/112755 fast/css3-text/css3-text-indent [ ImageOnlyFailure ]
 
 # CURSOR_VISIBILITY is not enabled in qt
 webkit.org/b/107601 fullscreen/video-cursor-auto-hide.html [ Failure ]
@@ -222,47 +217,30 @@ svg/as-image/animated-svg-repaints-completely-in-hidpi.html
 svg/as-image/image-respects-deviceScaleFactor.html
 svg/as-image/svg-as-image-canvas.html
 # All hidpi-* tests should activate HiDPI, but our DRT doesn't support it
-fast/backgrounds/hidpi-background-image-contain-cover-scale-needs-more-precision.html
 fast/backgrounds/hidpi-bitmap-background-on-subpixel-position.html
 fast/backgrounds/hidpi-bitmap-background-origin-on-subpixel-position.html
-fast/backgrounds/hidpi-bitmap-background-repeat-on-subpixel-position.html
 fast/backgrounds/hidpi-generated-gradient-background-on-subpixel-position.html
-fast/borders/hidpi-border-clipping-right-after-move.html
 fast/borders/hidpi-border-image-gradient-on-subpixels.html
-fast/borders/hidpi-border-painting-groove.html
-fast/borders/hidpi-border-painting-ridge.html
 fast/borders/hidpi-border-radius-outer-border-goes-rectangle.html
-fast/borders/hidpi-border-radius-with-subpixel-margin-not-renderable.html
 fast/borders/hidpi-border-width-flooring.html
-fast/borders/hidpi-double-border-with-border-radius-always-produce-solid-line.html
-fast/borders/hidpi-outline-hairline-painting.html
 fast/borders/hidpi-outline-on-subpixel-position.html
 fast/borders/hidpi-rounded-border-on-subpixel-position.html
-fast/borders/hidpi-simple-hairline-border-painting.html
 fast/box-shadow/hidpi-webkit-box-shadow-subpixel-position.html
 fast/canvas/hidpi-repaint-on-retina-leaves-bits-behind.html
 fast/flexbox/hidpi-simple-line-layout-with-flexbox-and-transition.html
 fast/forms/hidpi-fieldset-on-subpixel-position-when-legend-is-present.html
 fast/forms/hidpi-textarea-on-subpixel-position.html
-fast/forms/hidpi-textfield-background-bleeding.html
 fast/frames/hidpi-position-iframe-on-device-pixel.html
 fast/images/hidpi-directly-composited-image-on-subpixel-position.html
 fast/images/hidpi-image-position-on-device-pixels.html
-fast/inline-block/hidpi-margin-top-with-subpixel-value-and-overflow-hidden.html
-fast/inline/hidpi-inline-selection-leaves-gap.html
-fast/inline/hidpi-inline-text-decoration-with-subpixel-value.html
-fast/inline/hidpi-pixel-gap-between-adjacent-selection-inlines.html
 fast/inline/hidpi-rtl-text-does-not-fit-line-and-gets-cut-off.html
-fast/inline/hidpi-select-inline-on-subpixel-position.html
 fast/inline/hidpi-selection-gap-and-inline-selection-have-gap-rtl.html
 fast/inline/hidpi-selection-gap-on-subpixel-position.html
 fast/inline/hidpi-selection-gap-overlaps-inline-selection.html
 fast/inline/hidpi-slow-path-text-on-subpixel-position.html
-fast/layers/hidpi-box-positioned-off-by-one-when-transform-is-present.html
 fast/layers/hidpi-floor-negative-coordinate-values-to-maintain-rounding-direction.html
 fast/layers/hidpi-nested-layers-with-subpixel-accumulation.html
 fast/layers/hidpi-transform-on-child-content-is-mispositioned.html
-fast/regions/hidpi-region-with-auto-margin-on-subpixel-position.html
 fast/repaint/hidpi-absolute-positioned-element-wrong-cliprect-after-move.html
 fast/repaint/hidpi-block-width-change-leaves-cruft.html
 fast/repaint/hidpi-box-with-subpixel-height-inflates.html
@@ -270,7 +248,24 @@ fast/repaint/hidpi-content-inside-iframe-leaves-trails.html
 fast/repaint/hidpi-device-pixel-based-repaint-rect-tracking.html
 fast/repaint/hidpi-transform-on-subpixel-repaintrect.html
 fast/repaint/hidpi-wrong-repaint-rect-when-parent-has-noncompositing-transform.html
-fast/text/hidpi-text-selection-gap-between-words.html
+fast/backgrounds/hidpi-background-image-contain-cover-scale-needs-more-precision.html [ ImageOnlyFailure ]
+fast/backgrounds/hidpi-bitmap-background-repeat-on-subpixel-position.html [ ImageOnlyFailure ]
+fast/borders/hidpi-border-clipping-right-after-move.html [ ImageOnlyFailure ]
+fast/borders/hidpi-border-painting-groove.html [ ImageOnlyFailure ]
+fast/borders/hidpi-border-painting-ridge.html [ ImageOnlyFailure ]
+fast/borders/hidpi-border-radius-with-subpixel-margin-not-renderable.html [ ImageOnlyFailure ]
+fast/borders/hidpi-double-border-with-border-radius-always-produce-solid-line.html [ ImageOnlyFailure ]
+fast/borders/hidpi-outline-hairline-painting.html [ ImageOnlyFailure ]
+fast/borders/hidpi-simple-hairline-border-painting.html [ ImageOnlyFailure ]
+fast/forms/hidpi-textfield-background-bleeding.html [ ImageOnlyFailure ]
+fast/inline-block/hidpi-margin-top-with-subpixel-value-and-overflow-hidden.html [ ImageOnlyFailure ]
+fast/inline/hidpi-inline-selection-leaves-gap.html [ ImageOnlyFailure ]
+fast/inline/hidpi-inline-text-decoration-with-subpixel-value.html [ ImageOnlyFailure ]
+fast/inline/hidpi-pixel-gap-between-adjacent-selection-inlines.html [ ImageOnlyFailure ]
+fast/inline/hidpi-select-inline-on-subpixel-position.html [ ImageOnlyFailure ]
+fast/layers/hidpi-box-positioned-off-by-one-when-transform-is-present.html [ ImageOnlyFailure ]
+fast/regions/hidpi-region-with-auto-margin-on-subpixel-position.html [ ImageOnlyFailure ]
+fast/text/hidpi-text-selection-gap-between-words.html [ ImageOnlyFailure ]
 
 # ============================================================================= #
 # Failing fast Tests
@@ -325,11 +320,14 @@ webkit.org/b/115437 fast/css/sticky/sticky-writing-mode-vertical-lr.html [ Image
 # Similar to above
 fast/css/sticky/sticky-writing-mode-vertical-rl.html [ ImageOnlyFailure ]
 
+fast/sub-pixel/block-with-margin-overflow.html [ ImageOnlyFailure ]
+webkit.org/b/85532 fast/sub-pixel/file-upload-control-at-fractional-offset.html [ ImageOnlyFailure ]
+
 webkit.org/b/104696 fast/block/float/floats-offset-image-quirk-lineheight.html [ ImageOnlyFailure ]
 webkit.org/b/104696 fast/block/float/floats-offset-image-quirk.html [ ImageOnlyFailure ]
 webkit.org/b/104696 fast/block/float/floats-offset-image-strict-lineheight.html [ ImageOnlyFailure ]
 webkit.org/b/104696 fast/block/float/floats-offset-image-strict.html [ ImageOnlyFailure ]
-webkit.org/b/104696 fast/block/float/floats-wrap-inside-inline-007.html [ ImageOnlyFailure ]
+#webkit.org/b/104696 fast/block/float/floats-wrap-inside-inline-007.html [ ImageOnlyFailure ]
 
 #197
 fast/css-generated-content/012.html [ Failure ]
@@ -343,6 +341,7 @@ fast/css/square-button-appearance.html [ Failure ]
 #189
 fast/css/font-face-multiple-faces.html [ Failure ]
 fast/css/font-face-synthetic-bold-italic.html [ Failure ]
+fast/css3-text/font-synthesis.html [ ImageOnlyFailure ]
 
 #185
 fast/text/midword-break-before-surrogate-pair-2.html [ Failure ]
@@ -350,6 +349,7 @@ fast/text/midword-break-before-surrogate-pair-2.html [ Failure ]
 #184 - Accents
 fast/text/atsui-small-caps-punctuation-size.html [ Failure ]
 fast/text/cg-vs-atsui.html [ Failure ]
+fast/text/space-width.html [ ImageOnlyFailure ]
 
 #177
 fast/replaced/width100percent-checkbox.html [ Failure ]
@@ -403,6 +403,245 @@ fast/forms/datalist/update-range-with-datalist.html [ ImageOnlyFailure ]
 fast/regions/absolute-in-relative-overflow.html [ ImageOnlyFailure ]
 #219
 fast/forms/select/intrinsic-min-width-applies-with-fixed-width.html [ ImageOnlyFailure ]
+#220
+fast/css-grid-layout/flex-content-sized-columns-resize.html [ Timeout ]
+
+webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-2.html [ ImageOnlyFailure ]
+webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-3.html [ ImageOnlyFailure ]
+webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-4.html [ ImageOnlyFailure ]
+webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-5.html [ ImageOnlyFailure ]
+webkit.org/b/153700 fast/ruby/ruby-expansion-cjk.html [ ImageOnlyFailure ]
+
+#223
+fast/multicol/newmulticol/multicol-clip-rounded-corners.html [ ImageOnlyFailure ]
+
+# Wrong fonts used
+fast/shapes/shape-outside-floats/shape-outside-floats-layout-after-initial-layout-pass.html [ ImageOnlyFailure ]
+
+webkit.org/b/132235 fast/shapes/shape-outside-floats/shape-outside-floats-shape-margin-percent.html [ ImageOnlyFailure ]
+
+#226
+fast/text/arabic-zwj-and-zwnj.html [ ImageOnlyFailure ]
+
+webkit.org/b/124504 fast/text/break-word-pre-wrap.html [ ImageOnlyFailure ]
+
+#221
+fast/block/positioning/fixed-container-with-relative-parent.html [ ImageOnlyFailure ]
+fast/repaint/layer-child-outline.html [ ImageOnlyFailure ]
+fast/text/combining-mark-paint.html [ ImageOnlyFailure ]
+
+fast/text/descent-clip-in-scaled-page.html [ ImageOnlyFailure ]
+
+#228
+fast/text/font-kerning.html [ ImageOnlyFailure ]
+fast/text/multiple-feature-properties.html [ ImageOnlyFailure ]
+
+# Failing regions tests
+  fast/regions/absolute-pos-elem-in-region.html [ ImageOnlyFailure ]
+  fast/regions/animation-element-in-region-flowed-to-other-thread.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-abspos-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-allregions-nobreaks.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-allregions.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-break-after.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-breakafteralways-maxheight.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-breakbeforealways.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-definedheight-changenotdetected.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-dynamic-update.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-firstregion-breakalways.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-flexbox.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-floatright-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-horizontal-bt.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-inlineblock-normalflow-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-lastregion-overflowauto-breaksignored.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-lastregion-overflowauto.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-maxheight-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-middleregion.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-minheight-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-normalflow-region.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-region-valid-from-invalid.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-secondregion-breakoutside.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-secondregion.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-breakafteralways-maxheight.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-breakafteralways.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-breakaftermargin.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-breakbeforealways-minheight.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-breakbeforealways.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-multiplebreaks.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-overflowauto-breaksignored.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autoheight-singleregion-overflowauto.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-abspos-regionchain.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-abspos.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-float.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-inlineblock.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-nonreplaced-abspos.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-nonreplacedblock-normalflow.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-normalflow-minmaxwidth.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-normalflow-minwidth.html [ ImageOnlyFailure ]
+  fast/regions/auto-size/autowidth-normalflow.html [ ImageOnlyFailure ]
+  fast/regions/box-decorations-over-region-padding-fragmented.html [ ImageOnlyFailure ]
+  fast/regions/box-decorations-over-region-padding-horiz-bt.html [ ImageOnlyFailure ]
+  fast/regions/box-decorations-over-region-padding.html [ ImageOnlyFailure ]
+  fast/regions/clip-to-padding-box-vertical-lr.html [ ImageOnlyFailure ]
+  fast/regions/collapse-anonymous-region.html [ ImageOnlyFailure ]
+  fast/regions/content-relative-next-tile.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-001.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-002.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-003.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-004.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-005.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-006.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-007.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-008.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-009.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-010.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-011.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-012.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-013.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-014.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-list-items-015.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-numbered-paragraphs-divs-001.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-numbered-paragraphs-divs-002.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-numbered-paragraphs.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-numbered-spans-display-only-some.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-001.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-002.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-003.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-explicit-counters-001.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-explicit-counters-002.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-explicit-counters-003.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-ordered-lists-in-regions-explicit-counters-004.html [ ImageOnlyFailure ]
+  fast/regions/counters/extract-unordered-lists-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/drag-scrollbars-of-content.html [ ImageOnlyFailure ]
+  fast/regions/float-pushed-width-change-2.html [ ImageOnlyFailure ]
+  fast/regions/float-pushed-width-change.html [ ImageOnlyFailure ]
+  fast/regions/float-slicing-on-forced-break.html [ ImageOnlyFailure ]
+  fast/regions/floats-basic-in-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/fragmentation-after-float-overflow-single-region.html [ ImageOnlyFailure ]
+  fast/regions/fragmentation-after-monolithic-overflow-self-collapsed.html [ ImageOnlyFailure ]
+  fast/regions/fragmentation-after-monolithic-overflow-single-region.html [ ImageOnlyFailure ]
+  fast/regions/fragmentation-after-monolithic-overflow.html [ ImageOnlyFailure ]
+  fast/regions/frame-view-overflow-scroll.html [ ImageOnlyFailure ]
+  fast/regions/generated-content/firstletter-inside-flowthread.html [ ImageOnlyFailure ]
+  fast/regions/hover-content-inside-iframe-in-region.html [ ImageOnlyFailure ]
+  fast/regions/hover-in-second-region.html [ ImageOnlyFailure ]
+  fast/regions/hover-overflow-hidden.html [ ImageOnlyFailure ]
+  fast/regions/inline-block-flowed-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/inline-block-inline-children-flowed-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/inline-block-inside-anonymous-overflow.html [ ImageOnlyFailure ]
+  fast/regions/inline-block-overflow.html [ ImageOnlyFailure ]
+  fast/regions/inline-blocks-dyn-enlarged-regions.html [ ImageOnlyFailure ]
+  fast/regions/inline-blocks-dyn-shrunk-regions.html [ ImageOnlyFailure ]
+  fast/regions/inline-blocks-in-two-regions.html [ ImageOnlyFailure ]
+  fast/regions/inlineblock-child-inlineblock-contentnode-in-region.html [ ImageOnlyFailure ]
+  fast/regions/last-region-border-radius.html [ ImageOnlyFailure ]
+  fast/regions/layers/region-normalflow-stacking-context.html [ ImageOnlyFailure ]
+  fast/regions/layers/region-removed-during-animation.html [ ImageOnlyFailure ]
+  fast/regions/layers/stacking-context-paint-order.html [ ImageOnlyFailure ]
+  fast/regions/list-item-as-region.html [ ImageOnlyFailure ]
+  fast/regions/listmarker-inside-flowthread.html [ ImageOnlyFailure ]
+  fast/regions/multicol/multicol-as-region-prevented.html [ ImageOnlyFailure ]
+  fast/regions/multicol/regions-in-multicol-bt.html [ ImageOnlyFailure ]
+  fast/regions/multicol/regions-in-multicol-hover-overflow.html [ ImageOnlyFailure ]
+  fast/regions/multicol/regions-in-multicol-hover.html [ ImageOnlyFailure ]
+  fast/regions/multicol/regions-in-multicol.html [ ImageOnlyFailure ]
+  fast/regions/named-flow-content-order-1.html [ ImageOnlyFailure ]
+  fast/regions/named-flow-content-order-2.html [ ImageOnlyFailure ]
+  fast/regions/nested-floated-region.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-auto-after-float.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-content-transform-rotate.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-content-zero-height-region.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-first-and-last-regions.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-in-uniform-regions-dynamic.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-in-variable-width-regions-inline-bt.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-in-variable-width-regions-inline-continuation.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-in-variable-width-regions-inline.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-moving-below-floats-in-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-nested-regions.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-not-moving-below-floats-in-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-region-inline.html [ ImageOnlyFailure ]
+  fast/regions/overflow/overflow-size-change-in-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/percentage-margins-mixed-ltr-dominant-regions.html [ ImageOnlyFailure ]
+  fast/regions/percentage-margins-mixed-rtl-dominant-regions.html [ ImageOnlyFailure ]
+  fast/regions/percentage-margins-rtl-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/percentage-margins-variable-width-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-in-named-flow-position-changed.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-inside-fixed-in-named-flow.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-inside-named-flow-zIndex.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-pos-content-fragmented.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-pos-elem-in-namedflow-noregions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-pos-elem-in-region.html [ ImageOnlyFailure ]
+  fast/regions/positioning/fixed-pos-region-overflow-content.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-fragmented-content.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-block-static-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-block-static-in-rtl-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-block-static-spanning-regions-rtl.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-block-static-spanning-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-clipped-spanning-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-in-rtl-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-inline-static-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-inline-static-in-rtl-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-inline-static-spanning-regions-rtl.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-inline-static-spanning-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-perpendicular-flows-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-objects-spanning-regions.html [ ImageOnlyFailure ]
+  fast/regions/positioning/positioned-slider-in-regions.html [ ImageOnlyFailure ]
+  fast/regions/region-as-bfc-avoids-float.html [ ImageOnlyFailure ]
+  fast/regions/region-border-radius-overflow-clip.html [ ImageOnlyFailure ]
+  fast/regions/region-clipping.html [ ImageOnlyFailure ]
+  fast/regions/region-content-flown-into-region.html [ ImageOnlyFailure ]
+  fast/regions/region-overflow-break.html [ ImageOnlyFailure ]
+  fast/regions/region-padding-overflow-hidden.html [ ImageOnlyFailure ]
+  fast/regions/region-styling/region-style-in-columns.html [ ImageOnlyFailure ]
+  fast/regions/region-styling/region-style-not-supported-properties.html [ ImageOnlyFailure ]
+  fast/regions/region-styling/region-style-rule-position.html [ ImageOnlyFailure ]
+  fast/regions/region-styling/region-withstyling-valid-from-invalid.html [ ImageOnlyFailure ]
+  fast/regions/region-visual-overflow-transform.html [ ImageOnlyFailure ]
+  fast/regions/region-width-change-relayout-1.html [ ImageOnlyFailure ]
+  fast/regions/region-width-change-relayout-2.html [ ImageOnlyFailure ]
+  fast/regions/region-width-change-relayout-3.html [ ImageOnlyFailure ]
+  fast/regions/relative-borders-overflow.html [ ImageOnlyFailure ]
+  fast/regions/relative-in-absolute-borders-overflow.html [ ImageOnlyFailure ]
+  fast/regions/repaint/fixed-in-named-flow-cb-changed.html [ ImageOnlyFailure ]
+  fast/regions/repaint/fixed-in-named-flow-cb-changed2.html [ ImageOnlyFailure ]
+  fast/regions/repaint/region-painting-composited-element.html [ ImageOnlyFailure ]
+  fast/regions/repaint/region-painting-in-composited-view.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/scroll-into-view-relative.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/scroll-into-view.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/scrollable-first-region.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/scrollable-paragraph-unsplittable.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/wheel-scroll-abspos.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/wheel-scroll.html [ ImageOnlyFailure ]
+  fast/regions/scrolling/wheel-scrollable-single-region.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-ignoring-region-horiz-bt.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-ignoring-region-vert-lr.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-ignoring-region.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-in-2-regions-horiz-bt.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-in-2-regions-vert-lr.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-in-2-regions.html [ ImageOnlyFailure ]
+  fast/regions/selection/selecting-text-through-different-region-flows.html [ ImageOnlyFailure ]
+  fast/regions/selection/selection-in-overflow-hit-testing.html [ ImageOnlyFailure ]
+  fast/regions/selection/selection-in-overflow.html [ ImageOnlyFailure ]
+  fast/regions/selection/selection-in-text-after-overflow-hit-testing.html [ ImageOnlyFailure ]
+  fast/regions/shape-outside-floats/regions-shape-outside-content-flows-multiple-regions.html [ ImageOnlyFailure ]
+  fast/regions/shape-outside-floats/regions-shape-outside-floats-inset.html [ ImageOnlyFailure ]
+  fast/regions/shape-outside-floats/regions-shape-outside-region-polygon-floats.html [ ImageOnlyFailure ]
+  fast/regions/static-in-relative-overflow.html [ ImageOnlyFailure ]
+  fast/regions/sticky-border-overflow.html [ ImageOnlyFailure ]
+  fast/regions/subtree-with-horiz-bt.html [ ImageOnlyFailure ]
+  fast/regions/subtree-with-vert-lr.html [ ImageOnlyFailure ]
+  fast/regions/subtree-with-vert-rl.html [ ImageOnlyFailure ]
+  fast/regions/table-cell-as-region.html [ ImageOnlyFailure ]
+  fast/regions/top-overflow-out-of-second-region.html [ ImageOnlyFailure ]
+  fast/regions/unsplittable-nested-region.html [ ImageOnlyFailure ]
+  fast/regions/visibility-hidden.html [ ImageOnlyFailure ]
+  fast/regions/webkit-flow-double-pagination-float-push.html [ ImageOnlyFailure ]
+  fast/regions/webkit-flow-float-unable-to-push.html [ ImageOnlyFailure ]
+  fast/regions/webkit-flow-renderer-layer.html [ ImageOnlyFailure ]
+  fast/regions/webkit-flow-renderer-nested.html [ ImageOnlyFailure ]
+  fast/regions/webkit-flow-renderer.html [ ImageOnlyFailure ]
+  fast/regions/writing-mode/invalid-first-region-with-writing-mode-2.html [ ImageOnlyFailure ]
+  fast/regions/writing-mode/invalid-first-region-with-writing-mode.html [ ImageOnlyFailure ]
 
 # Unsorted timeouts (FIXME)
 
