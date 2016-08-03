@@ -57,6 +57,9 @@ fast/sub-pixel/input-caret-on-subpixel-bound.html [ Pass ]
 #       Permanently Skipped Tests.                                            #
 # =========================================================================== #
 
+fast/html/keygen [ WontFix ]
+fast/text/line-initial-and-final-swashes.html [ WontFix ]
+
 # =========================================================================== #
 #       Disabled features.                                                    #
 # =========================================================================== #
@@ -205,6 +208,9 @@ fast/css3-text/css3-text-indent/text-indent-each-line-hanging.html [ ImageOnlyFa
 # CURSOR_VISIBILITY is not enabled in qt
 webkit.org/b/107601 fullscreen/video-cursor-auto-hide.html [ Failure ]
 
+# ENABLE(ATTACHMENT_ELEMENT) is disabled
+fast/attachment [ Failure ]
+
 
 # =========================================================================== #
 #       Feature not yet supported.                                            #
@@ -220,8 +226,17 @@ css3/masking/mask-repeat-space-padding.html [ ImageOnlyFailure ]
 fast/borders/border-image-space.html [ ImageOnlyFailure ]
 
 #232
+fast/images/pdf-as-background.html [ Failure ]
+fast/images/pdf-as-image-landscape.html [ Failure ]
 fast/images/pdf-as-image-with-annotations.html [ ImageOnlyFailure ]
+fast/replaced/pdf-as-image.html [ Failure ]
 fast/replaced/pdf-as-object-and-embed.html [ ImageOnlyFailure ]
+
+# EXIF orientation support has not yet been implemented for this platform
+# http://webkit.org/b/19688
+fast/images/exif-orientation.html [ Failure ]
+fast/images/exif-orientation-css.html [ Failure ]
+fast/images/exif-orientation-composited.html [ Failure ]
 
 # =========================================================================== #
 #       Drag and Drop Support in DRT.                                         #
@@ -231,7 +246,9 @@ fast/replaced/pdf-as-object-and-embed.html [ ImageOnlyFailure ]
 # to receive this event, running windowless, DRT cannot tell what is being dropped and where.
 # Bug: https://bugs.webkit.org/show_bug.cgi?id=31332
 
-fast/css/draggable-region-parser.html
+fast/css/draggable-region-parser.html [ Failure ]
+
+fast/lists/drag-into-marker.html [ Failure ]
 
 # ============================================================================= #
 #            Missing features in our DumpRenderTree implementation              #
@@ -255,6 +272,9 @@ fast/scrolling/overflow-scroll-past-max.html
 fast/canvas/canvas-blend-solid.html
 fast/canvas/drawImage-with-small-values.html
 
+# Need WebKitImageControlsEnabled in overridePreference()
+fast/images/image-controls-basic.html [ Failure ]
+
 # Need layoutTestController.enableAutoResizeMode()
 fast/autoresize/basic.html
 fast/autoresize/turn-off-autoresize.html
@@ -262,6 +282,11 @@ fast/autoresize/turn-off-autoresize.html
 # [Qt] Implement layouTestController.setShouldStayOnPageAfterHandlingBeforeUnload
 # https://bugs.webkit.org/show_bug.cgi?id=66162
 fast/loader/form-submission-after-beforeunload-cancel.html [ Failure ]
+
+#241
+fast/forms/input-readonly-autoscroll.html [ Failure ]
+fast/forms/input-text-drag-down.html [ Failure ]
+
 
 #201 - Support testRunner.setBackingScaleFactor() in DRT
 fast/hidpi
@@ -422,6 +447,13 @@ fast/replaced/width100percent-textfield.html [ Failure ]
 fast/borders/borderRadiusDashed04.html [ ImageOnlyFailure ]
 fast/borders/borderRadiusDashed05.html [ ImageOnlyFailure ]
 fast/box-shadow/inset.html [ Failure ]
+fast/borders/borderRadiusAllStylesAllCorners.html [ Failure ]
+fast/borders/borderRadiusDashed01.html [ Failure ]
+fast/borders/borderRadiusDashed02.html [ Failure ]
+fast/borders/borderRadiusDashed03.html [ Failure ]
+fast/borders/borderRadiusDotted01.html [ Failure ]
+fast/borders/borderRadiusDotted02.html [ Failure ]
+fast/borders/borderRadiusDotted03.html [ Failure ]
 
 #160 - ???
 fast/frames/inline-object-inside-frameset.html [ Failure ]
@@ -450,6 +482,42 @@ fast/dom/Window/window-properties-device-orientation.html [ Failure ]
 
 webkit.org/b/30620 fast/xsl/sort-locale.xml [ Failure ]
 
+#235
+fast/dom/HTMLMeterElement/meter-appearances-capacity.html [ Failure ]
+fast/dom/HTMLMeterElement/meter-appearances-rating-relevancy.html [ Failure ]
+
+#236
+fast/dom/Window/btoa-pnglet.html [ Failure ]
+
+#238
+fast/gradients/css3-color-stops.html [ Failure ]
+fast/gradients/css3-radial-gradients2.html [ Failure ]
+#239
+fast/gradients/css3-radial-gradients.html [ Failure ]
+fast/gradients/css3-radial-gradients3.html [ Failure ]
+fast/gradients/css3-repeating-radial-gradients.html [ Failure ]
+fast/gradients/unprefixed-radial-gradients.html [ Failure ]
+#242
+fast/forms/menulist-narrow-width.html [ Failure ]
+#243
+fast/forms/menulist-restrict-line-height.html [ Failure ]
+#245
+fast/forms/validation-message-appearance.html [ Failure ]
+#246
+fast/replaced/image-solid-color-with-alpha.html [ Failure ]
+#248
+fast/text/decorations-with-text-combine.html [ Failure ]
+fast/text/emphasis-vertical.html [ Failure ]
+#249
+fast/text/international/bidi-menulist.html [ Failure ]
+fast/text/international/pop-up-button-text-alignment-and-direction.html [ Failure ]
+#250
+fast/text/justify-ideograph-leading-expansion.html [ Failure ]
+#251
+fast/text/wide-zero-width-space.html [ Failure ]
+
+
+
 # Failing reftests
 webkit.org/b/103424 fast/backgrounds/background-opaque-images-over-color.html [ ImageOnlyFailure ]
 # Fails on ios-simulator as well
@@ -472,6 +540,21 @@ webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-4.html [ ImageOnlyFailure ]
 webkit.org/b/153700 fast/ruby/ruby-expansion-cjk-5.html [ ImageOnlyFailure ]
 webkit.org/b/153700 fast/ruby/ruby-expansion-cjk.html [ ImageOnlyFailure ]
 fast/ruby/text-decoration-in-descendants-ruby.html [ ImageOnlyFailure ]
+fast/ruby/base-shorter-than-text.html [ Failure ]
+fast/ruby/bopomofo-letter-spacing.html [ Failure ]
+fast/ruby/bopomofo-rl.html [ Failure ]
+fast/ruby/bopomofo.html [ Failure ]
+fast/ruby/nested-ruby.html [ Failure ]
+fast/ruby/ruby-beforeafter.html [ Failure ]
+fast/ruby/ruby-empty-rt.html [ Failure ]
+fast/ruby/ruby-length.html [ Failure ]
+fast/ruby/ruby-run-break.html [ Failure ]
+fast/ruby/ruby-runs-spans.html [ Failure ]
+fast/ruby/ruby-runs.html [ Failure ]
+fast/ruby/ruby-simple-rp.html [ Failure ]
+fast/ruby/ruby-simple.html [ Failure ]
+fast/ruby/ruby-trailing.html [ Failure ]
+fast/ruby/select-ruby.html [ Failure ]
 
 #223
 fast/multicol/newmulticol/multicol-clip-rounded-corners.html [ ImageOnlyFailure ]
@@ -503,6 +586,7 @@ fast/text/kerning-with-TextLayout.html [ ImageOnlyFailure ]
 fast/gradients/css3-color-stop-invalid.html [ ImageOnlyFailure ]
 #231
 fast/images/animated-png.html [ ImageOnlyFailure ]
+fast/backgrounds/animated-gif-as-background.html [ Failure ]
 
 webkit.org/b/42194 fast/scrolling/scroll-select-list.html [ ImageOnlyFailure ]
 
@@ -510,6 +594,13 @@ webkit.org/b/42194 fast/scrolling/scroll-select-list.html [ ImageOnlyFailure ]
 fast/text/decorations-vertical-underline.html [ ImageOnlyFailure ]
 fast/text/international/synthesized-italic-vertical.html [ ImageOnlyFailure ]
 fast/writing-mode/vertical-subst-font-vert-no-dflt.html [ ImageOnlyFailure ]
+fast/dynamic/text-combine.html [ Failure ]
+fast/text/orientation-sideways.html [ Failure ]
+fast/text/text-combine-shrink-on-color-change.html [ Failure ]
+fast/writing-mode/text-orientation-basic.html [ Failure ]
+fast/writing-mode/vertical-align-table-baseline.html [ Failure ]
+fast/writing-mode/vertical-baseline-alignment.html [ Failure ]
+fast/writing-mode/vertical-font-fallback.html [ Failure ]
 
 webkit.org/b/146724 fast/text/word-break-keep-all.html [ ImageOnlyFailure ]
 
