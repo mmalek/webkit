@@ -32,6 +32,7 @@
 #include "GCController.h"
 #include "MemoryCache.h"
 #include "PageCache.h"
+#include <QCoreApplication>
 #include <QFontDatabase>
 
 #if HAVE(FONTCONFIG)
@@ -105,6 +106,40 @@ void QtTestSupport::initializeTestFonts()
 void QtTestSupport::garbageCollectorCollect()
 {
     GCController::singleton().garbageCollectNow();
+}
+
+// This code is based on GtkUtilities.cpp
+
+static QDir topLevelDir()
+{
+    QByteArray webkitTopLevel = qgetenv("WEBKIT_TOP_LEVEL");
+    if (!webkitTopLevel.isEmpty())
+        return QDir(QString::fromLocal8Bit(webkitTopLevel));
+
+    // If the environment variable wasn't provided then assume we were built into
+    // WebKitBuild/Debug or WebKitBuild/Release. Obviously this will fail if the build
+    // directory is non-standard, but we can't do much more about this.
+    QDir dir(qApp->applicationDirPath());
+    dir.cd(QStringLiteral("../../.."));
+    return dir;
+}
+
+QDir QtTestSupport::webkitBuildDirectory()
+{
+    QByteArray webkitOutputDir = qgetenv("WEBKIT_OUTPUTDIR");
+    if (!webkitOutputDir.isEmpty())
+        return QString::fromLocal8Bit(webkitOutputDir);
+
+    QDir outputDir(topLevelDir());
+    outputDir.cd("WebKitBuild");
+    return outputDir;
+}
+
+QDir QtTestSupport::iconThemesDirectory()
+{
+    QDir dataDir(webkitBuildDirectory());
+    dataDir.cd("DependenciesQT/Root/share/icons");
+    return dataDir;
 }
 
 }

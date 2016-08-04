@@ -125,6 +125,10 @@ int main(int argc, char* argv[])
 
     WTFInstallReportBacktraceOnCrashHook();
 
+    qDebug() << WebKit::QtTestSupport::iconThemesDirectory().canonicalPath();
+    QIcon::setThemeSearchPaths(QStringList() << WebKit::QtTestSupport::iconThemesDirectory().canonicalPath());
+    QIcon::setThemeName("gnome");
+
     QStringList args = app.arguments();
     if (args.count() < (!suppressQtDebugOutput ? 3 : 2)) {
         printUsage();

@@ -12,12 +12,15 @@
       <dep package="libxml2"/>
       <dep package="libxslt"/>
       <dep package="glib"/>
+      <dep package="gnome-icon-theme"/>
+      <dep package="gnome-icon-theme-symbolic"/>
       <dep package="gstreamer"/>
       <dep package="gst-plugins-base"/>
       <dep package="gst-plugins-good"/>
       <dep package="gst-plugins-bad"/>
       <dep package="gst-libav"/>
       <dep package="openwebrtc"/>
+      <dep package="shared-mime-info"/>
       <dep package="qt"/>
     </dependencies>
   </metamodule>
@@ -112,6 +115,28 @@
     </branch>
   </autotools>
 
+  <autotools id="gnome-icon-theme" autogen-sh="configure">
+    <branch module="pub/GNOME/sources/gnome-icon-theme/3.2/gnome-icon-theme-3.2.1.tar.xz" version="3.2.1"
+            repo="ftp.gnome.org"
+            hash="sha256:a7f0a8b17e91ac338fdbc01ac59a8738e9c1e201de492c070d43aacf291a8959"
+            md5sum="40be1e5a6eae11181311a6fc432cf892">
+    </branch>
+  </autotools>
+
+  <autotools id="gnome-icon-theme-symbolic" supports-non-srcdir-builds="no" autogen-sh="configure">
+    <branch module="pub/GNOME/sources/gnome-icon-theme-symbolic/3.2/gnome-icon-theme-symbolic-3.2.1.tar.xz" version="3.2.1"
+            repo="ftp.gnome.org"
+            hash="sha256:a558af2f87f761f00421f49c1addd2149b70228158e09327fa861219ac1a63cb"
+            md5sum="94137d3c256f2cc80298a9bef15d68c4">
+    </branch>
+  </autotools>
+
+  <autotools id="gnome-themes-standard" autogen-sh="configure">
+    <branch module="pub/GNOME/sources/gnome-themes-standard/3.6/gnome-themes-standard-3.6.0.tar.xz" version="3.6.0"
+            repo="ftp.gnome.org"
+            hash="sha256:d832fd38f7659f470df5ddc52131a59f989c75f3a70f8b3a514f89d90d4f43ec">
+    </branch>
+  </autotools>
 
   <autotools id="libxml2" supports-non-srcdir-builds="no"
              autogen-sh="./autogen.sh; ./configure --with-python=no">
@@ -255,6 +280,20 @@
             repo="webkitgtk-jhbuild-mirror"
             hash="sha256:e16b22cbefdd354bec114541f7849a12f8fc2015320ca5282ee4fd787571457b">
       <patch file="icudata-stdlibs.patch" strip="1"/>
+    </branch>
+  </autotools>
+
+  <autotools id="shared-mime-info"
+             autogenargs="--disable-default-make-check">
+    <dependencies>
+      <dep package="libxml2"/>
+      <dep package="glib"/>
+    </dependencies>
+    <branch module="/~hadess/shared-mime-info-${version}.tar.xz" version="1.5"
+            repo="freedesktop.org"
+            hash="sha256:d6412840eb265bf36e61fd7b6fc6bea21b0f58cb22bed16f2ccccdd54bea4180">
+      <patch file="shared-mime-info-xht-glob.patch" strip="1"/>
+      <patch file="shared-mime-info-xhtml-magic.patch" strip="1"/>
     </branch>
   </autotools>
 

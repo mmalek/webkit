@@ -23,6 +23,7 @@
 #define QtTestSupport_h
 
 #include <qwebkitglobal.h>
+#include <QDir>
 
 namespace WebKit {
 
@@ -31,6 +32,8 @@ namespace QtTestSupport {
 void QWEBKIT_EXPORT clearMemoryCaches();
 void QWEBKIT_EXPORT initializeTestFonts();
 void QWEBKIT_EXPORT garbageCollectorCollect();
+QDir QWEBKIT_EXPORT webkitBuildDirectory();
+QDir QWEBKIT_EXPORT iconThemesDirectory();
 
 }
 

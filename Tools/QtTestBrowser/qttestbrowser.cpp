@@ -298,6 +298,11 @@ int main(int argc, char **argv)
 {
     LauncherApplication app(argc, argv);
 
+#if HAVE(QTTESTSUPPORT)
+    QIcon::setThemeSearchPaths(QStringList() << WebKit::QtTestSupport::iconThemesDirectory().canonicalPath());
+    QIcon::setThemeName("gnome");
+#endif
+
     if (app.isRobotized()) {
         LauncherWindow* window = new LauncherWindow();
         UrlLoader loader(window->page()->mainFrame(), app.urls().at(0), app.robotTimeout(), app.robotExtraTime());
