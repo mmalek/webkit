@@ -3273,12 +3273,14 @@ void HTMLMediaElement::setVolume(double vol, ExceptionCode& ec)
 
 bool HTMLMediaElement::muted() const
 {
+    printf("HTMLMediaElement::muted %d %d %d\n", m_explicitlyMuted, m_muted, fastHasAttribute(mutedAttr));
     return m_explicitlyMuted ? m_muted : fastHasAttribute(mutedAttr);
 }
 
 void HTMLMediaElement::setMuted(bool muted)
 {
     LOG(Media, "HTMLMediaElement::setMuted(%p) - %s", this, boolString(muted));
+    printf("HTMLMediaElement::setMuted(%p) - %s\n", this, boolString(muted));
 
 #if PLATFORM(IOS)
     UNUSED_PARAM(muted);
@@ -3286,9 +3288,11 @@ void HTMLMediaElement::setMuted(bool muted)
     if (m_muted != muted || !m_explicitlyMuted) {
         m_muted = muted;
         m_explicitlyMuted = true;
+        printf("HTMLMediaElement::setMuted m_muted=%d m_explicitlyMuted=%d\n", m_muted, m_explicitlyMuted);
         // Avoid recursion when the player reports volume changes.
         if (!processingMediaPlayerCallback()) {
             if (m_player) {
+                printf("HTMLMediaElement::setMuted 3293 %d\n", effectiveMuted());
                 m_player->setMuted(effectiveMuted());
                 if (hasMediaControls())
                     mediaControls()->changedMute();
@@ -4788,8 +4792,10 @@ void HTMLMediaElement::updateVolume()
         double volumeMultiplier = page ? page->mediaVolume() : 1;
         bool shouldMute = effectiveMuted();
 
+        printf("HTMLMediaElement::updateVolume m_mediaController=%p\n", m_mediaController.get());
         if (m_mediaController) {
             volumeMultiplier *= m_mediaController->volume();
+            printf("HTMLMediaElement::updateVolume 4795 m_volume=%f volumeMultiplier=%f page->isMuted()=%d\n", m_volume, volumeMultiplier, page->isMuted());
             shouldMute = m_mediaController->muted() || (page && page->isMuted());
         }
 
@@ -4798,6 +4804,7 @@ void HTMLMediaElement::updateVolume()
             volumeMultiplier *= 0.25;
 #endif
 
+        printf("HTMLMediaElement::updateVolume 4804\n");
         m_player->setMuted(shouldMute);
         m_player->setVolume(m_volume * volumeMultiplier);
     }
@@ -6662,6 +6669,7 @@ void HTMLMediaElement::pageMutedStateDidChange()
 
 bool HTMLMediaElement::effectiveMuted() const
 {
+    printf("HTMLMediaElement::effectiveMuted muted=%d document().page()->isMuted=%d\n", muted(), document().page()->isMuted());
     return muted() || (document().page() && document().page()->isMuted());
 }
 

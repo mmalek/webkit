@@ -1169,6 +1169,7 @@ void LauncherWindow::toggleScrollAnimator(bool toggle)
 
 void LauncherWindow::toggleMute(bool toggle)
 {
+    qDebug() << Q_FUNC_INFO << toggle;
     page()->setAudioMuted(toggle);
 }
 

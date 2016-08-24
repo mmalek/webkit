@@ -146,7 +146,7 @@ bool WebPage::shouldInterruptJavaScript()
 
 void WebPage::javaScriptConsoleMessage(const QString& message, int lineNumber, const QString& sourceID)
 {
-    qDebug() << "CONSOLE" << QString("%1:%2").arg(sourceID, lineNumber) << message;
+//    qDebug() << "CONSOLE" << QString("%1:%2").arg(sourceID, lineNumber) << message;
 }
 
 void WebPage::authenticationRequired(QNetworkReply* reply, QAuthenticator* authenticator)

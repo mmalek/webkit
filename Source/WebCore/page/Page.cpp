@@ -1274,10 +1274,13 @@ void Page::updateIsPlayingMedia(uint64_t sourceElementID)
 
 void Page::setMuted(bool muted)
 {
+    printf("Page::setMuted %d -> %d\n", m_muted, muted);
+
     if (m_muted == muted)
         return;
 
     m_muted = muted;
+    printf("Page::setMuted %d\n", m_muted);
 
     for (Frame* frame = &mainFrame(); frame; frame = frame->tree().traverseNext()) {
         if (!frame->document())

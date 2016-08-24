@@ -393,6 +393,7 @@ void MediaPlayerPrivateGStreamerBase::setMuted(bool muted)
     if (!m_volumeElement)
         return;
 
+    printf("MediaPlayerPrivateGStreamerBase::setMuted %d\n", muted);
     g_object_set(m_volumeElement.get(), "mute", muted, NULL);
 }
 

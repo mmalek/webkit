@@ -667,6 +667,8 @@ IntRect ChromeClientQt::visibleRectForTiledBackingStore() const
 
 void ChromeClientQt::isPlayingMediaDidChange(MediaProducer::MediaStateFlags state, uint64_t)
 {
+    qDebug() << Q_FUNC_INFO << (state & MediaProducer::IsPlayingAudio);
+
     if (state == m_mediaState)
         return;
 

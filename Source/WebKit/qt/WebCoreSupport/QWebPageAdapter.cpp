@@ -1368,6 +1368,7 @@ bool QWebPageAdapter::isAudioMuted() const
 
 void QWebPageAdapter::setAudioMuted(bool muted)
 {
+    qDebug() << Q_FUNC_INFO << muted;
     page->setMuted(muted);
 }
 
