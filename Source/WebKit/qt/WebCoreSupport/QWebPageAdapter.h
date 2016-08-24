@@ -286,6 +286,8 @@ public:
     virtual void createAndSetCurrentContextMenu(const QList<MenuItemDescription>&, QBitArray*) = 0;
     virtual bool handleScrollbarContextMenuEvent(QContextMenuEvent*, bool, ScrollDirection*, ScrollGranularity*) = 0;
 
+    virtual void recentlyAudibleChanged(bool) = 0;
+
     void setVisibilityState(VisibilityState);
     VisibilityState visibilityState() const;
 
@@ -379,6 +381,10 @@ public:
 
     ViewportAttributes viewportAttributesForSize(const QSize& availableSize, const QSize& deviceSize) const;
     void setDevicePixelRatio(float devicePixelRatio);
+
+    bool isAudioMuted() const;
+    void setAudioMuted(bool);
+    bool isPlayingAudio() const;
 
     QWebSettings *settings;
 

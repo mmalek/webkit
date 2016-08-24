@@ -192,6 +192,10 @@ void LauncherWindow::initializeView()
     if (m_windowOptions.printLoadedUrls)
         connect(page()->mainFrame(), SIGNAL(urlChanged(QUrl)), this, SLOT(printURL(QUrl)));
 
+    connect(page(), &QWebPage::recentlyAudibleChanged, [this](bool audible) {
+        qDebug() << "on &QWebPage::recentlyAudibleChanged" << audible << page()->recentlyAudible();
+    });
+
     applyPrefs();
 
     splitter->addWidget(m_inspector);
@@ -365,6 +369,12 @@ void LauncherWindow::createChrome()
     QAction* offlineStorageDefaultQuotaAction = toolsMenu->addAction("Set Offline Storage Default Quota Size", this, SLOT(setOfflineStorageDefaultQuota()));
     offlineStorageDefaultQuotaAction->setCheckable(true);
     offlineStorageDefaultQuotaAction->setChecked(m_windowOptions.offlineStorageDefaultQuotaSize);
+
+    toolsMenu->addSeparator();
+
+    QAction* toggleMute = toolsMenu->addAction("Mute audio", this, SLOT(toggleMute(bool)));
+    toggleMute->setCheckable(true);
+    toggleMute->setChecked(page()->isAudioMuted());
 
     toolsMenu->addSeparator();
 
@@ -1155,6 +1165,11 @@ void LauncherWindow::toggleScrollAnimator(bool toggle)
 {
     m_windowOptions.enableScrollAnimator = toggle;
     page()->settings()->setAttribute(QWebSettings::ScrollAnimatorEnabled, toggle);
+}
+
+void LauncherWindow::toggleMute(bool toggle)
+{
+    page()->setAudioMuted(toggle);
 }
 
 LauncherWindow* LauncherWindow::newWindow()

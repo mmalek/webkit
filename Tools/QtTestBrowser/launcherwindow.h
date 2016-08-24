@@ -147,6 +147,7 @@ protected Q_SLOTS:
     void toggleOfflineStorageDatabase(bool toggle);
     void toggleOfflineWebApplicationCache(bool toggle);
     void toggleScrollAnimator(bool toggle);
+    void toggleMute(bool);
     void setOfflineStorageDefaultQuota();
 #ifndef QT_NO_LINEEDIT
     void showFindBar();

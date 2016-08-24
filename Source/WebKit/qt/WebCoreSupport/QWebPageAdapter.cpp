@@ -1361,6 +1361,21 @@ void QWebPageAdapter::setDevicePixelRatio(float devicePixelRatio)
     page->setDeviceScaleFactor(devicePixelRatio);
 }
 
+bool QWebPageAdapter::isAudioMuted() const
+{
+    return page->isMuted();
+}
+
+void QWebPageAdapter::setAudioMuted(bool muted)
+{
+    page->setMuted(muted);
+}
+
+bool QWebPageAdapter::isPlayingAudio() const
+{
+    return page->mediaState() & MediaProducer::IsPlayingAudio;
+}
+
 bool QWebPageAdapter::handleKeyEvent(QKeyEvent *ev)
 {
     Frame& frame = page->focusController().focusedOrMainFrame();

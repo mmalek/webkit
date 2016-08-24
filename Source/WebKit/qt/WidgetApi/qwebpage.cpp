@@ -3223,6 +3223,25 @@ QWebPage::VisibilityState QWebPage::visibilityState() const
 }
 
 
+bool QWebPage::isAudioMuted() const
+{
+    return d->isAudioMuted();
+}
+
+void QWebPage::setAudioMuted(bool muted)
+{
+    bool oldAudioMuted = d->isAudioMuted();
+    d->setAudioMuted(muted);
+    if (oldAudioMuted != muted)
+        emit audioMutedChanged(muted);
+}
+
+bool QWebPage::recentlyAudible() const
+{
+    return d->isPlayingAudio();
+}
+
+
 /*!
     \since 4.8
     \fn void QWebPage::viewportChangeRequested()
