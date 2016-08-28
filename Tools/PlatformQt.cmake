@@ -13,7 +13,5 @@ endif ()
 
 if (ENABLE_WEBKIT2)
     add_subdirectory(MiniBrowser/qt)
+    add_subdirectory(WebKitTestRunner)
 endif ()
-
-# FIXME: Remove when WK2 Tools patches are merged
-set(ENABLE_WEBKIT2 0)
