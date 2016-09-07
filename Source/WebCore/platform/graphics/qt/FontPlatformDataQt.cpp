@@ -139,6 +139,20 @@ bool FontPlatformData::operator==(const FontPlatformData& other) const
     return equals;
 }
 
+PassRefPtr<SharedBuffer> FontPlatformData::openTypeTable(uint32_t table) const
+{
+    const char tag[4] = {
+        char(table & 0xff),
+        char((table & 0xff00) >> 8),
+        char((table & 0xff0000) >> 16),
+        char(table >> 24)
+    };
+    QByteArray tableData = m_data->rawFont.fontTable(tag);
+
+    // TODO: Wrap SharedBuffer around QByteArray when it's possible
+    return SharedBuffer::create(tableData.data(), tableData.size());
+}
+
 unsigned FontPlatformData::hash() const
 {
     if (!m_data)
