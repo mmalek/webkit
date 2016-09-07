@@ -24,7 +24,9 @@
 #include "config.h"
 #include "FontPlatformData.h"
 
+#include "FontCache.h"
 #include "FontCascade.h"
+#include "SharedBuffer.h"
 #include <wtf/text/WTFString.h>
 
 namespace WebCore {
@@ -92,6 +94,7 @@ FontPlatformData::FontPlatformData(float size, bool bold, bool oblique)
 
 FontPlatformData::FontPlatformData(const FontDescription& description, const AtomicString& familyName, int wordSpacing, int letterSpacing)
     : m_data(adoptRef(new FontPlatformDataPrivate()))
+    , m_orientation(description.orientation())
 {
     QFont font;
     int requestedSize = description.computedPixelSize();
@@ -126,7 +129,7 @@ FontPlatformData::FontPlatformData(const FontPlatformData& other, float size)
 
 bool FontPlatformData::operator==(const FontPlatformData& other) const
 {
-    if (m_data == other.m_data)
+    if (m_data == other.m_data && m_orientation == other.m_orientation)
         return true;
 
     if (!m_data || !other.m_data || m_data->isDeletedValue || other.m_data->isDeletedValue)
@@ -135,8 +138,18 @@ bool FontPlatformData::operator==(const FontPlatformData& other) const
     const bool equals = (m_data->size == other.m_data->size
                          && m_data->bold == other.m_data->bold
                          && m_data->oblique == other.m_data->oblique
-                         && m_data->rawFont == other.m_data->rawFont);
+                         && m_data->rawFont == other.m_data->rawFont && m_orientation == other.m_orientation);
     return equals;
+}
+
+FontOrientation FontPlatformData::orientation() const
+{
+    return m_orientation;
+}
+
+void FontPlatformData::setOrientation(FontOrientation orientation)
+{
+    m_orientation = orientation;
 }
 
 PassRefPtr<SharedBuffer> FontPlatformData::openTypeTable(uint32_t table) const
@@ -151,6 +164,12 @@ PassRefPtr<SharedBuffer> FontPlatformData::openTypeTable(uint32_t table) const
 
     // TODO: Wrap SharedBuffer around QByteArray when it's possible
     return SharedBuffer::create(tableData.data(), tableData.size());
+}
+
+PassRefPtr<OpenTypeVerticalData> FontPlatformData::verticalData() const
+{
+    ASSERT(hash());
+    return FontCache::singleton().getVerticalData(String::number(hash()), *this);
 }
 
 unsigned FontPlatformData::hash() const

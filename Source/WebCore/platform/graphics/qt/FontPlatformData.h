@@ -25,6 +25,7 @@
 #define FontPlatformData_h
 
 #include "FontDescription.h"
+#include "OpenTypeVerticalData.h"
 #include "TextFlags.h"
 #include <QFont>
 #include <QHash>
@@ -117,9 +118,10 @@ public:
         return m_data->size;
     }
 
-    FontOrientation orientation() const { return Horizontal; } // FIXME: Implement.
-    void setOrientation(FontOrientation) { } // FIXME: Implement.
+    FontOrientation orientation() const;
+    void setOrientation(FontOrientation);
     PassRefPtr<SharedBuffer> openTypeTable(uint32_t table) const;
+    PassRefPtr<OpenTypeVerticalData> verticalData() const;
 
     unsigned hash() const;
 
@@ -128,6 +130,7 @@ public:
 #endif
 private:
     RefPtr<FontPlatformDataPrivate> m_data;
+    FontOrientation m_orientation;
 };
 
 } // namespace WebCore

@@ -65,6 +65,8 @@ list(APPEND WebCore_SOURCES
 
     platform/graphics/gpu/qt/DrawingBufferQt.cpp
 
+    platform/graphics/opentype/OpenTypeVerticalData.cpp
+
     platform/graphics/qt/ColorQt.cpp
     platform/graphics/qt/FloatPointQt.cpp
     platform/graphics/qt/FloatRectQt.cpp

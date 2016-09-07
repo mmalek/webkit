@@ -87,6 +87,8 @@ WEBKIT_OPTION_DEFINE(ENABLE_OPENGL "Whether to use OpenGL." PUBLIC OFF)
 WEBKIT_OPTION_DEFINE(ENABLE_PRINT_SUPPORT "Enable support for printing web pages" PUBLIC ON)
 WEBKIT_OPTION_DEFINE(ENABLE_X11_TARGET "Whether to enable support for the X11 windowing target." PUBLIC ${ENABLE_X11_TARGET_DEFAULT})
 
+WEBKIT_OPTION_DEFINE(ENABLE_OPENTYPE_VERTICAL "Enable better support for vertical text" PRIVATE ON)
+
 option(GENERATE_DOCUMENTATION "Generate HTML and QCH documentation" OFF)
 option(ENABLE_TEST_SUPPORT "Build tools for running layout tests and related library code" ON)
 
