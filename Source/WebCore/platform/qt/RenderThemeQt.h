@@ -166,6 +166,8 @@ protected:
 
     virtual QRect inflateButtonRect(const QRect& originalRect) const;
     virtual QRectF inflateButtonRect(const QRectF& originalRect) const;
+    virtual void inflateCheckBoxRect(QRect& originalRect) const;
+    virtual void inflateCheckBoxRect(FloatRect& originalRect) const;
 
     virtual void setPopupPadding(RenderStyle&) const = 0;
 

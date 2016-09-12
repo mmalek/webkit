@@ -140,6 +140,11 @@ void RenderThemeQStyle::setPaletteFromPageClientIfExists(QPalette& palette) cons
         palette = pageClient->palette();
 }
 
+QRect RenderThemeQStyle::buttonSubElementRect(QStyleFacade::ButtonSubElement buttonElement, const QRect& originalRect) const
+{
+    return m_qStyle->buttonSubElementRect(buttonElement, QStyleFacade::State_Small, originalRect);
+}
+
 QRect RenderThemeQStyle::inflateButtonRect(const QRect& originalRect) const
 {
     QRect layoutRect = m_qStyle->buttonSubElementRect(QStyleFacade::PushButtonLayoutItem, QStyleFacade::State_Small, originalRect);
@@ -168,6 +173,33 @@ QRectF RenderThemeQStyle::inflateButtonRect(const QRectF& originalRect) const
     return originalRect;
 }
 
+template<typename T>
+static void inflateCheckBoxRectImpl(T& originalRect, const QRect& rect)
+{
+    if (!rect.isNull()) {
+        if (rect.width() > originalRect.width()) {
+            int dx = static_cast<int>((rect.width() - originalRect.width()) / 2);
+            originalRect.setX(originalRect.x() - dx);
+            originalRect.setWidth(rect.width());
+        }
+        if (rect.height() > originalRect.height()) {
+            int dy = static_cast<int>((rect.height() - originalRect.height()) / 2);
+            originalRect.setY(originalRect.y() - dy);
+            originalRect.setHeight(rect.height());
+        }
+    }
+}
+
+void RenderThemeQStyle::inflateCheckBoxRect(QRect& originalRect) const
+{
+    inflateCheckBoxRectImpl(originalRect, buttonSubElementRect(QStyleFacade::CheckBoxIndicator, originalRect));
+}
+
+void RenderThemeQStyle::inflateCheckBoxRect(FloatRect& originalRect) const
+{
+    inflateCheckBoxRectImpl(originalRect, buttonSubElementRect(QStyleFacade::CheckBoxIndicator, enclosingIntRect(originalRect)));
+}
+
 static int extendFixedPadding(Length oldPadding, int padding)
 {
     if (oldPadding.isFixed())
@@ -178,7 +210,7 @@ static int extendFixedPadding(Length oldPadding, int padding)
 
 void RenderThemeQStyle::computeSizeBasedOnStyle(RenderStyle& renderStyle) const
 {
-    QSize size(0, 0);
+    QSizeF size(0, 0);
     const QFontMetrics fm(renderStyle.fontCascade().syntheticFont());
 
     switch (renderStyle.appearance()) {
@@ -208,9 +240,9 @@ void RenderThemeQStyle::computeSizeBasedOnStyle(RenderStyle& renderStyle) const
         break;
     }
     case RadioPart: {
-        int radioWidth = m_qStyle->simplePixelMetric(QStyleFacade::PM_ExclusiveIndicatorWidth, QStyleFacade::State_Small);
+        qreal radioWidth = m_qStyle->simplePixelMetric(QStyleFacade::PM_ExclusiveIndicatorWidth, QStyleFacade::State_Small);
         radioWidth *= renderStyle.effectiveZoom();
-        size = QSize(radioWidth, radioWidth);
+        size = QSizeF(radioWidth, radioWidth);
         break;
     }
     case PushButtonPart:
@@ -324,8 +356,10 @@ bool RenderThemeQStyle::paintButton(const RenderObject& o, const PaintInfo& i, c
         p.paintButton(QStyleFacade::PushButton);
     } else if (p.appearance == RadioPart)
         p.paintButton(QStyleFacade::RadioButton);
-    else if (p.appearance == CheckboxPart)
+    else if (p.appearance == CheckboxPart) {
+        inflateCheckBoxRect(p.styleOption.rect);
         p.paintButton(QStyleFacade::CheckBox);
+    }
 
     return false;
 }

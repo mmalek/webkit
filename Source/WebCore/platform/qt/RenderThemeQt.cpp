@@ -217,10 +217,19 @@ QRectF RenderThemeQt::inflateButtonRect(const QRectF& originalRect) const
     return originalRect;
 }
 
+void RenderThemeQt::inflateCheckBoxRect(QRect&) const
+{
+}
+
+void RenderThemeQt::inflateCheckBoxRect(FloatRect&) const
+{
+}
+
 void RenderThemeQt::adjustRepaintRect(const RenderObject& o, FloatRect& rect)
 {
     switch (o.style().appearance()) {
     case CheckboxPart:
+        inflateCheckBoxRect(rect);
         break;
     case RadioPart:
         break;

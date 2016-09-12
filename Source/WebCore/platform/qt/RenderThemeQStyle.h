@@ -95,6 +95,8 @@ protected:
 
     QRect inflateButtonRect(const QRect& originalRect) const override;
     QRectF inflateButtonRect(const QRectF& originalRect) const override;
+    void inflateCheckBoxRect(QRect& originalRect) const override;
+    void inflateCheckBoxRect(FloatRect& originalRect) const override;
 
     void setPopupPadding(RenderStyle&) const override;
 
@@ -106,6 +108,8 @@ private:
     void setButtonPadding(RenderStyle&) const;
 
     void setPaletteFromPageClientIfExists(QPalette&) const;
+
+    QRect buttonSubElementRect(QStyleFacade::ButtonSubElement buttonElement, const QRect& originalRect) const;
 
 #ifdef Q_OS_MAC
     int m_buttonFontPixelSize;

@@ -38,6 +38,7 @@ struct QStyleFacadeOption;
 class QStyleFacade {
 public:
     enum ButtonSubElement {
+        CheckBoxIndicator,
         PushButtonLayoutItem,
         PushButtonContents
     };
