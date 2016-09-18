@@ -89,6 +89,13 @@ static void resolveBlobUrl(const QUrl& url, QUrl& resolvedUrl)
 }
 #endif
 
+static inline QByteArray stringToByteArray(const String& string)
+{
+    if (string.is8Bit())
+        return QByteArray(reinterpret_cast<const char*>(string.characters8()), string.length());
+    return QString(string).toLatin1();
+}
+
 QNetworkRequest ResourceRequest::toNetworkRequest(NetworkingContext *context) const
 {
     QNetworkRequest request;
@@ -105,8 +112,8 @@ QNetworkRequest ResourceRequest::toNetworkRequest(NetworkingContext *context) co
     const HTTPHeaderMap &headers = httpHeaderFields();
     for (HTTPHeaderMap::const_iterator it = headers.begin(), end = headers.end();
          it != end; ++it) {
-        QByteArray name = QString(it->key).toLatin1();
-        QByteArray value = QString(it->value).toLatin1();
+        QByteArray name = stringToByteArray(it->key);
+        QByteArray value = stringToByteArray(it->value);
         // QNetworkRequest::setRawHeader() would remove the header if the value is null
         // Make sure to set an empty header instead of null header.
         if (!value.isNull())
