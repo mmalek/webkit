@@ -113,13 +113,12 @@ QNetworkRequest ResourceRequest::toNetworkRequest(NetworkingContext *context) co
     for (HTTPHeaderMap::const_iterator it = headers.begin(), end = headers.end();
          it != end; ++it) {
         QByteArray name = stringToByteArray(it->key);
-        QByteArray value = stringToByteArray(it->value);
         // QNetworkRequest::setRawHeader() would remove the header if the value is null
         // Make sure to set an empty header instead of null header.
-        if (!value.isNull())
-            request.setRawHeader(name, value);
+        if (!it->value.isNull())
+            request.setRawHeader(name, stringToByteArray(it->value));
         else
-            request.setRawHeader(name, "");
+            request.setRawHeader(name, QByteArrayLiteral(""));
     }
 
     // Make sure we always have an Accept header; some sites require this to
