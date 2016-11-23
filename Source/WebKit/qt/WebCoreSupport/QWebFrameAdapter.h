@@ -143,6 +143,7 @@ public:
 
     QString toHtml() const;
     QString toPlainText() const;
+    QByteArray mainResourceData() const;
 
     void setContent(const QByteArray& data, const QString& mimeType, const QUrl& baseUrl);
     void setHtml(const QString& html, const QUrl& baseUrl);

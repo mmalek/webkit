@@ -245,6 +245,17 @@ QString QWebFrameAdapter::toPlainText() const
     return QString();
 }
 
+QByteArray QWebFrameAdapter::mainResourceData() const
+{
+    auto* documentLoader = frame->loader().activeDocumentLoader();
+    ASSERT(documentLoader);
+    RefPtr<SharedBuffer> buffer = documentLoader->mainResourceData();
+    if (!buffer)
+        return QByteArray();
+
+    return QByteArray(buffer->data(), buffer->size());
+}
+
 void QWebFrameAdapter::setContent(const QByteArray &data, const QString &mimeType, const QUrl &baseUrl)
 {
     URL kurl(baseUrl);

@@ -142,6 +142,7 @@ public:
     void addToJavaScriptWindowObject(const QString &name, QObject *object, ValueOwnership ownership = QtOwnership);
     QString toHtml() const;
     QString toPlainText() const;
+    QByteArray mainResourceData() const;
 
     QString title() const;
     void setUrl(const QUrl &url);

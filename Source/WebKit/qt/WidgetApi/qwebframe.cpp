@@ -276,6 +276,11 @@ QString QWebFrame::toPlainText() const
     return d->toPlainText();
 }
 
+QByteArray QWebFrame::mainResourceData() const
+{
+    return d->mainResourceData();
+}
+
 /*!
     \property QWebFrame::title
     \brief the title of the frame as defined by the HTML &lt;title&gt; element
