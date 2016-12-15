@@ -98,6 +98,7 @@ MediaPlayerPrivateMediaFoundation::MediaPlayerPrivateMediaFoundation(MediaPlayer
     , m_hasVideo(false)
     , m_preparingToPlay(false)
     , m_hwndVideo(nullptr)
+    , m_volume(1.0)
     , m_networkState(MediaPlayer::Empty)
     , m_readyState(MediaPlayer::HaveNothing)
     , m_weakPtrFactory(this)
@@ -304,10 +305,17 @@ void MediaPlayerPrivateMediaFoundation::setVolume(float volume)
     if (!MFGetServicePtr())
         return;
 
-    COMPtr<IMFSimpleAudioVolume> audioVolume;
-    if (SUCCEEDED(MFGetServicePtr()(m_mediaSession.get(), MR_POLICY_VOLUME_SERVICE, __uuidof(IMFSimpleAudioVolume), (void **)&audioVolume))) {
-        HRESULT hr = audioVolume->SetMasterVolume(volume);
+    COMPtr<IMFAudioStreamVolume> audioVolume;
+    if (SUCCEEDED(MFGetServicePtr()(m_mediaSession.get(), MR_STREAM_VOLUME_SERVICE, __uuidof(IMFAudioStreamVolume), (void **)&audioVolume))) {
+        UINT32 channelsCount;
+        HRESULT hr = audioVolume->GetChannelCount(&channelsCount);
         ASSERT(SUCCEEDED(hr));
+
+        for (int i = 0; i < channelsCount; i++) {
+            audioVolume->SetChannelVolume(i, volume);
+        }
+
+        m_volume = volume;
     }
 }
 
@@ -321,10 +329,15 @@ void MediaPlayerPrivateMediaFoundation::setMuted(bool muted)
     if (!MFGetServicePtr())
         return;
 
-    COMPtr<IMFSimpleAudioVolume> audioVolume;
-    if (SUCCEEDED(MFGetServicePtr()(m_mediaSession.get(), MR_POLICY_VOLUME_SERVICE, __uuidof(IMFSimpleAudioVolume), (void **)&audioVolume))) {
-        HRESULT hr = audioVolume->SetMute(muted ? TRUE : FALSE);
+    COMPtr<IMFAudioStreamVolume> audioVolume;
+    if (SUCCEEDED(MFGetServicePtr()(m_mediaSession.get(), MR_STREAM_VOLUME_SERVICE, __uuidof(IMFAudioStreamVolume), (void **)&audioVolume))) {
+        UINT32 channelsCount;
+        HRESULT hr = audioVolume->GetChannelCount(&channelsCount);
         ASSERT(SUCCEEDED(hr));
+
+        for (int i = 0; i < channelsCount; i++) {
+            audioVolume->SetChannelVolume(i, muted ? 0.0 : m_volume);
+        }
     }
 }
 

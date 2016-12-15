@@ -112,6 +112,7 @@ private:
     bool m_hasAudio;
     bool m_hasVideo;
     bool m_preparingToPlay;
+    float m_volume;
     HWND m_hwndVideo;
     MediaPlayer::NetworkState m_networkState;
     MediaPlayer::ReadyState m_readyState;
