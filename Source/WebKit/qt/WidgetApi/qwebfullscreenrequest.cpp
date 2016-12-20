@@ -53,26 +53,39 @@ public:
 QWebFullScreenRequest::QWebFullScreenRequest(QWebPage* page, const QUrl& origin, const QWebElement& element, bool toggleOn)
     : d(new QWebFullScreenRequestPrivate(page, origin, element, toggleOn))
 {
+    qDebug() << Q_FUNC_INFO;
+    if (element.isNull())
+        d->element = page->d->fullScreenElement();
+}
+
+QWebFullScreenRequest::QWebFullScreenRequest()
+{
 }
 
 QWebFullScreenRequest::QWebFullScreenRequest(const QWebFullScreenRequest& other)
     : d(new QWebFullScreenRequestPrivate(other.d->page, other.d->origin, other.d->element, other.d->toggleOn))
 {
+    qDebug() << Q_FUNC_INFO;
 }
 
 QWebFullScreenRequest::~QWebFullScreenRequest()
 {
+    qDebug() << Q_FUNC_INFO;
     if (d->accepted && d->page) {
-        if (d->toggleOn)
+        if (d->toggleOn) {
+            qDebug() << Q_FUNC_INFO << "endEnterFullScreen";
             d->element.endEnterFullScreen();
-        else
+        } else {
+            qDebug() << Q_FUNC_INFO << "endExitFullScreen";
             d->element.endExitFullScreen();
+            d->page->d->setFullScreenElement(QWebElement());
+        }
     }
-    delete d;
 }
 
 void QWebFullScreenRequest::accept()
 {
+    qDebug() << Q_FUNC_INFO;
     if (!d->page) {
         qWarning("Cannot accept QWebFullScreenRequest: Originating page is already deleted");
         return;
@@ -80,14 +93,19 @@ void QWebFullScreenRequest::accept()
 
     d->accepted = true;
 
-    if (d->toggleOn)
+    if (d->toggleOn) {
+        d->page->d->setFullScreenElement(d->element);
+        qDebug() << Q_FUNC_INFO << "beginEnterFullScreen";
         d->element.beginEnterFullScreen();
-    else
+    } else {
+        qDebug() << Q_FUNC_INFO << "beginExitFullScreen";
         d->element.beginExitFullScreen();
+    }
 }
 
 void QWebFullScreenRequest::reject()
 {
+    qDebug() << Q_FUNC_INFO;
 }
 
 bool QWebFullScreenRequest::toggleOn() const
