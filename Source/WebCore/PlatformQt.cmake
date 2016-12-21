@@ -322,11 +322,12 @@ endif ()
 
 if (ENABLE_VIDEO)
     list(APPEND WebCore_USER_AGENT_STYLE_SHEETS
-        ${WEBCORE_DIR}/Modules/mediacontrols/mediaControlsBase.css
+        ${WEBCORE_DIR}/css/mediaControlsGtk.css
     )
     set(WebCore_USER_AGENT_SCRIPTS
         ${WEBCORE_DIR}/English.lproj/mediaControlsLocalizedStrings.js
         ${WEBCORE_DIR}/Modules/mediacontrols/mediaControlsBase.js
+        ${WEBCORE_DIR}/Modules/mediacontrols/mediaControlsGtk.js
     )
     set(WebCore_USER_AGENT_SCRIPTS_DEPENDENCIES ${WEBCORE_DIR}/platform/qt/RenderThemeQt.cpp)
 endif ()

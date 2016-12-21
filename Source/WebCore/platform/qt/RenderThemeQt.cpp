@@ -540,9 +540,9 @@ bool RenderThemeQt::supportsFocus(ControlPart appearance) const
 }
 
 #if ENABLE(VIDEO)
-String RenderThemeQt::mediaControlsStyleSheet()
+String RenderThemeQt::extraMediaControlsStyleSheet()
 {
-    return ASCIILiteral(mediaControlsBaseUserAgentStyleSheet);
+    return String(mediaControlsGtkUserAgentStyleSheet, sizeof(mediaControlsGtkUserAgentStyleSheet));
 }
 
 String RenderThemeQt::mediaControlsScript()
@@ -550,28 +550,16 @@ String RenderThemeQt::mediaControlsScript()
     StringBuilder scriptBuilder;
     scriptBuilder.append(mediaControlsLocalizedStringsJavaScript, sizeof(mediaControlsLocalizedStringsJavaScript));
     scriptBuilder.append(mediaControlsBaseJavaScript, sizeof(mediaControlsBaseJavaScript));
+    scriptBuilder.append(mediaControlsGtkJavaScript, sizeof(mediaControlsGtkJavaScript));
     return scriptBuilder.toString();
-}
-#endif
-
-#if 0 // ENABLE(VIDEO)
-
-String RenderThemeQt::extraMediaControlsStyleSheet()
-{
-    String result = String(mediaControlsQtUserAgentStyleSheet, sizeof(mediaControlsQtUserAgentStyleSheet));
-
-    if (m_page && m_page->chrome().requiresFullscreenForVideoPlayback())
-        result.append(String(mediaControlsQtFullscreenUserAgentStyleSheet, sizeof(mediaControlsQtFullscreenUserAgentStyleSheet)));
-
-    return result;
 }
 
 // Helper class to transform the painter's world matrix to the object's content area, scaled to 0,0,100,100
 class WorldMatrixTransformer {
 public:
-    WorldMatrixTransformer(QPainter* painter, RenderObject& renderObject, const IntRect& r) : m_painter(painter)
+    WorldMatrixTransformer(QPainter* painter, const RenderObject& renderObject, const IntRect& r) : m_painter(painter)
     {
-        RenderStyle& style = renderObject->style();
+        RenderStyle& style = renderObject.style();
         m_originalTransform = m_painter->transform();
         m_painter->translate(r.x() + style.paddingLeft().value(), r.y() + style.paddingTop().value());
         m_painter->scale((r.width() - style.paddingLeft().value() - style.paddingRight().value()) / 100.0,
@@ -598,9 +586,9 @@ void RenderThemeQt::paintMediaBackground(QPainter* painter, const IntRect& r) co
     painter->drawRoundedRect(r.x(), r.y(), r.width(), r.height(), 5.0, 5.0);
 }
 
-static bool mediaElementCanPlay(RenderObject& o)
+static bool mediaElementCanPlay(const RenderObject& o)
 {
-    HTMLMediaElement* mediaElement = toParentMediaElement(o);
+    HTMLMediaElement* mediaElement = parentMediaElement(o);
     if (!mediaElement)
         return false;
 
@@ -609,13 +597,11 @@ static bool mediaElementCanPlay(RenderObject& o)
                && o.style().appearance() == MediaPlayButtonPart && mediaElement->preload() == "none");
 }
 
-QColor RenderThemeQt::getMediaControlForegroundColor(RenderObject& o) const
+QColor RenderThemeQt::getMediaControlForegroundColor(const RenderObject& o) const
 {
     QColor fgColor = platformActiveSelectionBackgroundColor();
-    if (!o)
-        return fgColor;
 
-    if (o.node() && o.node()->isElementNode() && toElement(o.node())->active())
+    if (o.node() && o.node()->isElementNode() && downcast<Element>(o.node())->active())
         fgColor = fgColor.lighter();
 
     if (!mediaElementCanPlay(o))
@@ -624,9 +610,9 @@ QColor RenderThemeQt::getMediaControlForegroundColor(RenderObject& o) const
     return fgColor;
 }
 
-bool RenderThemeQt::paintMediaFullscreenButton(RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
+bool RenderThemeQt::paintMediaFullscreenButton(const RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
 {
-    HTMLMediaElement* mediaElement = toParentMediaElement(o);
+    HTMLMediaElement* mediaElement = parentMediaElement(o);
     if (!mediaElement)
         return false;
 
@@ -648,9 +634,9 @@ bool RenderThemeQt::paintMediaFullscreenButton(RenderObject& o, const PaintInfo&
     return false;
 }
 
-bool RenderThemeQt::paintMediaMuteButton(RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
+bool RenderThemeQt::paintMediaMuteButton(const RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
 {
-    HTMLMediaElement* mediaElement = toParentMediaElement(o);
+    HTMLMediaElement* mediaElement = parentMediaElement(o);
     if (!mediaElement)
         return false;
 
@@ -672,9 +658,9 @@ bool RenderThemeQt::paintMediaMuteButton(RenderObject& o, const PaintInfo& paint
     return false;
 }
 
-bool RenderThemeQt::paintMediaPlayButton(RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
+bool RenderThemeQt::paintMediaPlayButton(const RenderObject& o, const PaintInfo& paintInfo, const IntRect& r)
 {
-    HTMLMediaElement* mediaElement = toParentMediaElement(o);
+    HTMLMediaElement* mediaElement = parentMediaElement(o);
     if (!mediaElement)
         return false;
 
@@ -698,7 +684,9 @@ bool RenderThemeQt::paintMediaPlayButton(RenderObject& o, const PaintInfo& paint
 
     return false;
 }
+#endif
 
+#if 0 // ENABLE(VIDEO)
 bool RenderThemeQt::paintMediaSeekBackButton(RenderObject&, const PaintInfo&, const IntRect&)
 {
     // We don't want to paint this at the moment.

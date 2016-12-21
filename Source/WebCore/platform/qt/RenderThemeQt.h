@@ -94,7 +94,7 @@ public:
     virtual String extraMediaControlsStyleSheet();
 #endif
 #if ENABLE(VIDEO)
-    String mediaControlsStyleSheet() override;
+    String extraMediaControlsStyleSheet() override;
     String mediaControlsScript() override;
 #endif
 
@@ -142,12 +142,19 @@ protected:
     void adjustInnerSpinButtonStyle(StyleResolver&, RenderStyle&, Element*) const override;
 #endif
 
+#if ENABLE(VIDEO)
+    bool paintMediaFullscreenButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
+    bool paintMediaPlayButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
+    bool paintMediaMuteButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
+
+    QColor getMediaControlForegroundColor(const RenderObject&) const;
+    void paintMediaBackground(QPainter*, const IntRect&) const;
+    double mediaControlsBaselineOpacity() const;
+#endif
+
 #if 0 //ENABLE(VIDEO)
-    virtual bool paintMediaFullscreenButton(const RenderObject&, const PaintInfo&, const IntRect&);
-    virtual bool paintMediaPlayButton(const RenderObject&, const PaintInfo&, const IntRect&);
-    virtual bool paintMediaMuteButton(const RenderObject&, const PaintInfo&, const IntRect&);
-    virtual bool paintMediaSeekBackButton(const RenderObject&, const PaintInfo&, const IntRect&);
-    virtual bool paintMediaSeekForwardButton(const RenderObject&, const PaintInfo&, const IntRect&);
+    bool paintMediaSeekBackButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
+    bool paintMediaSeekForwardButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
     virtual bool paintMediaSliderTrack(const RenderObject&, const PaintInfo&, const IntRect&);
     virtual bool paintMediaSliderThumb(const RenderObject&, const PaintInfo&, const IntRect&);
     virtual bool paintMediaCurrentTime(const RenderObject&, const PaintInfo&, const IntRect&);
@@ -156,10 +163,6 @@ protected:
     virtual String formatMediaControlsCurrentTime(float currentTime, float duration) const override;
     virtual String formatMediaControlsRemainingTime(float currentTime, float duration) const override;
     virtual bool hasOwnDisabledStateHandlingFor(ControlPart) const { return true; }
-
-    void paintMediaBackground(QPainter*, const IntRect&) const;
-    double mediaControlsBaselineOpacity() const;
-    QColor getMediaControlForegroundColor(const RenderObject& = 0) const;
 #endif
     virtual void computeSizeBasedOnStyle(RenderStyle&) const = 0;
 
