@@ -41,6 +41,7 @@
 # - Failing CSS Tests
 # - failing fast tests
 # - failing fonts tests
+# - failing fullscreen tests
 # - failing security tests
 # - failing tables tests
 # - Failed canvas tests from http://philip.html5.org/tests/canvas/suite/tests/
@@ -59,7 +60,6 @@ css2.1 [ Missing ]
 displaylists
 editing
 fonts
-fullscreen
 gamepad
 ietestcenter
 imported
@@ -219,6 +219,9 @@ fast/events/right-click-focus.html [ Crash Pass ]
 
 fast/html/keygen.html [ WontFix ]
 fast/text/line-initial-and-final-swashes.html [ WontFix ]
+
+# We don't support ALLOW_KEYBOARD_INPUT, and it's deprecated
+fullscreen/full-screen-keyboard-enabled.html [ WontFix ]
 
 # =========================================================================== #
 #       Disabled features.                                                    #
@@ -1226,6 +1229,14 @@ fast/borders/border-mixed-alpha.html [ ImageOnlyFailure ]
   fast/regions/webkit-flow-renderer.html [ ImageOnlyFailure ]
   fast/regions/writing-mode/invalid-first-region-with-writing-mode-2.html [ ImageOnlyFailure ]
   fast/regions/writing-mode/invalid-first-region-with-writing-mode.html [ ImageOnlyFailure ]
+
+# ============================================================================= #
+# Failing fullscreen Tests
+# ============================================================================= #
+
+# FIXME when plugin tests are enabled
+fullscreen/full-screen-plugin.html [ Skip ]
+
 
 # Unsorted timeouts (FIXME)
 
