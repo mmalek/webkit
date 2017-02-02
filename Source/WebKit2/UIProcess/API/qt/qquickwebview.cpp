@@ -355,9 +355,6 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     pageToView()->insert(webPage.get(), this);
 
     webPageProxy->setUseFixedLayout(s_flickableViewportEnabled);
-#if ENABLE(FULLSCREEN_API)
-    webPageProxy->fullScreenManager()->setWebView(q_ptr);
-#endif
 
     pageEventHandler.reset(new QtWebPageEventHandler(webPage.get(), pageView.data(), q_ptr));
 
