@@ -354,10 +354,12 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     webPage = toAPI(webPageProxy.get());
     pageToView()->insert(webPage.get(), this);
 
+    pageEventHandler.reset(new QtWebPageEventHandler(webPage.get(), pageView.data(), q_ptr));
+    pageClient.initialize(q_ptr, pageEventHandler.data(), &undoController);
+    webPageProxy->initializeWebPage();
+
     qDebug() << ">>> setUseFixedLayout <<<";
     webPageProxy->setUseFixedLayout(s_flickableViewportEnabled);
-
-    pageEventHandler.reset(new QtWebPageEventHandler(webPage.get(), pageView.data(), q_ptr));
 
     {
         WKPageFindClientV0 findClient;
@@ -410,8 +412,6 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     WKPageConfigurationSetPreferences(pageConfiguration.get(), preferencesRef);
     webPageProxy->pageGroup().preferences().setForceCompositingMode(true);
 
-    pageClient.initialize(q_ptr, pageEventHandler.data(), &undoController);
-    webPageProxy->initializeWebPage();
     webPageProxy->registerApplicationScheme(ASCIILiteral("qrc"));
 
     q_ptr->setAcceptedMouseButtons(Qt::MouseButtonMask);
