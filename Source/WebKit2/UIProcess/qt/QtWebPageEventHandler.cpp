@@ -262,7 +262,7 @@ void QtWebPageEventHandler::deactivateTapHighlight()
 
 void QtWebPageEventHandler::handleSingleTapEvent(const QTouchEvent::TouchPoint& point)
 {
-#if ENABLE(GESTURE_EVENTS)
+#if ENABLE(QT_GESTURE_EVENTS)
     deactivateTapHighlight();
     m_postponeTextInputStateChanged = true;
 
@@ -449,7 +449,7 @@ void QtWebPageEventHandler::handleWillSetInputMethodState()
 
 void QtWebPageEventHandler::doneWithGestureEvent(const WebGestureEvent& event, bool wasEventHandled)
 {
-#if ENABLE(GESTURE_EVENTS)
+#if ENABLE(QT_GESTURE_EVENTS)
     if (event.type() != WebEvent::GestureSingleTap)
         return;
 
