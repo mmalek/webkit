@@ -1711,6 +1711,9 @@ webkit.org/b/61932 [ Debug ] jquery/manipulation.html [ Failure Pass Timeout ]
 
 webkit.org/b/49142 fast/css/style-scoped [ Skip ]
 
+# These tests require TOUCH_ADJUSTMENT flag to be enabled
+webkit.org/b/78801 touchadjustment
+
 # Tracking corner not being painted for TextArea.
 webkit.org/b/85484 fast/css/resize-corner-tracking-transformed.html [ Failure ]
 webkit.org/b/85484 fast/css/resize-corner-tracking.html [ Failure ]
