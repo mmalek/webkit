@@ -44,20 +44,9 @@ PassRefPtr<GestureEvent> GestureEvent::create(PassRefPtr<AbstractView> view, con
 {
     AtomicString eventType;
     switch (event.type()) {
-    case PlatformEvent::GestureScrollBegin:
-        eventType = eventNames().gesturescrollstartEvent; break;
-    case PlatformEvent::GestureScrollEnd:
-        eventType = eventNames().gesturescrollendEvent; break;
-    case PlatformEvent::GestureScrollUpdate:
-    case PlatformEvent::GestureScrollUpdateWithoutPropagation:
-        eventType = eventNames().gesturescrollupdateEvent; break;
     case PlatformEvent::GestureTap:
         eventType = eventNames().gesturetapEvent; break;
-    case PlatformEvent::GestureTapDown:
-        eventType = eventNames().gesturetapdownEvent; break;
-    case PlatformEvent::GestureTwoFingerTap:
     case PlatformEvent::GestureLongPress:
-    case PlatformEvent::GestureTapDownCancel:
     default:
         return 0;
     }
