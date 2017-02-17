@@ -69,7 +69,7 @@ void GestureEvent::initGestureEvent(const AtomicString& type, PassRefPtr<Abstrac
     if (dispatched())
         return;
 
-    initUIEvent(type, true, true, view, 0);
+    initUIEvent(type, true, true, view.get(), 0);
     m_screenLocation = IntPoint(screenX, screenY);
     m_ctrlKey = ctrlKey;
     m_altKey = altKey;
@@ -95,7 +95,7 @@ GestureEvent::GestureEvent()
 }
 
 GestureEvent::GestureEvent(const AtomicString& type, double timestamp, PassRefPtr<AbstractView> view, int screenX, int screenY, int clientX, int clientY, bool ctrlKey, bool altKey, bool shiftKey, bool metaKey, float deltaX, float deltaY)
-    : MouseRelatedEvent(type, true, true, timestamp, view, 0, IntPoint(screenX, screenY), IntPoint(clientX, clientY),
+    : MouseRelatedEvent(type, true, true, timestamp, view.get(), 0, IntPoint(screenX, screenY), IntPoint(clientX, clientY),
 #if ENABLE(POINTER_LOCK)
                         IntPoint(0, 0),
 #endif
