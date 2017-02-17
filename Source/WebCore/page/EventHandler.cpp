@@ -110,6 +110,10 @@
 #include "ScrollAnimator.h"
 #endif
 
+#if ENABLE(TOUCH_ADJUSTMENT)
+#include "TouchAdjustment.h"
+#endif
+
 #if ENABLE(IOS_TOUCH_EVENTS)
 #include "PlatformTouchEventIOS.h"
 #endif
