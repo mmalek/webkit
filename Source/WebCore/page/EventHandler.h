@@ -477,8 +477,6 @@ private:
 
 #if ENABLE(QT_GESTURE_EVENTS)
     bool handleGestureForTextSelectionOrContextMenu(const PlatformGestureEvent&);
-    bool passGestureEventToWidget(const PlatformGestureEvent&, Widget*);
-    bool passGestureEventToWidgetIfPossible(const PlatformGestureEvent&, RenderObject*);
 #endif
 
     void setLastKnownMousePosition(const PlatformMouseEvent&);
@@ -590,12 +588,6 @@ private:
     RefPtr<Document> m_originatingTouchPointDocument;
     unsigned m_originatingTouchPointTargetKey { 0 };
     bool m_touchPressed { false };
-#endif
-
-#if ENABLE(QT_GESTURE_EVENTS)
-    RefPtr<Node> m_scrollGestureHandlingNode;
-    bool m_lastHitTestResultOverWidget;
-    bool m_didLongPressInvokeContextMenu { false };
 #endif
 
     double m_maxMouseMovedDuration { 0 };
