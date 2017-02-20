@@ -409,10 +409,7 @@ void WebFrameLoaderClient::dispatchDidReceiveIcon()
 
 void WebFrameLoaderClient::dispatchDidStartProvisionalLoad()
 {
-    fprintf(stderr, "%s\n", __PRETTY_FUNCTION__);
-
     WebPage* webPage = m_frame->page();
-    fprintf(stderr, "%s - webPage=%p\n", __PRETTY_FUNCTION__, webPage);
     if (!webPage)
         return;
 
