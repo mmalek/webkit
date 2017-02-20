@@ -392,9 +392,6 @@ EventHandler::EventHandler(Frame& frame)
 #if !ENABLE(IOS_TOUCH_EVENTS)
     , m_fakeMouseMoveEventTimer(*this, &EventHandler::fakeMouseMoveEventTimerFired)
 #endif
-#if ENABLE(QT_GESTURE_EVENTS)
-    , m_lastHitTestResultOverWidget(false)
-#endif
 #if ENABLE(CURSOR_VISIBILITY)
     , m_autoHideCursorTimer(*this, &EventHandler::autoHideCursorTimerFired)
 #endif
@@ -469,10 +466,6 @@ void EventHandler::clear()
     m_originatingTouchPointTargets.clear();
     m_originatingTouchPointDocument = nullptr;
     m_originatingTouchPointTargetKey = 0;
-#endif
-#if ENABLE(QT_GESTURE_EVENTS)
-    m_lastHitTestResultOverWidget = false;
-    m_didLongPressInvokeContextMenu = false;
 #endif
     m_maxMouseMovedDuration = 0;
     m_baseEventType = PlatformEvent::NoType;
@@ -2810,59 +2803,16 @@ bool EventHandler::handleGestureTap(const PlatformGestureEvent& gestureEvent)
 
 bool EventHandler::handleGestureLongPress(const PlatformGestureEvent& gestureEvent)
 {
-#if 0 // ENABLE(DRAG_SUPPORT)
-    if (m_frame.settings().touchDragDropEnabled()) {
-        IntPoint adjustedPoint = gestureEvent.position();
-#if ENABLE(TOUCH_ADJUSTMENT)
-        adjustGesturePosition(gestureEvent, adjustedPoint);
-#endif
-        PlatformMouseEvent mouseDownEvent(adjustedPoint, gestureEvent.globalPosition(), LeftButton, PlatformEvent::MousePressed, 0, false, false, false, false, WTF::currentTime(), ForceAtClick);
-        handleMousePressEvent(mouseDownEvent);
-        PlatformMouseEvent mouseDragEvent(adjustedPoint, gestureEvent.globalPosition(), LeftButton, PlatformEvent::MouseMoved, 0, false, false, false, false, WTF::currentTime(), ForceAtClick);
-        HitTestRequest request(HitTestRequest::ReadOnly | HitTestRequest::DisallowShadowContent);
-        MouseEventWithHitTestResults mev = prepareMouseEvent(request, mouseDragEvent);
-        m_didStartDrag = false;
-        RefPtr<Frame> subframe = subframeForHitTestResult(mev);
-        if (subframe && !m_mouseDownMayStartDrag) {
-            if (subframe->eventHandler().handleGestureLongPress(gestureEvent))
-                return true;
-        }
-        handleDrag(mev, DontCheckDragHysteresis);
-        if (m_didStartDrag)
-            return true;
-    }
-#endif
     return handleGestureForTextSelectionOrContextMenu(gestureEvent);
 }
 
 bool EventHandler::handleGestureForTextSelectionOrContextMenu(const PlatformGestureEvent& gestureEvent)
 {
 #if ENABLE(CONTEXT_MENUS)
-    m_didLongPressInvokeContextMenu = (gestureEvent.type() == PlatformEvent::GestureLongPress);
     return sendContextMenuEventForGesture(gestureEvent);
 #else
     return false;
 #endif
-}
-
-bool EventHandler::passGestureEventToWidget(const PlatformGestureEvent& gestureEvent, Widget* widget)
-{
-    if (!widget)
-        return false;
-
-    if (!widget->isFrameView())
-        return false;
-
-    return downcast<FrameView>(widget)->frame().eventHandler().handleGestureEvent(gestureEvent);
-}
-
-bool EventHandler::passGestureEventToWidgetIfPossible(const PlatformGestureEvent& gestureEvent, RenderObject* renderer)
-{
-    if (m_lastHitTestResultOverWidget && renderer && renderer->isWidget()) {
-        Widget* widget = downcast<RenderWidget>(renderer)->widget();
-        return widget && passGestureEventToWidget(gestureEvent, widget);
-    }
-    return false;
 }
 #endif // ENABLE(QT_GESTURE_EVENTS)
 
