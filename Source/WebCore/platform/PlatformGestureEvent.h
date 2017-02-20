@@ -44,25 +44,6 @@ public:
     {
     }
 
-    PlatformGestureEvent(Type type, const IntPoint& position, const IntPoint& globalPosition, double timestamp, float deltaX, float deltaY, bool shiftKey, bool ctrlKey, bool altKey, bool metaKey)
-        : PlatformEvent(type, shiftKey, ctrlKey, altKey, metaKey, timestamp)
-        , m_position(position)
-        , m_globalPosition(globalPosition)
-        , m_deltaX(deltaX)
-        , m_deltaY(deltaY)
-    {
-    }
-
-    PlatformGestureEvent(Type type, const IntPoint& position, const IntPoint& globalPosition, double timestamp, const IntSize& area, const FloatPoint& delta, bool shiftKey, bool ctrlKey, bool altKey, bool metaKey)
-        : PlatformEvent(type, shiftKey, ctrlKey, altKey, metaKey, timestamp)
-        , m_position(position)
-        , m_globalPosition(globalPosition)
-        , m_area(area)
-        , m_deltaX(delta.x())
-        , m_deltaY(delta.y())
-    {
-    }
-
     const IntPoint& position() const { return m_position; } // PlatformWindow coordinates.
     const IntPoint& globalPosition() const { return m_globalPosition; } // Screen coordinates.
 
