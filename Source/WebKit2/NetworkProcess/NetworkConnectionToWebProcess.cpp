@@ -116,7 +116,6 @@ void NetworkConnectionToWebProcess::didReceiveInvalidMessage(IPC::Connection&, I
 
 void NetworkConnectionToWebProcess::scheduleResourceLoad(const NetworkResourceLoadParameters& loadParameters)
 {
-    fprintf(stderr, "%s\n", __PRETTY_FUNCTION__);
     auto loader = NetworkResourceLoader::create(loadParameters, *this);
     m_networkResourceLoaders.add(loadParameters.identifier, loader.ptr());
     loader->start();
@@ -124,7 +123,6 @@ void NetworkConnectionToWebProcess::scheduleResourceLoad(const NetworkResourceLo
 
 void NetworkConnectionToWebProcess::performSynchronousLoad(const NetworkResourceLoadParameters& loadParameters, RefPtr<Messages::NetworkConnectionToWebProcess::PerformSynchronousLoad::DelayedReply>&& reply)
 {
-    fprintf(stderr, "%s\n", __PRETTY_FUNCTION__);
     auto loader = NetworkResourceLoader::create(loadParameters, *this, WTFMove(reply));
     m_networkResourceLoaders.add(loadParameters.identifier, loader.ptr());
     loader->start();
