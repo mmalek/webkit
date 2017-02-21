@@ -88,7 +88,6 @@ public:
         // mirror the projection matrix to fit on the destination coordinate system.
         bool mirrored = projection && (*projection)(0, 0) * (*projection)(1, 1) - (*projection)(0, 1) * (*projection)(1, 0) > 0;
 
-        // QTFIXME: Dummy scroll position may break QQuickWebViewLegacy
         // FIXME: Support non-rectangular clippings.
         coordinatedGraphicsScene()->paintToCurrentGLContext(renderMatrix, inheritedOpacity(), clipRect(),
             pageNode()->page().pageExtendedBackgroundColor(), pageNode()->page().drawsBackground(), FloatPoint(),

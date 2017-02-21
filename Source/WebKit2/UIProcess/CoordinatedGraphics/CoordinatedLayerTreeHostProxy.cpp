@@ -30,6 +30,8 @@
 #include "WebProcessProxy.h"
 #include <WebCore/CoordinatedGraphicsState.h>
 
+#include <QDebug>
+
 namespace WebKit {
 
 using namespace WebCore;
@@ -72,6 +74,14 @@ void CoordinatedLayerTreeHostProxy::commitCoordinatedGraphicsState(const Coordin
 
 void CoordinatedLayerTreeHostProxy::setVisibleContentsRect(const FloatRect& rect, const FloatPoint& trajectoryVector)
 {
+    // Inform the renderer to adjust viewport-fixed layers.
+    RefPtr<CoordinatedGraphicsScene> sceneProtector(m_scene);
+    const FloatPoint& scrollPosition = rect.location();
+    qDebug() << Q_FUNC_INFO << QPointF(scrollPosition);
+    dispatchUpdate([=] {
+        sceneProtector->setScrollPosition(scrollPosition);
+    });
+
     if (rect == m_lastSentVisibleRect && trajectoryVector == m_lastSentTrajectoryVector)
         return;
 
