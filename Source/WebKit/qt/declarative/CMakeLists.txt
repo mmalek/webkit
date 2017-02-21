@@ -20,8 +20,10 @@ include_directories(SYSTEM
     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
 )
 
-add_library(qmlwebkitplugin SHARED plugin.cpp)
+add_library(qmlwebkitplugin MODULE plugin.cpp)
 target_link_libraries(qmlwebkitplugin
     WebKit2 Qt5::Quick)
+set_target_properties(qmlwebkitplugin PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/QtWebKit")
 
 add_subdirectory(experimental)
