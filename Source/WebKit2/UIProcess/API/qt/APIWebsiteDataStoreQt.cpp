@@ -31,9 +31,6 @@
 #include <WebCore/ApplicationCacheStorage.h>
 #include <WebCore/FileSystem.h>
 
-// QTFIXME: Use QDir
-#define G_DIR_SEPARATOR_S "/"
-
 namespace API {
 
 String WebsiteDataStore::defaultApplicationCacheDirectory()
