@@ -122,6 +122,7 @@ WEBKIT_OPTION_DEFINE(ENABLE_INSPECTOR_UI "Include Inspector UI into resources" P
 WEBKIT_OPTION_DEFINE(ENABLE_OPENGL "Whether to use OpenGL." PUBLIC ON)
 WEBKIT_OPTION_DEFINE(ENABLE_PRINT_SUPPORT "Enable support for printing web pages" PUBLIC ON)
 WEBKIT_OPTION_DEFINE(ENABLE_QT_GESTURE_EVENTS "Enable support for gesture events (required for mouse in WK2)" PUBLIC ON)
+WEBKIT_OPTION_DEFINE(ENABLE_WEBKIT2 "Enable WebKit2 (QML API)" PUBLIC ON)
 WEBKIT_OPTION_DEFINE(ENABLE_X11_TARGET "Whether to enable support for the X11 windowing target." PUBLIC ${ENABLE_X11_TARGET_DEFAULT})
 
 option(GENERATE_DOCUMENTATION "Generate HTML and QCH documentation" OFF)
@@ -224,7 +225,6 @@ if (APPLE AND CMAKE_SYSTEM_VERSION VERSION_LESS 14.0.0)
 endif ()
 
 set(ENABLE_WEBKIT ON)
-set(ENABLE_WEBKIT2 ON)
 set(WTF_USE_UDIS86 1)
 
 get_target_property(QT_CORE_TYPE Qt5::Core TYPE)
