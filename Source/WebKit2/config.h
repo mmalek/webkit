@@ -22,7 +22,7 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 #if defined(HAVE_CONFIG_H) && HAVE_CONFIG_H && defined(BUILDING_WITH_CMAKE)
 #include "cmakeconfig.h"
@@ -49,10 +49,15 @@
 #define _WINSOCKAPI_ /* Prevent inclusion of winsock.h in windows.h */
 #endif
 
-#if !PLATFORM(QT)
 #include <WebCore/config.h>
-#endif
 #include <windows.h>
+
+#undef WEBCORE_EXPORT
+#define WEBCORE_EXPORT WTF_EXPORT_DECLARATION
+#define BUILDING_WEBKIT 1
+#ifndef pid_t
+#define pid_t DWORD
+#endif
 
 #if USE(CG)
 #include <CoreGraphics/CoreGraphics.h>

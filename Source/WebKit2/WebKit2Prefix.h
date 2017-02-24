@@ -23,7 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+#pragma message( "Last modified on " __TIMESTAMP__ )
 #if defined(HAVE_CONFIG_H) && HAVE_CONFIG_H && defined(BUILDING_WITH_CMAKE)
 #include "cmakeconfig.h"
 #endif
@@ -58,6 +58,12 @@
 
 #if PLATFORM(GTK)
 #define ENABLE_SHAREABLE_RESOURCE 1
+#elif OS(WINDOWS)
+#pragma message( "Last modified on " __TIMESTAMP__ )
+#include "config.h"
+
+#undef WEBCORE_EXPORT
+#define WEBCORE_EXPORT WTF_EXPORT_DECLARATION
 #endif
 
 /* When C++ exceptions are disabled, the C++ library defines |try| and |catch|
@@ -75,7 +81,7 @@
 #endif
 
 #ifdef __cplusplus
-#define new ("if you use new/delete make sure to include config.h at the top of the file"()) 
-#define delete ("if you use new/delete make sure to include config.h at the top of the file"()) 
+#define new ("if you use new/delete make sure to include config.h at the top of the file"())
+#define delete ("if you use new/delete make sure to include config.h at the top of the file"())
 #endif
 

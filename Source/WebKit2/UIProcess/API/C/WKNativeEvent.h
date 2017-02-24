@@ -43,7 +43,7 @@ class NSEvent;
 struct NSEvent;
 #endif
 typedef NSEvent *WKNativeEventPtr;
-#elif defined(WIN32) || defined(_WIN32)
+#elif !defined(BUILDING_QT__) && (defined(WIN32) || defined(_WIN32))
 typedef const struct tagMSG* WKNativeEventPtr;
 #elif defined(BUILDING_GTK__)
 typedef union _GdkEvent GdkEvent;

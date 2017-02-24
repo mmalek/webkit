@@ -3,7 +3,7 @@ set(WebKit2_NetworkProcess_OUTPUT_NAME QtWebNetworkProcess)
 set(WebKit2_PluginProcess_OUTPUT_NAME QtWebPluginProcess)
 set(WebKit2_DatabaseProcess_OUTPUT_NAME QtWebDatabaseProcess)
 
-#set(WebKit2_USE_PREFIX_HEADER ON)
+set(WebKit2_USE_PREFIX_HEADER ON)
 
 # FIXME: It should be in WebKitFS actually
 set(FORWARDING_HEADERS_DIR "${DERIVED_SOURCES_DIR}/ForwardingHeaders")

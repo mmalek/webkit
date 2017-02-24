@@ -745,11 +745,11 @@ endif ()
 
 macro(ADD_WEBKIT2_PREFIX_HEADER _target)
     if (WebKit2_USE_PREFIX_HEADER)
-        get_target_property(OLD_COMPILE_FLAGS ${_target} COMPILE_FLAGS)
-        if (${OLD_COMPILE_FLAGS} STREQUAL "OLD_COMPILE_FLAGS-NOTFOUND")
-            set(OLD_COMPILE_FLAGS "")
+        if (COMPILER_IS_GCC_OR_CLANG)
+            ADD_PREFIX_HEADER(${_target} "${WEBKIT2_DIR}/WebKit2Prefix.h")
+        else ()
+            ADD_PRECOMPILED_HEADER("${WEBKIT2_DIR}/WebKit2Prefix.h" "${WEBKIT2_DIR}/WebKit2Prefix.cpp" ${_target}_SOURCES)
         endif ()
-        set_target_properties(${_target} PROPERTIES COMPILE_FLAGS "${OLD_COMPILE_FLAGS} -include ${WEBKIT2_DIR}/WebKit2Prefix.h")
     endif ()
 endmacro()
 
@@ -762,7 +762,9 @@ add_dependencies(WebKit2 WebCore ${WEBKIT2_EXTRA_DEPENDENCIES})
 add_webkit2_prefix_header(WebKit2)
 
 # Suppress unused parameter warnings for sources in WebKit2.
-ADD_TARGET_PROPERTIES(WebKit2 COMPILE_FLAGS "-Wno-unused-parameter")
+if (COMPILER_IS_GCC_OR_CLANG)
+    ADD_TARGET_PROPERTIES(WebKit2 COMPILE_FLAGS "-Wno-unused-parameter")
+endif ()
 
 if (WebKit2_VERSION_SCRIPT)
     ADD_TARGET_PROPERTIES(WebKit2 LINK_FLAGS "${WebKit2_VERSION_SCRIPT}")

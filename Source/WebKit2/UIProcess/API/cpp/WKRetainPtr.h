@@ -57,14 +57,14 @@ public:
         : m_ptr(ptr)
     {
     }
-    
+
     template<typename U> WKRetainPtr(const WKRetainPtr<U>& o)
         : m_ptr(o.get())
     {
         if (PtrType ptr = m_ptr)
             WKRetain(ptr);
     }
-    
+
     WKRetainPtr(const WKRetainPtr& o)
         : m_ptr(o.m_ptr)
     {
@@ -76,7 +76,7 @@ public:
         : m_ptr(o.leakRef())
     {
     }
-    
+
     WKRetainPtr(WKRetainPtr&& o)
         : m_ptr(o.leakRef())
     {
@@ -113,7 +113,7 @@ public:
         m_ptr = 0;
         return ptr;
     }
-    
+
     PtrType operator->() const { return m_ptr; }
     bool operator!() const { return !m_ptr; }
 
@@ -213,36 +213,40 @@ template<typename T> inline void swap(WKRetainPtr<T>& a, WKRetainPtr<T>& b)
 }
 
 template<typename T, typename U> inline bool operator==(const WKRetainPtr<T>& a, const WKRetainPtr<U>& b)
-{ 
-    return a.get() == b.get(); 
+{
+    return a.get() == b.get();
 }
 
 template<typename T, typename U> inline bool operator==(const WKRetainPtr<T>& a, U* b)
-{ 
-    return a.get() == b; 
+{
+    return a.get() == b;
 }
 
-template<typename T, typename U> inline bool operator==(T* a, const WKRetainPtr<U>& b) 
+template<typename T, typename U> inline bool operator==(T* a, const WKRetainPtr<U>& b)
 {
-    return a == b.get(); 
+    return a == b.get();
 }
 
 template<typename T, typename U> inline bool operator!=(const WKRetainPtr<T>& a, const WKRetainPtr<U>& b)
-{ 
-    return a.get() != b.get(); 
+{
+    return a.get() != b.get();
 }
 
 template<typename T, typename U> inline bool operator!=(const WKRetainPtr<T>& a, U* b)
 {
-    return a.get() != b; 
+    return a.get() != b;
 }
 
 template<typename T, typename U> inline bool operator!=(T* a, const WKRetainPtr<U>& b)
-{ 
-    return a != b.get(); 
+{
+    return a != b.get();
 }
 
+#if COMPILER(MSVC)
+template<typename T> inline WKRetainPtr<T> adoptWK(T);
+#else
 template<typename T> inline WKRetainPtr<T> adoptWK(T) __attribute__((warn_unused_result));
+#endif
 template<typename T> inline WKRetainPtr<T> adoptWK(T o)
 {
     return WKRetainPtr<T>(AdoptWK, o);
