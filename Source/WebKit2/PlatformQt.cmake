@@ -237,6 +237,7 @@ list(APPEND WebKit2_SYSTEM_INCLUDE_DIRECTORIES
 list(APPEND WebKit2_LIBRARIES
     ${Qt5Positioning_LIBRARIES}
     ${Qt5Quick_LIBRARIES}
+    ${Qt5WebChannel_LIBRARIES}
     ${X11_X11_LIB}
 )
 
