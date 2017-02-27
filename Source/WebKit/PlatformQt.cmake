@@ -234,7 +234,7 @@ if (ENABLE_WEBKIT2)
         set(WEBKIT2_LIBRARY -Wl,--whole-archive WebKit2 -Wl,--no-whole-archive)
     endif ()
 else ()
-    set(WEBKIT2_LIBRARY "")
+    set(WEBKIT2_LIBRARY WebKit2)
 endif ()
 
 list(APPEND WebKit_LIBRARIES
