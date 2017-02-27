@@ -83,6 +83,7 @@ list(APPEND WebKit2_SOURCES
     Shared/Plugins/unix/PluginSearchPath.cpp
 
     Shared/qt/ArgumentCodersQt.cpp
+    Shared/qt/ChildProcessMainQt.cpp
     Shared/qt/NativeWebKeyboardEventQt.cpp
     Shared/qt/NativeWebMouseEventQt.cpp
     Shared/qt/NativeWebTouchEventQt.cpp
@@ -93,8 +94,6 @@ list(APPEND WebKit2_SOURCES
     Shared/qt/ShareableBitmapQt.cpp
     Shared/qt/WebCoreArgumentCodersQt.cpp
     Shared/qt/WebEventFactoryQt.cpp
-
-    Shared/unix/ChildProcessMain.cpp
 
     UIProcess/BackingStore.cpp
     UIProcess/DefaultUndoController.cpp
