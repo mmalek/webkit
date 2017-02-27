@@ -28,6 +28,7 @@
 
 #if ENABLE(DATABASE_PROCESS)
 
+#include <QCoreApplication>
 #include "ChildProcessMain.h"
 
 using namespace WebCore;
@@ -36,6 +37,7 @@ namespace WebKit {
 
 Q_DECL_EXPORT int DatabaseProcessMainQt(int argc, char** argv)
 {
+    QCoreApplication app(argc, argv);
     return ChildProcessMain<DatabaseProcess, ChildProcessMainBase>(argc, argv);
 }
 
