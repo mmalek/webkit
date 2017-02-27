@@ -161,8 +161,8 @@ void Connection::readEventHandler()
         if (!m_readBuffer.isEmpty()) {
             // We have a message, let's dispatch it.
 
-            OwnPtr<MessageDecoder> decoder = MessageDecoder::create(DataReference(m_readBuffer.data(), m_readBuffer.size()));
-            processIncomingMessage(decoder.release());
+            auto decoder = std::make_unique<MessageDecoder>(DataReference(m_readBuffer.data(), m_readBuffer.size()));
+            processIncomingMessage(WTFMove(decoder));
         }
 
         // Find out the size of the next message in the pipe (if there is one) so that we can read
