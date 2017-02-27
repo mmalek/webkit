@@ -65,6 +65,7 @@ void CustomProtocolManager::unregisterScheme(const String&)
 bool CustomProtocolManager::supportsScheme(const String& scheme)
 {
 // QTFIXME    return m_impl->supportsScheme(scheme);
+    return false;
 }
 
 void CustomProtocolManager::didFailWithError(uint64_t customProtocolID, const WebCore::ResourceError& error)
