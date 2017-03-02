@@ -42,7 +42,7 @@
 #include "config.h"
 #include "qwebchannelwebkittransport_p.h"
 
-#ifdef ENABLE(QT_WEBCHANNEL)
+#if ENABLE(QT_WEBCHANNEL)
 
 #include "qquickwebview_p.h"
 

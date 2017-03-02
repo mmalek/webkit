@@ -135,7 +135,7 @@ public:
     void handleDownloadRequest(WebKit::DownloadProxy*);
 
     void didReceiveMessageFromNavigatorQtObject(WKStringRef message);
-#ifdef ENABLE(QT_WEBCHANNEL)
+#if ENABLE(QT_WEBCHANNEL)
     void didReceiveMessageFromNavigatorQtWebChannelTransportObject(WKStringRef message);
 #endif
 

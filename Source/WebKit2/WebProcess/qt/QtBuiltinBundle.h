@@ -56,7 +56,7 @@ public:
 private:
     void handleMessageToNavigatorQtObject(WKBundlePageRef, WKTypeRef messageBody);
     void handleSetNavigatorQtObjectEnabled(WKBundlePageRef, WKTypeRef messageBody);
-#ifdef ENABLE(QT_WEBCHANNEL)
+#if ENABLE(QT_WEBCHANNEL)
     void handleMessageToNavigatorQtWebChannelTransport(WKBundlePageRef, WKTypeRef messageBody);
 #endif
 
