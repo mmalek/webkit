@@ -64,6 +64,8 @@ endif ()
 
 if (APPLE)
     list(APPEND WTF_SOURCES
+        cocoa/WorkQueueCocoa.cpp
+
         text/cf/AtomicStringImplCF.cpp
         text/cf/StringCF.cpp
         text/cf/StringImplCF.cpp
