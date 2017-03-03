@@ -44,7 +44,7 @@
 #include <wtf/glib/GRefPtr.h>
 #elif PLATFORM(EFL)
 #include <DispatchQueueEfl.h>
-#elif PLATFORM(QT) && OS(UNIX)
+#elif PLATFORM(QT) && USE(UNIX_DOMAIN_SOCKETS)
 #include <QSocketNotifier>
 #elif OS(WINDOWS)
 #include <wtf/HashMap.h>
@@ -52,7 +52,7 @@
 #include <wtf/win/WorkItemWin.h>
 #endif
 
-#if PLATFORM(QT) && OS(UNIX)
+#if PLATFORM(QT) && USE(UNIX_DOMAIN_SOCKETS)
 QT_BEGIN_NAMESPACE
 class QProcess;
 QT_END_NAMESPACE
@@ -88,7 +88,7 @@ public:
     void registerSocketEventHandler(int, std::function<void ()>);
     void unregisterSocketEventHandler(int);
 #elif PLATFORM(QT)
-#if OS(UNIX)
+#if USE(UNIX_DOMAIN_SOCKETS)
     QSocketNotifier* registerSocketEventHandler(int, QSocketNotifier::Type, std::function<void()>);
     void dispatchOnTermination(QProcess*, std::function<void()>);
 #elif OS(WINDOWS)
@@ -127,7 +127,7 @@ private:
     Condition m_terminateRunLoopCondition;
 #elif PLATFORM(EFL)
     RefPtr<DispatchQueue> m_dispatchQueue;
-#elif PLATFORM(QT) && OS(UNIX)
+#elif PLATFORM(QT) && USE(UNIX_DOMAIN_SOCKETS)
     class WorkItemQt;
     QThread* m_workThread;
     friend class WorkItemQt;
