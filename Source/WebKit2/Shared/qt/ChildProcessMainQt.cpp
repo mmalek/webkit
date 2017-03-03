@@ -46,11 +46,11 @@ bool ChildProcessMainBase::parseCommandLine(int argc, char** argv)
         return false;
 
 #if OS(DARWIN)
-    QString serviceName = app->arguments().value(1);
+    QByteArray serviceName(argv[1]);
 
     // Get the server port.
     mach_port_t identifier;
-    kern_return_t kr = bootstrap_look_up2(bootstrap_port, serviceName.toUtf8().data(), &identifier, 0, 0);
+    kern_return_t kr = bootstrap_look_up2(bootstrap_port, serviceName.data(), &identifier, 0, 0);
     if (kr) {
         printf("bootstrap_look_up2 result: %x", kr);
         return false;
