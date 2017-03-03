@@ -334,6 +334,7 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
 //    if (!pageConfiguration) {
 //        pageConfiguration = adoptWK(WKPageConfigurationCreate()); // API::PageConfiguration::create();
 
+    WKRetainPtr<WKPageConfigurationRef> pageConfiguration;
     qDebug() << pageConfiguration.get();
 
 //    pageGroup = WKPageConfigurationGetPageGroup(configurationRef);
@@ -400,16 +401,14 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     QObject::connect(iconDatabase, SIGNAL(iconChangedForPageURL(QString)), q_ptr, SLOT(_q_onIconChangedForPageURL(QString)));
 
     // Any page setting should preferrable be set before creating the page.
-//    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(pageGroup.get());
-    WKPreferencesRef preferencesRef = WKPreferencesCreate(); //WKPageConfigurationGetPreferences(pageConfiguration.get());
-    WKPreferencesSetAcceleratedCompositingEnabled(preferencesRef, true);
+    auto& preferences = webPageProxy->pageGroup().preferences();
+    preferences.setAcceleratedCompositingEnabled(true);
     bool showDebugVisuals = qgetenv("WEBKIT_SHOW_COMPOSITING_DEBUG_VISUALS") == "1";
-    WKPreferencesSetCompositingBordersVisible(preferencesRef, showDebugVisuals);
-    WKPreferencesSetCompositingRepaintCountersVisible(preferencesRef, showDebugVisuals);
-    WKPreferencesSetFrameFlatteningEnabled(preferencesRef, true);
-    WKPreferencesSetWebGLEnabled(preferencesRef, true);
-    WKPageConfigurationSetPreferences(pageConfiguration.get(), preferencesRef);
-    webPageProxy->pageGroup().preferences().setForceCompositingMode(true);
+    preferences.setCompositingBordersVisible(showDebugVisuals);
+    preferences.setCompositingRepaintCountersVisible(showDebugVisuals);
+    preferences.setFrameFlatteningEnabled(true);
+    preferences.setWebGLEnabled(true);
+    preferences.setForceCompositingMode(true);
 
     webPageProxy->registerApplicationScheme(ASCIILiteral("qrc"));
 

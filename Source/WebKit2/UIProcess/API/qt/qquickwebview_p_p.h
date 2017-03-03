@@ -181,8 +181,6 @@ protected:
     QQuickWebViewPrivate(QQuickWebView* viewport);
     RefPtr<WebKit::WebPageProxy> webPageProxy;
     WKRetainPtr<WKPageRef> webPage;
-    WKRetainPtr<WKPageConfigurationRef> pageConfiguration;
-//    WKRetainPtr<WKPageGroupRef> pageGroup;
 
     WebKit::QtPageClient pageClient;
     WebKit::DefaultUndoController undoController;
