@@ -72,7 +72,7 @@ struct GraphicsSurfacePrivate {
 
         GLPlatformSurface::SurfaceAttributes sharedSurfaceAttributes = GLPlatformSurface::DoubleBuffered |
             GLPlatformSurface::SupportAlpha;
-        m_configSelector = adoptPtr(new GLXConfigSelector(sharedSurfaceAttributes));
+        m_configSelector = std::make_unique<GLXConfigSelector>(sharedSurfaceAttributes);
 
         if (!m_configSelector->surfaceContextConfig()) {
             clear();
@@ -107,7 +107,7 @@ struct GraphicsSurfacePrivate {
             return 0;
 
         GLXFBConfig config = m_configSelector->surfaceContextConfig();
-        OwnPtrX11<XVisualInfo> visInfo(m_configSelector->visualInfo(config));
+        XUniquePtr<XVisualInfo> visInfo(m_configSelector->visualInfo(config));
 
         if (!visInfo.get()) {
             clear();
@@ -148,7 +148,7 @@ struct GraphicsSurfacePrivate {
             sharedSurfaceAttributes = GLPlatformSurface::SupportAlpha;
 
         if (!m_configSelector)
-            m_configSelector = adoptPtr(new GLXConfigSelector(sharedSurfaceAttributes));
+            m_configSelector = std::make_unique<GLXConfigSelector>(sharedSurfaceAttributes);
 
         m_glxPixmap = glXCreatePixmap(display(), m_configSelector->surfaceClientConfig(format->depth, XVisualIDFromVisual(attr.visual)), m_xPixmap, glxAttributes);
 
@@ -323,7 +323,7 @@ private:
     GLXContext m_glContext;
     GLXContext m_detachedContext;
     GLXDrawable m_detachedSurface;
-    OwnPtr<GLXConfigSelector> m_configSelector;
+    std::unique_ptr<GLXConfigSelector> m_configSelector;
     bool m_isReceiver;
     TextureMapperGL::Flags m_flags;
     GLuint m_texture;
@@ -367,7 +367,7 @@ void GraphicsSurface::platformCopyFromTexture(uint32_t texture, const IntRect& s
     m_private->copyFromTexture(texture, sourceRect);
 }
 
-void GraphicsSurface::platformPaintToTextureMapper(TextureMapper* textureMapper, const FloatRect& targetRect, const TransformationMatrix& transform, float opacity)
+void GraphicsSurface::platformPaintToTextureMapper(TextureMapper& textureMapper, const FloatRect& targetRect, const TransformationMatrix& transform, float opacity)
 {
     IntSize size = m_private->size();
     if (size.isEmpty())
@@ -379,7 +379,7 @@ void GraphicsSurface::platformPaintToTextureMapper(TextureMapper* textureMapper,
     FloatRect rectOnContents(FloatPoint::zero(), size);
     TransformationMatrix adjustedTransform = transform;
     adjustedTransform.multiply(TransformationMatrix::rectToRect(rectOnContents, targetRect));
-    static_cast<TextureMapperGL*>(textureMapper)->drawTexture(texture, m_private->flags(), size, rectOnContents, adjustedTransform, opacity);
+    static_cast<TextureMapperGL&>(textureMapper).drawTexture(texture, m_private->flags(), size, rectOnContents, adjustedTransform, opacity);
 }
 
 uint32_t GraphicsSurface::platformFrontBuffer() const
@@ -451,6 +451,7 @@ void GraphicsSurface::platformDestroy()
     m_private = 0;
 }
 
+#if !PLATFORM(QT)
 std::unique_ptr<GraphicsContext> GraphicsSurface::platformBeginPaint(const IntSize&, char*, int)
 {
     notImplemented();
@@ -462,5 +463,6 @@ PassRefPtr<Image> GraphicsSurface::createReadOnlyImage(const IntRect&)
     notImplemented();
     return 0;
 }
+#endif
 }
 #endif

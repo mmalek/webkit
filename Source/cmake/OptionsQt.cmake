@@ -431,6 +431,11 @@ if (ENABLE_WEBKIT2)
     )
     SET_AND_EXPOSE_TO_BUILD(USE_COORDINATED_GRAPHICS TRUE)
     SET_AND_EXPOSE_TO_BUILD(USE_COORDINATED_GRAPHICS_MULTIPROCESS TRUE)
+
+    if (ENABLE_OPENGL AND ENABLE_X11_TARGET AND Qt5Gui_OPENGL_IMPLEMENTATION STREQUAL GL)
+        SET_AND_EXPOSE_TO_BUILD(USE_GLX 1)
+        SET_AND_EXPOSE_TO_BUILD(USE_GRAPHICS_SURFACE 1)
+    endif ()
 endif ()
 
 # Mach ports and Unix sockets are currently used by WK2, but their USE() values
@@ -547,10 +552,12 @@ endif ()
 
 if (ENABLE_X11_TARGET)
     find_package(X11 REQUIRED)
-    if (NOT X11_Xcomposite_FOUND)
-        message(FATAL_ERROR "libXcomposite is required for ENABLE_X11_TARGET")
-    elseif (NOT X11_Xrender_FOUND)
-        message(FATAL_ERROR "libXrender is required for ENABLE_X11_TARGET")
+    if (GRAPHICS_SURFACE)
+        if (NOT X11_Xcomposite_FOUND)
+            message(FATAL_ERROR "libXcomposite is required for GRAPHICS_SURFACE on X11")
+        elseif (NOT X11_Xrender_FOUND)
+            message(FATAL_ERROR "libXrender is required for GRAPHICS_SURFACE on X11")
+        endif ()
     endif ()
 endif ()
 
