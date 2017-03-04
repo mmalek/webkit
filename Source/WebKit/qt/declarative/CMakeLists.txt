@@ -25,6 +25,17 @@ target_link_libraries(qmlwebkitplugin
     WebKit Qt5::Quick)
 set_target_properties(qmlwebkitplugin PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/QtWebKit")
-install(TARGETS qmlwebkitplugin DESTINATION "${QML_INSTALL_DIR}/QtWebKit")
+
+add_custom_target(
+    qmlwebkitplugin-files ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different qmldir "${CMAKE_BINARY_DIR}/imports/QtWebKit"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different plugins.qmltypes "${CMAKE_BINARY_DIR}/imports/QtWebKit"
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+install(TARGETS qmlwebkitplugin
+        DESTINATION "${QML_INSTALL_DIR}/QtWebKit")
+install(FILES qmldir plugins.qmltypes
+        DESTINATION "${QML_INSTALL_DIR}/QtWebKit")
 
 add_subdirectory(experimental)
