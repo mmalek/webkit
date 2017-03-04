@@ -69,6 +69,8 @@ list(APPEND WebCore_SOURCES
     platform/graphics/PlatformDisplay.cpp
     platform/graphics/WOFFFileFormat.cpp
 
+    platform/graphics/surfaces/GraphicsSurface.cpp
+
     platform/graphics/texmap/BitmapTextureImageBuffer.cpp
     platform/graphics/texmap/TextureMapperImageBuffer.cpp
 
@@ -262,6 +264,8 @@ list(APPEND WebCore_LIBRARIES
     ${Qt5Sql_LIBRARIES}
     ${SQLITE_LIBRARIES}
     ${X11_X11_LIB}
+    ${X11_Xcomposite_LIB}
+    ${X11_Xrender_LIB}
     ${ZLIB_LIBRARIES}
 )
 
@@ -282,6 +286,17 @@ list(APPEND WebCore_USER_AGENT_STYLE_SHEETS
 if (ENABLE_WEBKIT2)
     list(APPEND WebCore_SOURCES
         page/qt/GestureTapHighlighter.cpp
+    )
+endif ()
+
+if (USE_GRAPHICS_SURFACE AND USE_GLX)
+    list(APPEND WebCore_SOURCES
+        platform/graphics/surfaces/glx/X11Helper.cpp
+
+        platform/graphics/surfaces/glx/GraphicsSurfaceGLX.cpp
+    )
+    list(APPEND WebCore_LIBRARIES
+        ${Qt5Gui_OPENGL_LIBRARIES}
     )
 endif ()
 
