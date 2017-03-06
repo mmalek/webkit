@@ -112,7 +112,6 @@ list(APPEND WebKit2_SOURCES
     UIProcess/API/qt/qquickwebpage.cpp
     UIProcess/API/qt/qquickwebview.cpp
     UIProcess/API/qt/qtwebsecurityorigin.cpp
-    UIProcess/API/qt/qwebchannelwebkittransport.cpp
     UIProcess/API/qt/qwebdownloaditem.cpp
     UIProcess/API/qt/qwebdownloaditem_p.h
     UIProcess/API/qt/qwebdownloaditem_p_p.h
@@ -230,6 +229,12 @@ else ()
         Platform/IPC/unix/ConnectionUnix.cpp
 
         Platform/unix/SharedMemoryUnix.cpp
+    )
+endif ()
+
+if (ENABLE_QT_WEBCHANNEL)
+    list(APPEND WebKit2_SOURCES
+        UIProcess/API/qt/qwebchannelwebkittransport.cpp
     )
 endif ()
 

@@ -52,7 +52,7 @@ WorkQueue::~WorkQueue()
     platformInvalidate();
 }
 
-#if !PLATFORM(COCOA)
+#if !PLATFORM(COCOA) && !PLATFORM(QT)
 void WorkQueue::concurrentApply(size_t iterations, const std::function<void (size_t index)>& function)
 {
     if (!iterations)

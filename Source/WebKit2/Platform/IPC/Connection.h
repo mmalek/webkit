@@ -204,7 +204,7 @@ public:
 
     Identifier identifier() const;
 
-#if PLATFORM(COCOA)
+#if PLATFORM(COCOA) || (PLATFORM(QT) && OS(DARWIN))
     bool kill();
     void terminateSoon(double intervalInSeconds);
 #endif
