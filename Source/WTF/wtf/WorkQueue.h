@@ -87,14 +87,12 @@ public:
 #elif PLATFORM(EFL)
     void registerSocketEventHandler(int, std::function<void ()>);
     void unregisterSocketEventHandler(int);
-#elif PLATFORM(QT)
-#if USE(UNIX_DOMAIN_SOCKETS)
+#elif PLATFORM(QT) && USE(UNIX_DOMAIN_SOCKETS)
     QSocketNotifier* registerSocketEventHandler(int, QSocketNotifier::Type, std::function<void()>);
     void dispatchOnTermination(QProcess*, std::function<void()>);
-#elif OS(WINDOWS)
+#elif PLATFORM(QT) && OS(WINDOWS)
     void registerHandle(HANDLE, const std::function<void()>&);
     void unregisterAndCloseHandle(HANDLE);
-#endif
 #elif OS(DARWIN)
     dispatch_queue_t dispatchQueue() const { return m_dispatchQueue; }
 #endif
