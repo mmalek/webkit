@@ -193,6 +193,8 @@ public:
         ToggleMediaMute,
         ToggleVideoFullscreen,
 
+        RequestClose,
+
         WebActionCount
     };
 
@@ -430,6 +432,7 @@ Q_SIGNALS:
     void geometryChangeRequested(const QRect& geom);
     void repaintRequested(const QRect& dirtyRect);
     void scrollRequested(int dx, int dy, const QRect& scrollViewRect);
+    void windowCloseRequestProcessed(bool);
     void windowCloseRequested();
     void printRequested(QWebFrame *frame);
     void linkClicked(const QUrl &url);

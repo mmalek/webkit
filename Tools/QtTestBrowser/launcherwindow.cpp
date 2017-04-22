@@ -592,6 +592,25 @@ bool LauncherWindow::isGraphicsBased() const
     return bool(qobject_cast<QGraphicsView*>(m_view));
 }
 
+void LauncherWindow::closeEvent(QCloseEvent* e)
+{
+    QEventLoop loop;
+    auto c = connect(page(), &QWebPage::windowCloseRequestProcessed, this, [e, &loop](bool isClosed) {
+        e->setAccepted(isClosed);
+        loop.quit();
+    }, Qt::QueuedConnection);
+    requestCloseWindow();
+    loop.exec();
+    disconnect(c);
+
+//    e->ignore();
+//    auto c = connect(page(), &QWebPage::windowCloseRequested, this, [e]() {
+//        e->accept();
+//    });
+//    requestCloseWindow();
+//    disconnect(c);
+}
+
 void LauncherWindow::sendTouchEvent()
 {
     if (m_touchPoints.isEmpty())
@@ -1166,6 +1185,11 @@ void LauncherWindow::clearMemoryCaches()
 {
     QWebSettings::clearMemoryCaches();
     qDebug() << "Memory caches were cleared";
+}
+
+void LauncherWindow::requestCloseWindow()
+{
+    page()->triggerAction(QWebPage::RequestClose);
 }
 
 void LauncherWindow::updateFPS(int fps)
