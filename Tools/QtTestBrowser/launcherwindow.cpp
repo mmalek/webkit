@@ -60,6 +60,7 @@
 #include <QToolButton>
 #include <QToolTip>
 #include <QVBoxLayout>
+#include <QWindow>
 
 #if !defined(QT_NO_FILEDIALOG) && !defined(QT_NO_MESSAGEBOX)
 #include <QFileDialog>
@@ -244,14 +245,14 @@ void LauncherWindow::createChrome()
     fileMenu->addAction("New Window", this, SLOT(newWindow()), QKeySequence::New);
     fileMenu->addAction(tr("Open File..."), this, SLOT(openFile()), QKeySequence::Open);
     fileMenu->addAction(tr("Open Location..."), this, SLOT(openLocation()), QKeySequence(Qt::CTRL | Qt::Key_L));
-    fileMenu->addAction("Close Window", this, SLOT(close()), QKeySequence::Close);
+    fileMenu->addAction("Close Window", this, SLOT(requestCloseWindow()), QKeySequence::Close);
     fileMenu->addSeparator();
     fileMenu->addAction("Take Screen Shot...", this, SLOT(screenshot()));
 #if !defined(QT_NO_PRINTER) && HAVE(QTPRINTSUPPORT)
     fileMenu->addAction(tr("Print..."), this, SLOT(print()), QKeySequence::Print);
 #endif
     fileMenu->addSeparator();
-    fileMenu->addAction("Quit", QApplication::instance(), SLOT(closeAllWindows()), QKeySequence(Qt::CTRL | Qt::Key_Q));
+    fileMenu->addAction("Quit", this, SLOT(closeAllWindows()), QKeySequence(Qt::CTRL | Qt::Key_Q));
 
     QMenu* editMenu = menuBar()->addMenu("&Edit");
     editMenu->addAction(page()->action(QWebPage::Undo));
@@ -590,6 +591,14 @@ void LauncherWindow::createChrome()
 bool LauncherWindow::isGraphicsBased() const
 {
     return bool(qobject_cast<QGraphicsView*>(m_view));
+}
+
+void LauncherWindow::closeEvent(QCloseEvent* e)
+{
+    if (!inCloseWindow()) {
+        e->ignore();
+        QMetaObject::invokeMethod(this, "requestCloseWindow", Qt::QueuedConnection);
+    }
 }
 
 void LauncherWindow::sendTouchEvent()
@@ -1166,6 +1175,18 @@ void LauncherWindow::clearMemoryCaches()
 {
     QWebSettings::clearMemoryCaches();
     qDebug() << "Memory caches were cleared";
+}
+
+void LauncherWindow::requestCloseWindow()
+{
+    page()->triggerAction(QWebPage::RequestClose);
+}
+
+void LauncherWindow::closeAllWindows()
+{
+    const auto& windows = qApp->topLevelWindows();
+    for (auto* w : windows)
+        w->close();
 }
 
 void LauncherWindow::updateFPS(int fps)

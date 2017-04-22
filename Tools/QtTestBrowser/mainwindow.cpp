@@ -85,7 +85,7 @@ void MainWindow::buildUI()
     connect(page()->mainFrame(), SIGNAL(loadStarted()), this, SLOT(onLoadStarted()));
     connect(page()->mainFrame(), SIGNAL(iconChanged()), this, SLOT(onIconChanged()));
     connect(page()->mainFrame(), SIGNAL(titleChanged(QString)), this, SLOT(onTitleChanged(QString)));
-    connect(page(), SIGNAL(windowCloseRequested()), this, SLOT(close()));
+    connect(page(), &QWebPage::windowCloseRequested, this, &MainWindow::closeWindow);
 
 #ifndef QT_NO_SHORTCUT
     // short-cuts
@@ -248,4 +248,11 @@ void MainWindow::onTitleChanged(const QString& title)
         setWindowTitle(QCoreApplication::applicationName());
     else
         setWindowTitle(QString::fromLatin1("%1 - %2").arg(title).arg(QCoreApplication::applicationName()));
+}
+
+void MainWindow::closeWindow()
+{
+    m_inCloseWindow = true;
+    close();
+    m_inCloseWindow = false;
 }

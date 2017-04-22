@@ -66,9 +66,11 @@ protected Q_SLOTS:
     void onIconChanged();
     void onLoadStarted();
     void onTitleChanged(const QString&);
+    void closeWindow();
 
 protected:
     QString addressUrl() const;
+    bool inCloseWindow() const { return m_inCloseWindow; }
 
 private:
     void buildUI();
@@ -78,6 +80,7 @@ private:
     QStringListModel urlModel;
     QStringList urlList;
     LocationEdit* urlEdit;
+    bool m_inCloseWindow { false };
 };
 
 #endif
