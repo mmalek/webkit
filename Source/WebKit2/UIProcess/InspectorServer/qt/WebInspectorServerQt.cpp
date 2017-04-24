@@ -27,7 +27,7 @@
 #include "WebInspectorProxy.h"
 #include "WebPageProxy.h"
 #include <QFile>
-#include <WebCore/MIMETypeRegistry.h>
+#include <QMimeDatabase>
 #include <wtf/NeverDestroyed.h>
 #include <wtf/text/CString.h>
 #include <wtf/text/StringBuilder.h>
@@ -49,7 +49,7 @@ bool WebInspectorServer::platformResourceForPath(const String& path, Vector<char
     }
 
     // Point the default path to a formatted page that queries the page list and display them.
-    String localPath = (path == "/") ? "/webkit/resources/inspectorPageIndex.html" : path;
+    QString localPath = (path == "/") ? "/webkit/resources/inspectorPageIndex.html" : path;
     // All other paths are mapped directly to a resource, if possible.
     QFile file(QString::fromLatin1(":%1").arg(localPath));
     if (file.exists()) {
@@ -57,9 +57,10 @@ bool WebInspectorServer::platformResourceForPath(const String& path, Vector<char
         data.grow(file.size());
         file.read(data.data(), data.size());
 
-        size_t extStart = localPath.reverseFind('.');
-        String ext = localPath.substring(extStart != notFound ? extStart + 1 : 0);
-        contentType = WebCore::MIMETypeRegistry::getMIMETypeForExtension(ext);
+        QByteArray dataAsByteArray = QByteArray::fromRawData(data.data(), data.size());
+        QMimeType mimeType = QMimeDatabase().mimeTypeForFileNameAndData(localPath, dataAsByteArray);
+        if (mimeType.isValid() && !mimeType.isDefault())
+            contentType = mimeType.name();
         return true;
     }
     return false;
