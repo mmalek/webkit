@@ -47,6 +47,7 @@
 
 #include <wtf/MainThread.h>
 #include <wtf/NeverDestroyed.h>
+#include "WCharStringExtras.h"
 
 SOFT_LINK_LIBRARY(Mf);
 SOFT_LINK_OPTIONAL(Mf, MFCreateSourceResolver, HRESULT, STDAPICALLTYPE, (IMFSourceResolver**));
@@ -465,11 +466,9 @@ bool MediaPlayerPrivateMediaFoundation::startCreateMediaSource(const String& url
         return false;
 
     COMPtr<IUnknown> cancelCookie;
-    Vector<UChar> urlSource = url.charactersWithNullTermination();
-
     AsyncCallback* callback = new AsyncCallback(this, false);
 
-    if (FAILED(m_sourceResolver->BeginCreateObjectFromURL(urlSource.data(), MF_RESOLUTION_MEDIASOURCE, nullptr, &cancelCookie, callback, nullptr)))
+    if (FAILED(m_sourceResolver->BeginCreateObjectFromURL(stringToNullTerminatedWChar(url), MF_RESOLUTION_MEDIASOURCE, nullptr, &cancelCookie, callback, nullptr)))
         return false;
 
     return true;
