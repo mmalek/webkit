@@ -148,7 +148,7 @@ static const HashSet<String, ASCIICaseInsensitiveHash>& mimeTypeCache()
     if (SUCCEEDED(hr)) {
         CALPWSTR mimeTypeArray = propVarMimeTypeArray.calpwstr;
         for (unsigned i = 0; i < mimeTypeArray.cElems; i++)
-            cachedTypes.get().add(mimeTypeArray.pElems[i]);
+            cachedTypes.get().add(wcharToString(mimeTypeArray.pElems[i]));
     }
 
     PropVariantClear(&propVarMimeTypeArray);
