@@ -869,8 +869,9 @@ void TestRunner::focusWebView()
 {
 }
 
-void TestRunner::setBackingScaleFactor(double)
+void TestRunner::setBackingScaleFactor(double scale)
 {
+    DumpRenderTree::instance()->webPage()->setDevicePixelRatio(scale);
 }
 
 void TestRunner::removeChromeInputField()
