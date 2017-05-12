@@ -706,9 +706,7 @@ svg/animations/animate-elem-08-t-drt.html [ Failure ]
 # Failing hidpi Tests
 # ============================================================================= #
 
-  fast/hidpi/image-srcset-data-srcset.html [ Failure Pass ]
-  fast/hidpi/image-srcset-invalid-descriptor.html [ Failure Pass ]
-  imported/blink/fast/hidpi/border-background-align.html [ ImageOnlyFailure ]
+imported/blink/fast/hidpi/border-background-align.html [ ImageOnlyFailure ]
 
 fast/repaint/hidpi-absolute-positioned-element-wrong-cliprect-after-move.html [ Failure ]
 fast/repaint/hidpi-box-with-subpixel-height-inflates.html [ Failure ]

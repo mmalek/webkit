@@ -71,6 +71,8 @@ void TestRunnerQt::reset()
     m_geolocationPermission = false;
     m_audioData.clear();
 
+    m_drt->webPage()->setDevicePixelRatio(1);
+
     DumpRenderTreeSupportQt::dumpEditingCallbacks(false);
     DumpRenderTreeSupportQt::dumpFrameLoader(false);
     DumpRenderTreeSupportQt::dumpProgressFinishedCallback(false);
