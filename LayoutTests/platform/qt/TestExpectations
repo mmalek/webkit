@@ -706,7 +706,12 @@ svg/animations/animate-elem-08-t-drt.html [ Failure ]
 # Failing hidpi Tests
 # ============================================================================= #
 
+# This test passes if setBackingScaleFactor is not working in DRT
 imported/blink/fast/hidpi/border-background-align.html [ ImageOnlyFailure ]
+
+
+fast/inline-block/hidpi-margin-top-with-subpixel-value-and-overflow-hidden.html [ ImageOnlyFailure ]
+fast/inline/hidpi-inline-text-decoration-with-subpixel-value.html [ ImageOnlyFailure ]
 
 fast/repaint/hidpi-absolute-positioned-element-wrong-cliprect-after-move.html [ Failure ]
 fast/repaint/hidpi-box-with-subpixel-height-inflates.html [ Failure ]
@@ -2556,7 +2561,6 @@ js/date-constructor.html [ Failure ]
   http/tests/loading/main-resource-delegates-on-back-navigation.html [ Failure ]
   http/tests/loading/promote-img-preload-priority.html [ Failure ]
   http/tests/loading/redirect-methods.html [ Failure ]
-  http/tests/loading/sizes/preload-image-sizes-2x.html [ Failure ]
   http/tests/local/drag-over-remote-content.html [ Failure ]
   http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure ]
   http/tests/local/fileapi/file-last-modified.html [ Failure ]
@@ -3139,7 +3143,6 @@ js/date-constructor.html [ Failure ]
   svg/clip-path/mask-objectboundingbox-content-clip.svg [ ImageOnlyFailure ]
   svg/clip-path/mask-userspaceonuse-content-clip-transform.svg [ ImageOnlyFailure ]
   svg/clip-path/mask-userspaceonuse-content-clip.svg [ ImageOnlyFailure ]
-  svg/css/svg-resource-fragment-identifier-img-src.html [ ImageOnlyFailure ]
   svg/custom/anchor-on-use.svg [ ImageOnlyFailure ]
   svg/custom/filter-update-different-root.html [ ImageOnlyFailure ]
   svg/custom/hidpi-masking-clipping.svg [ ImageOnlyFailure ]
