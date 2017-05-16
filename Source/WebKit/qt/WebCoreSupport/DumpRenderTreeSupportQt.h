@@ -192,7 +192,7 @@ public:
 
     static void enableMockScrollbars();
 
-    static QImage paintPagesWithBoundaries(QWebFrameAdapter*);
+    static QImage paintPagesWithBoundaries(QWebFrameAdapter*, qreal scale);
 
     static void setTrackRepaintRects(QWebFrameAdapter*, bool enable);
     static bool trackRepaintRects(QWebFrameAdapter*);

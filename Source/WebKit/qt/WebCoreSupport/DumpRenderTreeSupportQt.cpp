@@ -793,7 +793,7 @@ void DumpRenderTreeSupportQt::resetInternalsObject(JSContextRef context)
     WebCoreTestSupport::resetInternalsObject(context);
 }
 
-QImage DumpRenderTreeSupportQt::paintPagesWithBoundaries(QWebFrameAdapter* adapter)
+QImage DumpRenderTreeSupportQt::paintPagesWithBoundaries(QWebFrameAdapter* adapter, qreal scale)
 {
     Frame* frame = adapter->frame;
     PrintContext printContext(frame);
@@ -810,7 +810,8 @@ QImage DumpRenderTreeSupportQt::paintPagesWithBoundaries(QWebFrameAdapter* adapt
     int pageCount = printContext.pageCount();
     // pages * pageHeight and 1px line between each page
     int totalHeight = pageCount * (pageRect.height() + 1) - 1;
-    QImage image(pageRect.width(), totalHeight, QImage::Format_ARGB32);
+    QImage image(pageRect.width() * scale, totalHeight * scale, QImage::Format_ARGB32);
+    image.setDevicePixelRatio(scale);
     image.fill(Qt::white);
     painter.begin(&image);
 

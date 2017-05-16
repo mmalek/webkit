@@ -1019,14 +1019,15 @@ void DumpRenderTree::dump()
 
         QImage image;
         if (!m_jscController->isPrinting()) {
-            image = QImage(m_page->viewportSize(), QImage::Format_ARGB32);
+            image = QImage(m_page->viewportSize() * m_page->devicePixelRatio(), QImage::Format_ARGB32);
+            image.setDevicePixelRatio(m_page->devicePixelRatio());
             image.fill(Qt::white);
             QPainter painter(&image);
             painter.setRenderHints(renderHints);
             mainFrame->render(&painter);
             painter.end();
         } else
-            image = DumpRenderTreeSupportQt::paintPagesWithBoundaries(mainFrame->handle());
+            image = DumpRenderTreeSupportQt::paintPagesWithBoundaries(mainFrame->handle(), m_page->devicePixelRatio());
 
         if (DumpRenderTreeSupportQt::trackRepaintRects(mainFrameAdapter())) {
             QVector<QRectF> repaintRects;
