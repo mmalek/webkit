@@ -1,3 +1,15 @@
+<script>
+    window.onload = function() {
+        if (window.testRunner) {
+            testRunner.waitUntilDone();
+            testRunner.setBackingScaleFactor(2, finishTest);
+        }
+    }
+
+    function finishTest() {
+        setTimeout(function() { testRunner.notifyDone(); }, 0);
+    }
+</script>
 <style>
     html { color: white; background-color: black; }
 </style>
