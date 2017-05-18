@@ -53,7 +53,7 @@ namespace WebCore {
 #if ENABLE(ACCELERATED_2D_CANVAS)
 ImageBuffer::ImageBuffer(const IntSize& size, float resolutionScale, ColorSpace, QOpenGLContext* compatibleContext, bool& success)
     : m_data(size, resolutionScale, compatibleContext)
-    , m_size(size)
+    , m_size(size * resolutionScale)
     , m_logicalSize(size)
     , m_resolutionScale(resolutionScale)
 {
@@ -69,14 +69,13 @@ ImageBuffer::ImageBuffer(const IntSize& size, float resolutionScale, ColorSpace,
 
 ImageBuffer::ImageBuffer(const FloatSize& size, float resolutionScale, ColorSpace, RenderingMode /*renderingMode*/, bool& success)
     : m_data(size, resolutionScale)
+    , m_size(size * resolutionScale)
     , m_logicalSize(size)
     , m_resolutionScale(resolutionScale)
 {
     success = m_data.m_painter && m_data.m_painter->isActive();
     if (!success)
         return;
-
-    m_size = IntSize(size * resolutionScale);
 
     m_data.m_context = std::make_unique<GraphicsContext>(m_data.m_painter);
 }
@@ -160,15 +159,14 @@ PassRefPtr<Uint8ClampedArray> getImageData(const IntRect& unscaledRect, float sc
 
     QImage::Format format = (multiplied == Unmultiplied) ? QImage::Format_RGBA8888 : QImage::Format_RGBA8888_Premultiplied;
     QImage image(result->data(), rect.width(), rect.height(), format);
+    if (coordinateSystem == ImageBuffer::LogicalCoordinateSystem)
+        image.setDevicePixelRatio(scale);
     if (rect.x() < 0 || rect.y() < 0 || rect.maxX() > size.width() || rect.maxY() > size.height())
         image.fill(0);
 
     // Let drawImage deal with the conversion.
     // FIXME: This is inefficient for accelerated ImageBuffers when only part of the imageData is read.
     QPainter painter(&image);
-    // this painter needs the same scaling as the whole buffer, to copy HiDPI images properly:
-    if (coordinateSystem == ImageBuffer::LogicalCoordinateSystem)
-        painter.setWorldTransform(QTransform::fromScale(scale, scale));
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.drawImage(QPoint(0, 0), imageData.m_impl->toQImage(), rect);
     painter.end();

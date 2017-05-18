@@ -127,7 +127,7 @@ private:
 // ---------------------- ImageBufferDataPrivateAccelerated
 
 struct ImageBufferDataPrivateAccelerated final : public TextureMapperPlatformLayer, public ImageBufferDataPrivate {
-    ImageBufferDataPrivateAccelerated(const IntSize&, QOpenGLContext* sharedContext);
+    ImageBufferDataPrivateAccelerated(const FloatSize&, float scale, QOpenGLContext* sharedContext);
     virtual ~ImageBufferDataPrivateAccelerated();
 
     QPaintDevice* paintDevice() final { return m_paintDevice; }
@@ -160,12 +160,13 @@ private:
     ImageBufferContext* m_context;
 };
 
-ImageBufferDataPrivateAccelerated::ImageBufferDataPrivateAccelerated(const IntSize& size, QOpenGLContext* sharedContext)
+ImageBufferDataPrivateAccelerated::ImageBufferDataPrivateAccelerated(const FloatSize& size, float scale, QOpenGLContext* sharedContext)
 {
     m_context = new ImageBufferContext(sharedContext);
     m_context->makeCurrentIfNeeded();
 
-    m_paintDevice = new QFramebufferPaintDevice(size);
+    m_paintDevice = new QFramebufferPaintDevice(IntSize(size * scale));
+    m_paintDevice->setDevicePixelRatio(scale);
 }
 
 ImageBufferDataPrivateAccelerated::~ImageBufferDataPrivateAccelerated()
@@ -351,7 +352,7 @@ GraphicsSurfaceToken ImageBufferDataPrivateAccelerated::graphicsSurfaceToken() c
 // ---------------------- ImageBufferDataPrivateUnaccelerated
 
 struct ImageBufferDataPrivateUnaccelerated final : public ImageBufferDataPrivate {
-    ImageBufferDataPrivateUnaccelerated(const IntSize&, float scale);
+    ImageBufferDataPrivateUnaccelerated(const FloatSize&, float scale);
     QPaintDevice* paintDevice() final { return m_pixmap.isNull() ? 0 : &m_pixmap; }
     QImage toQImage() const final;
     RefPtr<Image> image() const final;
@@ -371,12 +372,11 @@ struct ImageBufferDataPrivateUnaccelerated final : public ImageBufferDataPrivate
     RefPtr<Image> m_image;
 };
 
-ImageBufferDataPrivateUnaccelerated::ImageBufferDataPrivateUnaccelerated(const IntSize& size, float scale)
-    : m_pixmap(size)
+ImageBufferDataPrivateUnaccelerated::ImageBufferDataPrivateUnaccelerated(const FloatSize& size, float scale)
+    : m_pixmap(IntSize(size * scale))
     , m_image(StillImage::createForRendering(&m_pixmap))
 {
     m_pixmap.fill(QColor(Qt::transparent));
-    // needs proper pixel ratio for drawing on HiDPI devices:
     m_pixmap.setDevicePixelRatio(scale);
 }
 
@@ -480,10 +480,7 @@ ImageBufferData::ImageBufferData(const FloatSize& size, float resolutionScale)
 {
     m_painter = new QPainter;
 
-    // we need to copy it, to scale without converting to int first, to retain precision:
-    FloatSize scaledSize(size);
-    scaledSize.scale(resolutionScale);
-    m_impl = new ImageBufferDataPrivateUnaccelerated(IntSize(scaledSize), resolutionScale);
+    m_impl = new ImageBufferDataPrivateUnaccelerated(size, resolutionScale);
 
     if (!m_impl->paintDevice())
         return;
@@ -498,10 +495,7 @@ ImageBufferData::ImageBufferData(const FloatSize& size, float resolutionScale, Q
 {
     m_painter = new QPainter;
 
-    // we need to copy it, to scale without converting to int first, to retain precision:
-    FloatSize scaledSize(size);
-    scaledSize.scale(resolutionScale);
-    m_impl = new ImageBufferDataPrivateAccelerated(IntSize(scaledSize), compatibleContext);
+    m_impl = new ImageBufferDataPrivateAccelerated(size, resolutionScale, compatibleContext);
 
     if (!m_impl->paintDevice())
         return;
