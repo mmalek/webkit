@@ -59,7 +59,6 @@ QImage QFramebufferPaintDevice::toImage() const
 #else
     QImage image = m_framebufferObject.toImage();
 #endif
-    image.setDevicePixelRatio(devicePixelRatio());
 
     if (currentContext)
         currentContext->makeCurrent(currentSurface);

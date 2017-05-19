@@ -127,7 +127,7 @@ private:
 // ---------------------- ImageBufferDataPrivateAccelerated
 
 struct ImageBufferDataPrivateAccelerated final : public TextureMapperPlatformLayer, public ImageBufferDataPrivate {
-    ImageBufferDataPrivateAccelerated(const FloatSize&, float scale, QOpenGLContext* sharedContext);
+    ImageBufferDataPrivateAccelerated(const FloatSize&, QOpenGLContext* sharedContext);
     virtual ~ImageBufferDataPrivateAccelerated();
 
     QPaintDevice* paintDevice() final { return m_paintDevice; }
@@ -160,13 +160,12 @@ private:
     ImageBufferContext* m_context;
 };
 
-ImageBufferDataPrivateAccelerated::ImageBufferDataPrivateAccelerated(const FloatSize& size, float scale, QOpenGLContext* sharedContext)
+ImageBufferDataPrivateAccelerated::ImageBufferDataPrivateAccelerated(const FloatSize& size, QOpenGLContext* sharedContext)
 {
     m_context = new ImageBufferContext(sharedContext);
     m_context->makeCurrentIfNeeded();
 
-    m_paintDevice = new QFramebufferPaintDevice(IntSize(size * scale));
-    m_paintDevice->setDevicePixelRatio(scale);
+    m_paintDevice = new QFramebufferPaintDevice(IntSize(size));
 }
 
 ImageBufferDataPrivateAccelerated::~ImageBufferDataPrivateAccelerated()
@@ -376,12 +375,14 @@ ImageBufferDataPrivateUnaccelerated::ImageBufferDataPrivateUnaccelerated(const F
     : m_pixmap(IntSize(size * scale))
     , m_image(StillImage::createForRendering(&m_pixmap))
 {
+    qDebug() << Q_FUNC_INFO << QSizeF(size) << scale << QSizeF(m_image->size());
     m_pixmap.fill(QColor(Qt::transparent));
     m_pixmap.setDevicePixelRatio(scale);
 }
 
 QImage ImageBufferDataPrivateUnaccelerated::toQImage() const
 {
+    qDebug() << Q_FUNC_INFO;
     QPaintEngine* paintEngine = m_pixmap.paintEngine();
     if (!paintEngine || paintEngine->type() != QPaintEngine::Raster)
         return m_pixmap.toImage();
@@ -491,11 +492,11 @@ ImageBufferData::ImageBufferData(const FloatSize& size, float resolutionScale)
 }
 
 #if ENABLE(ACCELERATED_2D_CANVAS)
-ImageBufferData::ImageBufferData(const FloatSize& size, float resolutionScale, QOpenGLContext* compatibleContext)
+ImageBufferData::ImageBufferData(const FloatSize& size, QOpenGLContext* compatibleContext)
 {
     m_painter = new QPainter;
 
-    m_impl = new ImageBufferDataPrivateAccelerated(size, resolutionScale, compatibleContext);
+    m_impl = new ImageBufferDataPrivateAccelerated(size, compatibleContext);
 
     if (!m_impl->paintDevice())
         return;

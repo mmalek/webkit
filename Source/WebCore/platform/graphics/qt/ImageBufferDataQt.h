@@ -67,7 +67,7 @@ class ImageBufferData {
 public:
     ImageBufferData(const FloatSize&, float resolutionScale);
 #if ENABLE(ACCELERATED_2D_CANVAS)
-    ImageBufferData(const FloatSize&, float resolutionScale, QOpenGLContext*);
+    ImageBufferData(const FloatSize&, QOpenGLContext*);
 #endif
     ~ImageBufferData();
     QPainter* m_painter;

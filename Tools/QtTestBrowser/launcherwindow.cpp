@@ -223,7 +223,7 @@ void LauncherWindow::applyPrefs()
     settings->setAttribute(QWebSettings::FrameFlatteningEnabled, m_windowOptions.useFrameFlattening);
     settings->setAttribute(QWebSettings::WebGLEnabled, m_windowOptions.useWebGL);
 //    settings->setUserStyleSheetUrl(QUrl("data:text/css;html{filter:invert();}"));
-    settings->setUserStyleSheetUrl(QUrl("file:///mnt/ssd2/WebKit/invert.css"));
+//    settings->setUserStyleSheetUrl(QUrl("file:///mnt/ssd2/WebKit/invert.css"));
     m_windowOptions.useWebAudio = settings->testAttribute(QWebSettings::WebAudioEnabled);
     m_windowOptions.useMediaSource = settings->testAttribute(QWebSettings::MediaSourceEnabled);
 
