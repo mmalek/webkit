@@ -2,8 +2,6 @@ set(TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Te
 set(TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY_WTF "${TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY}/WTF")
 
 if (ENABLE_WEBKIT2)
-    add_definitions(-DHAVE_WEBKIT2=1)
-
     add_custom_target(TestWebKitAPI-forwarding-headers
         COMMAND ${PERL_EXECUTABLE} ${WEBKIT2_DIR}/Scripts/generate-forwarding-headers.pl --include-path ${TESTWEBKITAPI_DIR} --output ${FORWARDING_HEADERS_DIR} --platform qt
         DEPENDS WebKit2-forwarding-headers
@@ -74,10 +72,6 @@ add_executable(TestWebCore
 target_link_libraries(TestWebCore ${test_webcore_LIBRARIES})
 if (ENABLE_WEBKIT2)
     add_dependencies(TestWebCore ${ForwardingHeadersForTestWebKitAPI_NAME})
-    target_link_libraries(TestWebCore WebKit2)
-    list(APPEND test_wtf_LIBRARIES
-        WebKit2
-    )
 endif ()
 
 add_test(TestWebCore ${TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY}/WebCore/TestWebCore)
@@ -137,6 +131,7 @@ if (ENABLE_WEBKIT2)
     )
 
     target_link_libraries(TestWebKit2 ${test_webkit2_api_LIBRARIES})
+    target_compile_definitions(TestWebKit2 PRIVATE HAVE_WEBKIT2=1)
     add_test(TestWebKit2 ${TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY}/WebKit2/TestWebKit2)
     set_tests_properties(TestWebKit2 PROPERTIES TIMEOUT 60)
     set_target_properties(TestWebKit2 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY}/WebKit2)

@@ -227,4 +227,9 @@ if (ENABLE_WEBKIT2)
             RUNTIME_OUTPUT_DIRECTORY ${TESTWEBKITAPI_RUNTIME_OUTPUT_DIRECTORY}/WebKit2/failure
         )
     endforeach ()
+
+    if ("${PORT}" STREQUAL "Qt")
+        target_compile_definitions(TestWebKitAPIBase PRIVATE HAVE_WEBKIT2=1)
+        target_compile_definitions(TestWebKitAPIInjectedBundle PRIVATE HAVE_WEBKIT2=1)
+    endif ()
 endif ()
