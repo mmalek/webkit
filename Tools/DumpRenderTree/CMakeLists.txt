@@ -130,4 +130,5 @@ endif ()
 
 if (${PORT} STREQUAL "Qt")
     set_target_properties(DumpRenderTree PROPERTIES AUTOMOC ON)
+    target_compile_definitions(TestNetscapePlugin PRIVATE QT_NO_VERSION_TAGGING)
 endif ()
