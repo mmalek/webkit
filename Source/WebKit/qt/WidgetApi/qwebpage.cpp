@@ -387,9 +387,27 @@ void QWebPagePrivate::emitSaveFrameStateRequested(QWebFrameAdapter *frame, QWebH
     emit q->saveFrameStateRequested(QWebFramePrivate::kit(frame), item);
 }
 
-void QWebPagePrivate::emitDownloadRequested(const QNetworkRequest &request)
+QWebPageAdapter::DownloadSignals QWebPagePrivate::connectedDownloadSignals()
 {
-    emit q->downloadRequested(request);
+    QWebPageAdapter::DownloadSignals result;
+    if (q->isSignalConnected(QMetaMethod::fromSignal(&QWebPage::downloadRequested)))
+        result |= QWebPageAdapter::DownloadRequested;
+    if (q->isSignalConnected(QMetaMethod::fromSignal(&QWebPage::downloadBufferRequested)))
+        result |= QWebPageAdapter::DownloadBufferRequested;
+    return result;
+}
+
+void QWebPagePrivate::emitDownloadRequested(QNetworkRequest&& request, const QString& suggestedName)
+{
+    if (q->isSignalConnected(QMetaMethod::fromSignal(&QWebPage::downloadRequestedWithName)))
+        emit q->downloadRequestedWithName(request, suggestedName);
+    else
+        emit q->downloadRequested(request);
+}
+
+void QWebPagePrivate::emitDownloadBufferRequested(QIODevice* device, const QString& suggestedName)
+{
+    emit q->downloadBufferRequested(device, suggestedName);
 }
 
 void QWebPagePrivate::emitFrameCreated(QWebFrameAdapter *frame)

@@ -133,7 +133,9 @@ public:
     bool acceptNavigationRequest(QWebFrameAdapter*, const QNetworkRequest&, int type) override;
     void emitRestoreFrameStateRequested(QWebFrameAdapter*) override;
     void emitSaveFrameStateRequested(QWebFrameAdapter*, QWebHistoryItem*) override;
-    void emitDownloadRequested(const QNetworkRequest&) override;
+    DownloadSignals connectedDownloadSignals() override;
+    void emitDownloadRequested(QNetworkRequest&&, const QString& suggestedName) override;
+    void emitDownloadBufferRequested(QIODevice*, const QString& suggestedName) override;
     void emitFrameCreated(QWebFrameAdapter*) override;
     QString userAgentForUrl(const QUrl &url) const override { return q->userAgentForUrl(url); }
     bool supportsErrorPageExtension() const override { return q->supportsExtension(QWebPage::ErrorPageExtension); }

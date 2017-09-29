@@ -199,6 +199,7 @@ list(APPEND WebKit_SOURCES
     qt/Api/qwebsecurityorigin.cpp
     qt/Api/qwebsettings.cpp
 
+    qt/WebCoreSupport/BlobUrlConversion.cpp
     qt/WebCoreSupport/ChromeClientQt.cpp
     qt/WebCoreSupport/ContextMenuClientQt.cpp
     qt/WebCoreSupport/DragClientQt.cpp

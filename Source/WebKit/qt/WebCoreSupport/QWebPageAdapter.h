@@ -241,7 +241,16 @@ public:
     virtual bool acceptNavigationRequest(QWebFrameAdapter*, const QNetworkRequest&, int type) = 0;
     virtual void emitRestoreFrameStateRequested(QWebFrameAdapter *) = 0;
     virtual void emitSaveFrameStateRequested(QWebFrameAdapter *, QWebHistoryItem*) = 0;
-    virtual void emitDownloadRequested(const QNetworkRequest&) = 0;
+
+    enum DownloadSignal {
+        DownloadRequested = 0x1,
+        DownloadBufferRequested = 0x4
+    };
+    Q_DECLARE_FLAGS(DownloadSignals, DownloadSignal)
+    virtual DownloadSignals connectedDownloadSignals() = 0;
+    virtual void emitDownloadRequested(QNetworkRequest&&, const QString& suggestedName) = 0;
+    virtual void emitDownloadBufferRequested(QIODevice*, const QString& suggestedName) = 0;
+
     virtual void emitFrameCreated(QWebFrameAdapter*) = 0;
     virtual QString userAgentForUrl(const QUrl&) const = 0;
     virtual bool supportsErrorPageExtension() const = 0;

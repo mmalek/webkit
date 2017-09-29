@@ -448,6 +448,8 @@ Q_SIGNALS:
 
     void unsupportedContent(QNetworkReply *reply);
     void downloadRequested(const QNetworkRequest &request);
+    void downloadRequestedWithName(QNetworkRequest request, const QString& suggestedName);
+    void downloadBufferRequested(QIODevice* buffer, const QString& suggestedName);
 
     void focusedElementChanged(const QWebElement &element);
     void microFocusChanged();

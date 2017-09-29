@@ -20,7 +20,6 @@
 #include "config.h"
 #include "ResourceRequest.h"
 
-#include "BlobUrlConversion.h"
 #include "NetworkingContext.h"
 #include "ThirdPartyCookiesQt.h"
 
@@ -40,13 +39,6 @@ unsigned initializeMaximumHTTPConnectionCountPerHost()
     return 6 * (1 + 3 + 2);
 }
 
-static QUrl toQUrl(const URL& url)
-{
-    if (url.protocolIsBlob())
-        return convertBlobToDataUrl(url);
-    return url;
-}
-
 static inline QByteArray stringToByteArray(const String& string)
 {
     if (string.is8Bit())
@@ -57,7 +49,7 @@ static inline QByteArray stringToByteArray(const String& string)
 QNetworkRequest ResourceRequest::toNetworkRequest(NetworkingContext *context) const
 {
     QNetworkRequest request;
-    QUrl newurl = toQUrl(url());
+    QUrl newurl(url());
     request.setUrl(newurl);
     request.setOriginatingObject(context ? context->originatingObject() : 0);
 

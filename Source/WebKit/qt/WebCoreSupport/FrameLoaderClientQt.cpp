@@ -33,8 +33,10 @@
 #include "config.h"
 #include "FrameLoaderClientQt.h"
 
+#include "BlobUrlConversion.h"
 #include "CSSComputedStyleDeclaration.h"
 #include "CSSPropertyNames.h"
+#include "DataURLDecoder.h"
 #include "DocumentLoader.h"
 #include "EventHandler.h"
 #include "FormState.h"
@@ -81,6 +83,7 @@
 #include "qwebhistoryinterface.h"
 #include "qwebpluginfactory.h"
 #include "qwebsettings.h"
+#include <QBuffer>
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QMouseEvent>
@@ -1228,14 +1231,58 @@ void FrameLoaderClientQt::dispatchUnableToImplementPolicy(const WebCore::Resourc
     notImplemented();
 }
 
-void FrameLoaderClientQt::startDownload(const WebCore::ResourceRequest& request, const String& /* suggestedName */)
+class BlobDataDevice : public QIODevice
+{
+    // TODO;
+};
+
+static BlobDataDevice* createBlobDataDevice(const URL&)
+{
+    return nullptr;
+}
+
+void FrameLoaderClientQt::startDownload(const WebCore::ResourceRequest& request, const String& suggestedName)
 {
     if (!m_webFrame)
         return;
 
-    QNetworkRequest r = request.toNetworkRequest(m_frame->loader().networkingContext());
-    if (r.url().isValid())
-        m_webFrame->pageAdapter->emitDownloadRequested(r);
+    auto connectedSignals = m_webFrame->pageAdapter->connectedDownloadSignals();
+    if (!connectedSignals)
+        return;
+
+    const URL& url = request.url();
+
+    if (url.protocolIsBlob()) {
+        if (connectedSignals & QWebPageAdapter::DownloadBufferRequested) { // New signal
+            // Note: The receiving slot is responsible for deleting the QIODevice device
+            m_webFrame->pageAdapter->emitDownloadBufferRequested(createBlobDataDevice(url), suggestedName);
+        } else if (connectedSignals & QWebPageAdapter::DownloadRequested) { // Legacy signal
+            QUrl dataUrl = convertBlobToDataUrl(url);
+            if (dataUrl.isValid()) {
+                QNetworkRequest r = request.toNetworkRequest(m_frame->loader().networkingContext());
+                r.setUrl(dataUrl);
+                m_webFrame->pageAdapter->emitDownloadRequested(WTFMove(r), suggestedName);
+            }
+        }
+    } else if (request.url().protocolIsData()) {
+        DataURLDecoder::ScheduleContext scheduleContext;
+        auto* pageAdapter = m_webFrame->pageAdapter;
+        // Should make pageAdapter reference-counted to prevent crash?
+        DataURLDecoder::decode(request.url(), scheduleContext, [pageAdapter, suggestedName] (Optional<DataURLDecoder::Result> decodeResult) {
+            if (!decodeResult) {
+                qWarning("Data URL decoding failed");
+                return;
+            }
+            auto& result = decodeResult.value();
+            // FIXME: Implement device to wrap SharedBuffer
+            QBuffer* buf = new QBuffer;
+            buf->setData(QByteArray(result.data->data(), result.data->size()));
+            pageAdapter->emitDownloadBufferRequested(buf, suggestedName);
+        });
+    } else {
+        // Regular URL
+        m_webFrame->pageAdapter->emitDownloadRequested(request.toNetworkRequest(m_frame->loader().networkingContext()), suggestedName);
+    }
 }
 
 RefPtr<Frame> FrameLoaderClientQt::createFrame(const URL& url, const String& name, HTMLFrameOwnerElement* ownerElement, const String& referrer, bool allowsScrolling, int marginWidth, int marginHeight)

@@ -110,7 +110,6 @@ list(APPEND WebCore_SOURCES
     platform/network/NetworkStorageSessionStub.cpp
     platform/network/MIMESniffing.cpp
 
-    platform/network/qt/BlobUrlConversion.cpp
     platform/network/qt/CookieJarQt.cpp
     platform/network/qt/CredentialStorageQt.cpp
     platform/network/qt/DNSQt.cpp
