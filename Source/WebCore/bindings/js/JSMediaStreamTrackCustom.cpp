@@ -127,7 +127,7 @@ JSC::JSValue JSMediaStreamTrack::getCapabilities(ExecState& state)
             facingModes.reserveCapacity(modes.size());
 
             for (auto& mode : modes)
-                facingModes.append(RealtimeMediaSourceSettings::facingMode(mode));
+                facingModes.append(RealtimeMediaSourceSettings::facingMode(mode).string());
         }
 
         object->putDirect(state.vm(), Identifier::fromString(&state, "facingMode"), jsArray(&state, castedThis->globalObject(), facingModes), DontDelete | ReadOnly);
