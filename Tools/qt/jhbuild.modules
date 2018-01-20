@@ -233,20 +233,17 @@
        <dep package="gst-plugins-base"/>
        <dep package="libusrsctp"/>
      </dependencies>
-    <branch repo="github.com" module="EricssonResearch/openwebrtc-gst-plugins.git" checkoutdir="gst-plugins-openwebrtc" tag="e359b67484af90f416ea35e301205d2b53c77a14"/>
+    <branch repo="github.com" module="EricssonResearch/openwebrtc-gst-plugins.git" checkoutdir="gst-plugins-openwebrtc" tag="5eb92d7e58a5aec82034d1a6d3f5ef66501172b7"/>
    </autotools>
 
-  <autotools id="libnice" supports-non-srcdir-builds="no">
+   <autotools id="libnice" supports-non-srcdir-builds="no">
     <dependencies>
       <dep package="gstreamer"/>
     </dependencies>
-    <branch repo="nice.freedesktop.org" module="releases/libnice-0.1.10.tar.gz" checkoutdir="libnice" version="0.1.10"
-            hash="sha256:1dbfb663b730889ae8cab13a2913fe557d581f70b513c918bbbd0b7d3eefebc9"
-            md5sum="27b62d0093ce29a39df1c6fcf0bb4396" size="903083">
-    </branch>
+    <branch repo="freedesktop-git" module="libnice/libnice.git" tag="0.1.13" checkoutdir="libnice"/>
   </autotools>
 
-  <autotools id="openwebrtc" autogenargs="--enable-bridge=no --enable-owr-gst=yes --disable-tests">
+  <autotools id="openwebrtc" autogenargs="--enable-bridge=no --enable-owr-gst=yes">
      <if condition-set="macos">
        <makeargs value="CFLAGS+=-Wno-error"/>
      </if>
@@ -254,11 +251,7 @@
       <dep package="gst-plugins-openwebrtc"/>
       <dep package="libnice"/>
      </dependencies>
-    <branch repo="github.com-tarball" module="EricssonResearch/openwebrtc/archive/13516c7f79a0c48bb411464f7613d4b426c70f5b.tar.gz" checkoutdir="openwebrtc" version="13516c7f79a0c48bb411464f7613d4b426c70f5b"
-            hash="sha256:c849d36d97c17a198a5d9c180f13f14c7897c9236e2384ea11029e23b09b59ac"
-            md5sum="13516c7f79a0c48bb411464f7613d4b426c70f5b.tar.gz" size="258936">
-      <patch file="openwebrtc-no-gtk-doc.patch" strip="1"/>
-    </branch>
+    <branch repo="github.com" module="EricssonResearch/openwebrtc.git" checkoutdir="openwebrtc" tag="f511ea1fa79a33fa3d52bfd1c0969c28084aeb35"/>
   </autotools>
 
   <autotools id="icu"
