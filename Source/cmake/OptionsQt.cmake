@@ -37,6 +37,32 @@ if (QT_CONAN_DIR)
     ")
 endif ()
 
+if (RUN_CONAN)
+    find_program(CONAN_COMMAND conan)
+    if (NOT CONAN_COMMAND)
+        message(STATUS "Conan is not found - install it for current user")
+        execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pip install --user --upgrade conan==1.1.1)
+        set(CONAN_COMMAND ${PYTHON_EXECUTABLE} ${TOOLS_DIR}/conan/conan.py)
+    endif ()
+
+    # Download automatically, you can also just copy the conan.cmake file
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+        message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.9/conan.cmake"
+            "${CMAKE_BINARY_DIR}/conan.cmake")
+    endif()
+
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+    conan_cmake_run(
+        REQUIRES libjpeg-turbo/1.5.2@bincrafters/stable
+                 libpng/1.6.34@bincrafters/stable
+        OPTIONS  libjpeg-turbo:shared=False
+                 libpng:shared=False
+        BASIC_SETUP
+        BUILD outdated)
+endif ()
+
 set(STATIC_DEPENDENCIES_CMAKE_FILE "${CMAKE_BINARY_DIR}/QtStaticDependencies.cmake")
 if (EXISTS ${STATIC_DEPENDENCIES_CMAKE_FILE})
     file(REMOVE ${STATIC_DEPENDENCIES_CMAKE_FILE})
