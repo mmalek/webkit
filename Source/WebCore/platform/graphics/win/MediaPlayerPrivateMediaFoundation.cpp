@@ -771,6 +771,11 @@ void MediaPlayerPrivateMediaFoundation::notifyDeleted()
         (*it)->onMediaPlayerDeleted();
 }
 
+void MediaPlayerPrivateMediaFoundation::notifyStreamEnded()
+{
+    m_player->streamEnded();
+}
+
 void MediaPlayerPrivateMediaFoundation::setNaturalSize(const FloatSize& size)
 {
     LockHolder locker(m_cachedNaturalSizeLock);
@@ -1798,6 +1803,14 @@ HRESULT MediaPlayerPrivateMediaFoundation::CustomVideoPresenter::beginStreaming(
 
 HRESULT MediaPlayerPrivateMediaFoundation::CustomVideoPresenter::endStreaming()
 {
+    if (m_mediaPlayer) {
+        auto weakPtr = m_mediaPlayer->m_weakPtrFactory.createWeakPtr();
+        callOnMainThread([weakPtr] {
+            if (weakPtr)
+                weakPtr->notifyStreamEnded();
+        });
+    }
+
     return m_scheduler.stopScheduler();
 }
 

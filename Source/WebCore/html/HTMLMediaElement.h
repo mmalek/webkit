@@ -542,6 +542,7 @@ private:
     virtual bool mediaPlayerRenderingCanBeAccelerated(MediaPlayer*) override;
     virtual void mediaPlayerRenderingModeChanged(MediaPlayer*) override;
     virtual void mediaPlayerEngineUpdated(MediaPlayer*) override;
+    virtual void streamEnded() override;
     
     Document* mediaPlayerOwningDocument() override;
 

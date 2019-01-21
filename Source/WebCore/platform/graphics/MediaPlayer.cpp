@@ -1162,6 +1162,11 @@ void MediaPlayer::characteristicChanged()
     m_client.mediaPlayerCharacteristicChanged(this);
 }
 
+void MediaPlayer::streamEnded()
+{
+    m_client.streamEnded();
+}
+
 #if ENABLE(WEB_AUDIO)
 AudioSourceProvider* MediaPlayer::audioSourceProvider()
 {

@@ -201,6 +201,8 @@ public:
     // availability of the platformLayer().
     virtual void mediaPlayerRenderingModeChanged(MediaPlayer*) { }
 
+    virtual void streamEnded() { }
+
 #if PLATFORM(WIN) && USE(AVFOUNDATION)
     virtual GraphicsDeviceAdapter* mediaPlayerGraphicsDeviceAdapter(const MediaPlayer*) const { return 0; }
 #endif
@@ -459,6 +461,7 @@ public:
     void durationChanged();
     void firstVideoFrameAvailable();
     void characteristicChanged();
+    void streamEnded();
 
     void repaint();
 

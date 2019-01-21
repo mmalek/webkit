@@ -165,6 +165,7 @@ private:
     void removeListener(MediaPlayerListener*);
     void setNaturalSize(const FloatSize&);
     void notifyDeleted();
+    void notifyStreamEnded();
 
     static LRESULT CALLBACK VideoViewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 

@@ -4545,6 +4545,14 @@ void HTMLMediaElement::mediaPlayerRenderingModeChanged(MediaPlayer*)
     setNeedsStyleRecalc(SyntheticStyleChange);
 }
 
+void HTMLMediaElement::streamEnded()
+{
+    if (!m_sentEndEvent) {
+        m_sentEndEvent = true;
+        scheduleEvent(eventNames().endedEvent);
+    }
+}
+
 #if PLATFORM(WIN) && USE(AVFOUNDATION)
 GraphicsDeviceAdapter* HTMLMediaElement::mediaPlayerGraphicsDeviceAdapter(const MediaPlayer*) const
 {
