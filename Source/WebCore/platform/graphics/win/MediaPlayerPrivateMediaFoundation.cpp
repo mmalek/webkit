@@ -103,7 +103,7 @@ MediaPlayerPrivateMediaFoundation::MediaPlayerPrivateMediaFoundation(MediaPlayer
     , m_networkState(MediaPlayer::Empty)
     , m_readyState(MediaPlayer::HaveNothing)
     , m_weakPtrFactory(this)
-    , m_endingSequence(false)
+    , m_ended(false)
 {
     createSession();
     createVideoWindow();
@@ -206,6 +206,7 @@ void MediaPlayerPrivateMediaFoundation::prepareToPlay()
 void MediaPlayerPrivateMediaFoundation::play()
 {
     m_paused = !startSession();
+    m_ended = false;
 
     m_preparingToPlay = false;
 }
@@ -261,6 +262,7 @@ void MediaPlayerPrivateMediaFoundation::seek(float time)
     ASSERT(SUCCEEDED(hr));
     PropVariantClear(&propVariant);
 
+    m_ended = false;
     m_player->timeChanged();
 }
 
@@ -297,7 +299,7 @@ float MediaPlayerPrivateMediaFoundation::duration() const
 
 float MediaPlayerPrivateMediaFoundation::currentTime() const
 {
-    if (m_endingSequence)
+    if (m_ended)
         return duration();
 
     if (!m_presenter)
@@ -967,9 +969,8 @@ void MediaPlayerPrivateMediaFoundation::onSessionEnded()
     m_paused = true;
     m_player->playbackStateChanged();
 
-    m_endingSequence = true;
+    m_ended = true;
     m_player->timeChanged();
-    m_endingSequence = false;
 }
 
 MediaPlayerPrivateMediaFoundation::AsyncCallback::AsyncCallback(MediaPlayerPrivateMediaFoundation* mediaPlayer, bool event)
