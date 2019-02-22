@@ -345,6 +345,7 @@ if (ENABLE_OPENGL)
         )
     else ()
         list(APPEND WebCore_SOURCES
+            platform/graphics/OpenGLShims.cpp
             platform/graphics/opengl/Extensions3DOpenGL.cpp
             platform/graphics/opengl/GraphicsContext3DOpenGL.cpp
         )
@@ -367,6 +368,14 @@ if (USE_GSTREAMER)
     include(platform/GStreamer.cmake)
     list(APPEND WebCore_SOURCES
         platform/graphics/gstreamer/ImageGStreamerQt.cpp
+    )
+endif ()
+
+if (USE_GSTREAMER_GL)
+    list(APPEND WebCore_SOURCES
+        platform/graphics/GLContext.cpp
+        platform/graphics/egl/GLContextEGL.cpp
+        platform/graphics/glx/GLContextGLX.cpp
     )
 endif ()
 
