@@ -47,7 +47,9 @@ public:
     virtual void waitNative();
     virtual bool canRenderToDefaultFramebuffer();
     virtual IntSize defaultFrameBufferSize();
+#if USE(CAIRO)
     virtual cairo_device_t* cairoDevice();
+#endif
     virtual bool isEGLContext() const { return false; }
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
@@ -63,7 +65,12 @@ private:
     XUniqueGLXPbuffer m_pbuffer;
     XUniquePixmap m_pixmap;
     XUniqueGLXPixmap m_glxPixmap;
+#if USE(CAIRO)
     cairo_device_t* m_cairoDevice { nullptr };
+#endif
+#if PLATFORM(QT)
+    std::unique_ptr<QOpenGLContext> m_platformContext;
+#endif
 };
 
 } // namespace WebCore

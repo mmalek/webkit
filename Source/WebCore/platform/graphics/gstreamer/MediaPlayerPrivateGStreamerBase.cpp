@@ -222,7 +222,7 @@ bool MediaPlayerPrivateGStreamerBase::handleSyncMessage(GstMessage* message)
     if (!g_strcmp0(contextType, "gst.gl.app_context")) {
         GRefPtr<GstContext> appContext = adoptGRef(gst_context_new("gst.gl.app_context", TRUE));
         GstStructure* structure = gst_context_writable_structure(appContext.get());
-        gst_structure_set(structure, "context", GST_GL_TYPE_CONTEXT, m_glContext.get(), nullptr);
+        gst_structure_set(structure, "context", GST_GL_DISPLAY_CONTEXT_TYPE, m_glContext.get(), nullptr);
         gst_element_set_context(GST_ELEMENT(message->src), appContext.get());
         return true;
     }
@@ -674,8 +674,7 @@ PassNativeImagePtr MediaPlayerPrivateGStreamerBase::nativeImageForCurrentTime()
 {
 #if !USE(CAIRO) || !ENABLE(ACCELERATED_2D_CANVAS)
     return nullptr;
-#endif
-
+#else
     if (m_usingFallbackVideoSink)
         return nullptr;
 
@@ -703,6 +702,7 @@ PassNativeImagePtr MediaPlayerPrivateGStreamerBase::nativeImageForCurrentTime()
     gst_video_frame_unmap(&videoFrame);
 
     return adoptRef(surface);
+#endif
 }
 #endif
 

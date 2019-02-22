@@ -239,6 +239,7 @@ endif ()
 # there is a strong reason we should support changing the value of the option,
 # and the option is not relevant to any other WebKit ports.
 WEBKIT_OPTION_DEFINE(USE_GSTREAMER "Use GStreamer implementation of MediaPlayer" PUBLIC ${USE_GSTREAMER_DEFAULT})
+WEBKIT_OPTION_DEFINE(USE_GSTREAMER_GL "Whether to enable support for GStreamer GL" PRIVATE OFF)
 WEBKIT_OPTION_DEFINE(USE_LIBHYPHEN "Use automatic hyphenation with LibHyphen" PUBLIC ${USE_LIBHYPHEN_DEFAULT})
 WEBKIT_OPTION_DEFINE(USE_MEDIA_FOUNDATION "Use MediaFoundation implementation of MediaPlayer" PUBLIC ${USE_MEDIA_FOUNDATION_DEFAULT})
 WEBKIT_OPTION_DEFINE(USE_QT_MULTIMEDIA "Use Qt Multimedia implementation of MediaPlayer" PUBLIC ${USE_QT_MULTIMEDIA_DEFAULT})
@@ -319,6 +320,8 @@ endif ()
 
 WEBKIT_OPTION_CONFLICT(USE_GSTREAMER USE_QT_MULTIMEDIA)
 WEBKIT_OPTION_CONFLICT(USE_GSTREAMER USE_MEDIA_FOUNDATION)
+WEBKIT_OPTION_DEPEND(USE_GSTREAMER_GL ENABLE_OPENGL)
+WEBKIT_OPTION_DEPEND(USE_GSTREAMER_GL ENABLE_VIDEO)
 WEBKIT_OPTION_CONFLICT(USE_QT_MULTIMEDIA USE_MEDIA_FOUNDATION)
 
 WEBKIT_OPTION_DEPEND(ENABLE_3D_TRANSFORMS ENABLE_OPENGL)
@@ -550,14 +553,53 @@ if (ENABLE_DEVICE_ORIENTATION)
 endif ()
 
 if (ENABLE_OPENGL)
+    find_package(OpenGL)
+    find_package(OpenGLES2)
+
+    # Set the default value for ENABLE_GLES2 automatically.
+    # We are not enabling or disabling automatically a feature here, because
+    # the feature is by default always on (ENABLE_OPENGL=ON).
+    # What we select here automatically is if we use OPENGL (ENABLE_GLES2=OFF)
+    # or OPENGLES2 (ENABLE_GLES2=ON) for building the feature.
+    set(ENABLE_GLES2_DEFAULT OFF)
+
+    if (NOT OPENGL_FOUND AND OPENGLES2_FOUND)
+        set(ENABLE_GLES2_DEFAULT ON)
+    endif ()
+
     # Note: Gui module is already found
     # Warning: quotes are sinificant here!
     if (NOT DEFINED Qt5Gui_OPENGL_IMPLEMENTATION OR "${Qt5Gui_OPENGL_IMPLEMENTATION}" STREQUAL "")
        message(FATAL_ERROR "Qt with OpenGL support is required for ENABLE_OPENGL")
     endif ()
 
+    # ENABLE_OPENGL is true if either USE_OPENGL or ENABLE_GLES2 is true.
+    # But USE_OPENGL is the opposite of ENABLE_GLES2.
+    if (ENABLE_GLES2)
+        find_package(OpenGLES2 REQUIRED)
+        SET_AND_EXPOSE_TO_BUILD(USE_OPENGL_ES_2 TRUE)
+
+        if (NOT EGL_FOUND)
+            message(FATAL_ERROR "EGL is needed for ENABLE_GLES2.")
+        endif ()
+    else ()
+        if (NOT OPENGL_FOUND)
+            message(FATAL_ERROR "Either OpenGL or OpenGLES2 is needed for ENABLE_OPENGL.")
+        endif ()
+        SET_AND_EXPOSE_TO_BUILD(USE_OPENGL TRUE)
+    endif ()
+
+    if (NOT EGL_FOUND AND (NOT ENABLE_X11_TARGET OR NOT GLX_FOUND))
+        message(FATAL_ERROR "Either GLX or EGL is needed for ENABLE_OPENGL.")
+    endif ()
+
     SET_AND_EXPOSE_TO_BUILD(USE_TEXTURE_MAPPER_GL TRUE)
     SET_AND_EXPOSE_TO_BUILD(ENABLE_GRAPHICS_CONTEXT_3D TRUE)
+    SET_AND_EXPOSE_TO_BUILD(USE_EGL ${EGL_FOUND})
+
+    if (ENABLE_X11_TARGET AND GLX_FOUND AND USE_OPENGL)
+        SET_AND_EXPOSE_TO_BUILD(USE_GLX TRUE)
+    endif ()
 
     if (WIN32)
         include(CheckCXXSymbolExists)

@@ -17,18 +17,28 @@
  */
 
 #include "config.h"
-#include "GLContextGLX.h"
 
 #if USE(GLX)
 #include "GraphicsContext3D.h"
 #include "OpenGLShims.h"
 #include "PlatformDisplayX11.h"
 #include <GL/glx.h>
+
+#if USE(CAIRO)
 #include <cairo.h>
 
 #if ENABLE(ACCELERATED_2D_CANVAS)
 #include <cairo-gl.h>
 #endif
+#endif
+
+#if PLATFORM(QT)
+#include<QOpenGLContext>
+Q_DECLARE_OPAQUE_POINTER(__GLXcontextRec*)
+Q_DECLARE_METATYPE(__GLXcontextRec*)
+#endif
+
+#include "GLContextGLX.h"
 
 namespace WebCore {
 
@@ -160,8 +170,10 @@ GLContextGLX::GLContextGLX(XUniqueGLXContext&& context, XUniquePixmap&& pixmap, 
 
 GLContextGLX::~GLContextGLX()
 {
+#if USE(CAIRO)
     if (m_cairoDevice)
         cairo_device_destroy(m_cairoDevice);
+#endif
 
     if (m_context) {
         // This may be necessary to prevent crashes with NVidia's closed source drivers. Originally
@@ -221,6 +233,7 @@ void GLContextGLX::waitNative()
     glXWaitX();
 }
 
+#if USE(CAIRO)
 cairo_device_t* GLContextGLX::cairoDevice()
 {
     if (m_cairoDevice)
@@ -232,11 +245,20 @@ cairo_device_t* GLContextGLX::cairoDevice()
 
     return m_cairoDevice;
 }
+#endif
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
 PlatformGraphicsContext3D GLContextGLX::platformContext()
 {
+#if PLATFORM(QT)
+    if (!m_platformContext) {
+        m_platformContext.reset(new QOpenGLContext);
+        m_platformContext->setNativeHandle(QVariant::fromValue(m_context.get()));
+    }
+    return m_platformContext.get();
+#else
     return m_context.get();
+#endif
 }
 #endif
 
