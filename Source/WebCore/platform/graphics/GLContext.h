@@ -78,6 +78,7 @@ public:
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
     virtual PlatformGraphicsContext3D platformContext() = 0;
+    virtual void* nativeContext() = 0;
 #endif
 
     class Data {

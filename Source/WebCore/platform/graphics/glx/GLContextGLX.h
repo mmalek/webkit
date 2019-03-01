@@ -53,7 +53,8 @@ public:
     virtual bool isEGLContext() const { return false; }
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
-    virtual PlatformGraphicsContext3D platformContext();
+    PlatformGraphicsContext3D platformContext() override;
+    void* nativeContext() override;
 #endif
 
 private:

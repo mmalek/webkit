@@ -260,11 +260,11 @@ bool MediaPlayerPrivateGStreamerBase::ensureGstGLContext()
     ASSERT_NOT_REACHED();
 #endif
 
-    PlatformGraphicsContext3D contextHandle = webkitContext->platformContext();
-    if (!contextHandle)
+    void* nativeHandle = webkitContext->nativeContext();
+    if (!nativeHandle)
         return false;
 
-    m_glContext = gst_gl_context_new_wrapped(m_glDisplay.get(), reinterpret_cast<guintptr>(contextHandle), glPlatform, glAPI);
+    m_glContext = gst_gl_context_new_wrapped(m_glDisplay.get(), reinterpret_cast<guintptr>(nativeHandle), glPlatform, glAPI);
 
     return true;
 }

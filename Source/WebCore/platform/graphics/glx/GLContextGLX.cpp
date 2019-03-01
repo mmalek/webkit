@@ -260,6 +260,10 @@ PlatformGraphicsContext3D GLContextGLX::platformContext()
     return m_context.get();
 #endif
 }
+void* GLContextGLX::nativeContext()
+{
+    return m_context.get();
+}
 #endif
 
 } // namespace WebCore
