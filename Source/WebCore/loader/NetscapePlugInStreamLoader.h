@@ -30,8 +30,8 @@
 #define NetscapePlugInStreamLoader_h
 
 #include "ResourceLoader.h"
-#include <wtf/Forward.h>
 #include <functional>
+#include <wtf/Forward.h>
 
 namespace WebCore {
 

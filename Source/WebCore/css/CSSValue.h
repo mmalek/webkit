@@ -23,11 +23,11 @@
 
 #include "ExceptionCode.h"
 #include "URLHash.h"
+#include <functional>
 #include <wtf/ListHashSet.h>
 #include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
 #include <wtf/TypeCasts.h>
-#include <functional>
 
 namespace WebCore {
 

@@ -29,10 +29,10 @@
 
 #include "InspectorFrontendRouter.h"
 #include "InspectorProtocolTypes.h"
+#include <functional>
 #include <wtf/Optional.h>
 #include <wtf/RefCounted.h>
 #include <wtf/text/WTFString.h>
-#include <functional>
 
 namespace Inspector {
 

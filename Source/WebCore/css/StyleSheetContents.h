@@ -24,13 +24,13 @@
 #include "CSSParserMode.h"
 #include "CachePolicy.h"
 #include "URL.h"
+#include <functional>
 #include <wtf/HashMap.h>
 #include <wtf/ListHashSet.h>
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 #include <wtf/text/AtomicStringHash.h>
 #include <wtf/text/TextPosition.h>
-#include <functional>
 
 namespace WebCore {
 
