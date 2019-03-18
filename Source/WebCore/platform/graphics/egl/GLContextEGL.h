@@ -55,6 +55,7 @@ public:
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
     virtual PlatformGraphicsContext3D platformContext();
+    void* nativeContext() override;
 #endif
 
 private:
@@ -74,6 +75,9 @@ private:
 #endif
 #if USE(CAIRO)
     cairo_device_t* m_cairoDevice { nullptr };
+#endif
+#if PLATFORM(QT)
+    std::unique_ptr<QOpenGLContext> m_platformContext;
 #endif
 };
 

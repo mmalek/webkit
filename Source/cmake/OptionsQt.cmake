@@ -1,3 +1,4 @@
+find_package(EGL)
 include(CheckCXXSourceCompiles)
 include(FeatureSummary)
 include(ECMEnableSanitizers)
