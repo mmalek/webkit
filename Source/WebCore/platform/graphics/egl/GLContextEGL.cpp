@@ -17,6 +17,11 @@
  */
 
 #include "config.h"
+
+#if PLATFORM(QT)
+#include<QOpenGLContext>
+#endif
+
 #include "GLContextEGL.h"
 
 #if USE(EGL)
@@ -26,6 +31,13 @@
 
 #if USE(CAIRO)
 #include <cairo.h>
+#if ENABLE(ACCELERATED_2D_CANVAS)
+// cairo-gl.h includes some definitions from GLX that conflict with
+// the ones provided by us. Since GLContextEGL doesn't use any GLX
+// functions we can safely disable them.
+#undef CAIRO_HAS_GLX_FUNCTIONS
+#include <cairo-gl.h>
+#endif
 #endif
 
 #if USE(OPENGL_ES_2)
@@ -38,14 +50,6 @@
 #if PLATFORM(X11)
 #include "PlatformDisplayX11.h"
 #include <X11/Xlib.h>
-#endif
-
-#if ENABLE(ACCELERATED_2D_CANVAS)
-// cairo-gl.h includes some definitions from GLX that conflict with
-// the ones provided by us. Since GLContextEGL doesn't use any GLX
-// functions we can safely disable them.
-#undef CAIRO_HAS_GLX_FUNCTIONS
-#include <cairo-gl.h>
 #endif
 
 namespace WebCore {
@@ -304,6 +308,18 @@ cairo_device_t* GLContextEGL::cairoDevice()
 
 #if ENABLE(GRAPHICS_CONTEXT_3D)
 PlatformGraphicsContext3D GLContextEGL::platformContext()
+{
+#if PLATFORM(QT)
+    if (!m_platformContext) {
+        m_platformContext.reset(new QOpenGLContext);
+        m_platformContext->setNativeHandle(QVariant::fromValue(m_context));
+    }
+    return m_platformContext.get();
+#else
+    return m_context;
+#endif
+}
+void* GLContextEGL::nativeContext()
 {
     return m_context;
 }
